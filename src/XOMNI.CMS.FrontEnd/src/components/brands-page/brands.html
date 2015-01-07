@@ -1,0 +1,55 @@
+<article id="mainContent" class="boxshd contentBox textshd">
+    <h1>Brands</h1>
+    <section class="contentBox infoBox">
+        <div>
+            <ul>
+                <li>
+                    <label for="username">Name:</label>
+                    <input type="text" data-bind="textInput: newBrandName" placeholder="New brand name.." />
+                </li>
+                <li class="validation">
+                    <div style="display:none;">
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <!-- ko if (newBrandName.length > 0) -->
+            <form data-bind="submit: add">
+                <button class="greenBttn" type="submit">Add</button>
+            </form>
+            <!-- /ko -->
+        </div>
+    </section>
+
+
+    <section id="listedContainer">
+        <ul class="listHead" data-bind="visible: brands().length > 0">
+            <li class="tfiveBox">Name</li>
+            <li class="fifteenBox toRight">Action</li>
+        </ul>
+        <!-- ko foreach: brands -->
+        <ul class="listRow">
+            <li class="tfiveBox">
+                <input type="text" data-bind="value: Name" />
+            </li>
+            <li class="fifteenBox toRight">
+                <a href="#" class="glyphicon glyphicon-remove" data-bind="click: $parent.delete"></a>
+                <a href="#" class="glyphicon glyphicon-upload" data-bind="click: $parent.update, visible: dirtyFlag.isDirty"></a>
+            </li>
+        </ul>
+        <!-- /ko -->
+    </section>
+
+    <ul data-bind="foreach: self.brands, visible: brands().length > 0">
+        <li class="tfiveBox">
+            <p><input data-bind="value: Name" /></p>
+        </li>
+        <li class="fifteenBox toRight">
+            <a href="#" class="glyphicon glyphicon-remove" data-bind="click: $parent.delete"></a>
+            <a href="#" class="glyphicon glyphicon-upload" data-bind="click: $parent.update, visible: dirtyFlag.isDirty"></a>
+        </li>
+    </ul>
+    You have
+    <span><b data-bind="text: brands().length">&nbsp;</b> brand(s)</span>
+</article>

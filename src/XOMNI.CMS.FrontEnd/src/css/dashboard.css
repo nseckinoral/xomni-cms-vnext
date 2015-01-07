@@ -1,0 +1,202 @@
+#content .left40 {
+	float: left;
+	width: 40%;
+}
+
+.left50 {
+	float: left;
+	width: 50%;
+}
+
+.left100 {
+	float: left;
+	width: 100%;
+}
+
+#content .right60{
+	float: right;
+	width:58%;
+}
+
+.right50{
+	float: right;
+	width:48%;
+}
+
+.attributebox {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	overflow: hidden;
+}
+
+.chkboxlist {
+	display: block;
+	margin: 0 15px;
+}
+
+.chkboxlist input {
+    float:left;
+}
+
+.chkboxlist label {
+    width:auto;
+    position: relative;
+    top: -3px;
+}
+.attributebox h2 {
+	padding: 3px 0 3px 15px;
+	padding-top: 5px;
+}
+.attributebox ul {
+	display: block;
+	margin: 0 15px;
+}
+.attributebox ul li{
+	display: block;
+	height:27px;
+}
+.attributebox ul li select{
+	float: right;
+}
+
+/* leftside - summary box styles */
+.left40 #summary {
+	padding-bottom: 15px;
+	overflow: hidden;
+}
+
+.left100 #summary {
+	padding-bottom: 15px;
+	overflow: hidden;
+}
+
+#summary ul {
+	/*display: block;*/
+	margin: 0 15px;
+}
+#summary ul li{
+	display: inline-block;
+	height:15px;
+	border-bottom: 1px dotted #e2e2e2;
+	padding-top: 10px;
+    margin-right: 20px;
+	width: 10%;
+}
+
+/*
+#summary ul a{
+	float: right;
+    margin-left: 10px;
+    margin-right:10px;
+}
+
+#summary ul li:nth-child(odd){
+	width: 44%;
+	float: left;
+}
+#summary ul li:nth-child(even){
+	width: 44%;
+	float: right;
+}*/
+
+
+
+
+/* left side - important notification style */
+.left40 #notifications {
+	float: left;
+	padding-bottom: 15px;
+}
+
+.left100 #notifications {
+	float: left;
+	padding-bottom: 15px;
+}
+#notifications h1 {
+	padding: 3px 0 3px 15px;
+	background: url("../images/icons/imp-notice.png") no-repeat 0px 0px;
+	padding-top: 5px;
+}
+#notifications #impItem {
+	display: block;
+	margin: 10px 15px 5px;
+	float: left;
+	line-height: 16px;
+	color: #373737;
+	border-bottom: 1px solid #f0f0f0;
+	padding-bottom: 10px;
+}
+#impItem h2{
+	font-size: 14px;
+	font-weight: bold;
+}
+#impItem time{
+	font-size: 11px;
+	color: #adadad;
+}
+#impItem p{
+	margin-top: 10px;
+}
+/* Quick Add styles */
+.right60 #quickAdd {
+	background: #eff9e9;
+	padding: 15px;
+	display: block;
+}
+#quickAdd label{
+	font-size: 18px;
+	font-weight: bold;
+	color: #3e7120;
+}
+#quickAdd label p{
+	float: left;
+	padding-top: 4px;
+	padding-right: 5px;
+}
+#quickAdd select{
+	border-radius: 3px;
+	border: 1px solid #b2cba4;
+	height: 25px;
+	padding: 2px 2px 2px 5px;
+	color: #aeaeae;
+}
+/* Latest products styles */
+
+.left100 #latest {
+	display: block;
+	overflow: hidden;
+}
+
+.right60 #latest {
+	display: block;
+	overflow: hidden;
+}
+#latest ul{
+	/* text-align: center; */
+}
+#latest ul li {
+	display: inline-block;
+}
+#latest .itemBox{
+	width: 150px;
+	height:200px;
+	margin: 10px 5px 15px 10px;
+	text-align: center;
+}
+.itemBox .productName{
+	font-size: 13px;
+	font-weight: bold;
+	margin: 5px;
+	display: block;
+	line-height: 16px;
+}
+.itemBox .category {
+	color: #a1a1a1;
+}
+.itemBox .price {
+	color: #ec662e;
+	font-size: 20px;
+	font-weight: bold;
+	display: block;
+	margin: 10px;
+}

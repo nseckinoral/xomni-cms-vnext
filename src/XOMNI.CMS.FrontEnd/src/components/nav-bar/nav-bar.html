@@ -1,0 +1,9 @@
+<nav id="subMenu" class="textshd boxshd contentBox" role="submenu">
+    <ul id="nav" class="fisrtlevel" data-bind="template: {name: 'navbar-item-template', foreach: navBarItems}"></ul>
+</nav>
+
+<script id="navbar-item-template" type="text/html">
+    <li data-bind="css: { firstSelected : selected }">
+        <a data-bind="attr: { href: link }, text: text" />
+    </li>
+</script>
