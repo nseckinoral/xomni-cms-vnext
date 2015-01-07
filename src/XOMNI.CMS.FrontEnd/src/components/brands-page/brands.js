@@ -23,11 +23,12 @@ define(['knockout', 'text!./brands.html', 'knockout-mapping'], function (ko, tem
         //self.dirtyFlag.reset();
     }
 
-    function BrandsPage(params) {
+    function BrandViewModel(params) {
         var self = this;
-        self.brands = ko.observableArray();
-        self.newBrandName = ko.observable();
+        self.brands = ko.observableArray([]);
+        self.newBrandName = ko.observable("");
 
+        // initial
         $.ajaxSetup({
             headers: {
                 "Authorization": "Basic U3RhZ2luZ0FwaVByaXZhdGVUZXN0VXNlcjpTdGFnaW5nQXBpUHJpdmF0ZVRlc3RQYXNz",
@@ -35,22 +36,25 @@ define(['knockout', 'text!./brands.html', 'knockout-mapping'], function (ko, tem
             }
         });
 
-        // initial
-        $.ajax("http://test.apistaging.xomni.com/private/catalog/brands?skip=0&take=1000", {
+
+        self.list = function() {
+          $.ajax("http://test.apistaging.xomni.com/private/catalog/brands?skip=0&take=1000", {
             type: "get",
             contentType: "application/json",
+            async:false,
             success: function (result) {
-                koMapping.fromJS(result.Results,
+              koMapping.fromJS(result.Results,
                 {
-                    create: function (item) {
-                        return new GenericModel(item.data);
-                    }
+                  create: function (item) {
+                    return new GenericModel(item.data);
+                  }
                 },
                 self.brands);
-            }
-        });
+                return self.brands;
+              }
+            });
+        };
 
-        // behaviors
         self.add = function () {
             $.ajax("http://test.apistaging.xomni.com/private/catalog/brand", {
                 data: ko.toJSON({ Name: self.newBrandName }),
@@ -91,7 +95,6 @@ define(['knockout', 'text!./brands.html', 'knockout-mapping'], function (ko, tem
                 }
             });
         }
-    }
-
-    return { viewModel: BrandsPage, template: templateMarkup };
+      }
+    return { viewModel: BrandViewModel, template: templateMarkup };
 });
