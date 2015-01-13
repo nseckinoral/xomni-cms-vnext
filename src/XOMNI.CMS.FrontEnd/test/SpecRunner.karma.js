@@ -1,14 +1,15 @@
 var tests = [];
-for (var file in window.__karma__.files) {
-  if (window.__karma__.files.hasOwnProperty(file)) {
-    if (/test\/components\/.*\.js$/.test(file)) {
-      tests.push(file);
+for (var file in __karma__.files) {
+    if (__karma__.files.hasOwnProperty(file)) {
+        if (/test\/components\/.*\.js$/.test(file)) {
+            tests.push(file);
+        }
     }
-  }
 }
 
 requirejs.config({
     baseUrl: '/base/src',
     deps: tests,
-    callback: window.__karma__.start
+    callback: __karma__.start
 });
+//# sourceMappingURL=SpecRunner.karma.js.map

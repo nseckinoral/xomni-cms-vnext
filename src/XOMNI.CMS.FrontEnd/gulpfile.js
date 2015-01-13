@@ -3,7 +3,7 @@ var fs = require('fs'), vm = require('vm'), merge = require('deeply'), chalk = r
 
 // Gulp and plugins
 var gulp = require('gulp'), rjs = require('gulp-requirejs-bundler'), concat = require('gulp-concat'), clean = require('gulp-clean'),
-    replace = require('gulp-replace'), uglify = require('gulp-uglify'), htmlreplace = require('gulp-html-replace');
+    replace = require('gulp-replace'), uglify = require('gulp-uglify'), htmlreplace = require('gulp-html-replace'), typescript = require('gulp-tsc');
 
 // Config
 var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require.config.js') + '; require;');
@@ -17,20 +17,31 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
         include: [
             'requireLib',
             'components/nav-bar/nav-bar',
-            'components/home-page/home',
-            'text!components/about-page/about.html'
+            'pages/home-page/home',
+            'text!pages/about-page/about.html'
         ],
         insertRequire: ['app/startup'],
         bundles: {
             // If you want parts of the site to load on demand, remove them from the 'include' list
             // above, and group them into bundles here.
             // 'bundle-name': [ 'some/module', 'another/module' ],
-            'brands': [ 'components/brands-page/brands' ]
+            // 'another-bundle-name': [ 'yet-another-module' ]
         }
     });
 
+// Compile all .ts files, producing .js and source map files alongside them
+gulp.task('ts', function() {
+    return gulp.src(['**/*.ts'])
+        .pipe(typescript({
+            module: 'amd',
+            sourcemap: true,
+            outDir: './'
+        }))
+        .pipe(gulp.dest('./'));
+});
+
 // Discovers all AMD dependencies, concatenates together all required .js files, minifies them
-gulp.task('js', function () {
+gulp.task('js', ['ts'], function () {
     return rjs(requireJsOptimizerConfig)
         .pipe(uglify({ preserveComments: 'some' }))
         .pipe(gulp.dest('./dist/'));
@@ -67,10 +78,15 @@ gulp.task('font', function () {
         .pipe(gulp.dest('./dist/fonts'));
 });
 
-// Removes all files from ./dist/
+// Removes all files from ./dist/, and the .js/.js.map files compiled from .ts
 gulp.task('clean', function() {
-    return gulp.src('./dist/**/*', { read: false })
-        .pipe(clean());
+    var distContents = gulp.src('./dist/**/*', { read: false }),
+        generatedJs = gulp.src(['src/**/*.js', 'src/**/*.js.map', 'test/**/*.js', 'test/**/*.js.map'], { read: false })
+            .pipe(es.mapSync(function(data) {
+                // Include only the .js/.js.map files that correspond to a .ts file
+                return fs.existsSync(data.path.replace(/\.js(\.map)?$/, '.ts')) ? data : undefined;
+            }));
+    return es.merge(distContents, generatedJs).pipe(clean());
 });
 
 gulp.task('default', ['html', 'js', 'css', 'img', 'font'], function(callback) {
