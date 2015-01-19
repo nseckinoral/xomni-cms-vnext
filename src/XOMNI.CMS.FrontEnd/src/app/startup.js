@@ -1,7 +1,9 @@
-﻿define(["require", "exports", "knockout", "./router"], function(require, exports, ko, router) {
+define(["require", "exports", "knockout", "./router"], function(require, exports, ko, router) {
     // Components can be packaged as AMD modules, such as the following:
+    ko.components.register('dashboard', { require: 'components/dashboard/dashboard' });
     ko.components.register('nav-bar', { require: 'components/nav-bar/nav-bar' });
-    ko.components.register('home-page', { require: 'pages/home-page/home' });
+    ko.components.register('side-bar', { require: 'components/side-bar/side-bar' });
+    ko.components.register('catalog-brand-page', { require: 'pages/catalog/brand-page/brand' });
 
     // ... or for template-only components, you can just point to a .html file directly:
     ko.components.register('about-page', {

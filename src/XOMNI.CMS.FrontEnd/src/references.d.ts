@@ -1,4 +1,5 @@
 /// <reference path="../definitions/jquery/jquery.d.ts" />
+/// <reference path="../definitions/jquery.cookie/jquery.cookie.d.ts" />
 /// <reference path="../definitions/knockout/knockout.d.ts" />
 /// <reference path="../definitions/knockout/knockout-3.2.0.d.ts" />
 /// <reference path="../definitions/knockout-projections/knockout-projections.d.ts" />

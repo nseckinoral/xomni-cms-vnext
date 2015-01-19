@@ -1,6 +1,6 @@
-/// <amd-dependency path="text!./nav-bar.html" />
+/// <amd-dependency path="text!./dashboard.html" />
 import ko = require("knockout");
-export var template: string = require("text!./nav-bar.html");
+export var template: string = require("text!./dashboard.html");
 
 export class viewModel {
     public route: any;

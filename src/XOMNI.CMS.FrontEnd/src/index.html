@@ -1,20 +1,45 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>XOMNI CMS vNext</title>
     <!-- build:css -->
-      <link href="bower_modules/components-bootstrap/css/bootstrap.min.css" rel="stylesheet">
-      <link href="css/styles.css" rel="stylesheet">
+    <link href="bower_modules/components-bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/toggle-switch.css" rel="stylesheet">
     <!-- endbuild -->
     <!-- build:js -->
-      <script src="app/require.config.js"></script>
-      <script data-main="app/startup" src="bower_modules/requirejs/require.js"></script>
+    <script src="app/require.config.js"></script>
+    <script data-main="app/startup" src="bower_modules/requirejs/require.js"></script>
     <!-- endbuild -->
-  </head>
-  <body>
-    <nav-bar params="route: route"></nav-bar>
-    <div id="page" class="container" data-bind="component: { name: route().page, params: route }"></div>
-  </body>
+</head>
+<body>
+    <div id="container">
+        <!-- main header << STARTS >> -->
+        <header id="mainHeader" role="banner">
+            <a class="logo" href="#">
+                <img src="images/logo-small.png" />
+            </a>
+            <div class="forUser" style="width: 370px;">
+                <span class="username">
+                    Gokhan
+                    <p>License Cap : #</p>
+                    <input type="button" class="hbttn logout" value="Log out">
+                </span>
+            </div>
+        </header>
+        <nav-bar params="route: route"></nav-bar>
+        <div id="content">
+            <div class="pageContainer">
+                <div class="sideMenu">
+                    <side-bar params="route: route"></side-bar>
+                </div>
+                <div class="mainContentArea" data-bind="component: { name: route().page, params: route }">
+                </div>
+            </div>
+        </div>
+</body>
 </html>

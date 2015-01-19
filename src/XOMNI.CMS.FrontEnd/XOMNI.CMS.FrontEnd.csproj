@@ -22,9 +22,81 @@
     <Content Include="gulpfile.js" />
     <Content Include="karma.conf.js" />
     <Content Include="src\app\require.config.js" />
-    <Content Include="src\pages\about-page\about.html" />
-    <Content Include="src\pages\home-page\home.html" />
+    <Content Include="src\components\dashboard\dashboard.html" />
     <Content Include="src\components\nav-bar\nav-bar.html" />
+    <Content Include="src\css\dashboard.css" />
+    <Content Include="src\css\reset.css" />
+    <Content Include="src\css\toggle-switch.css" />
+    <Content Include="src\fonts\eots\_notes\dwsync.xml" />
+    <Content Include="src\images\addRelBttn-bg.png" />
+    <Content Include="src\images\AztecSample.PNG" />
+    <Content Include="src\images\barcode.png" />
+    <Content Include="src\images\blue-bg-pattern.png" />
+    <Content Include="src\images\help-icon.png" />
+    <Content Include="src\images\icon-stripe.png" />
+    <Content Include="src\images\icons\addNew.png" />
+    <Content Include="src\images\icons\addNewField.png" />
+    <Content Include="src\images\icons\ajax-loader.gif" />
+    <Content Include="src\images\icons\arrow-down.png" />
+    <Content Include="src\images\icons\arrow-up.png" />
+    <Content Include="src\images\icons\brands-sel.png" />
+    <Content Include="src\images\icons\brands.png" />
+    <Content Include="src\images\icons\categories-sel.png" />
+    <Content Include="src\images\icons\categories.png" />
+    <Content Include="src\images\icons\cust-sel.png" />
+    <Content Include="src\images\icons\cust.png" />
+    <Content Include="src\images\icons\dashboard-sel.png" />
+    <Content Include="src\images\icons\dashboard.png" />
+    <Content Include="src\images\icons\detailed-list.png" />
+    <Content Include="src\images\icons\dummy-sel.png" />
+    <Content Include="src\images\icons\dummy.png" />
+    <Content Include="src\images\icons\grid-list.png" />
+    <Content Include="src\images\icons\imp-notice.png" />
+    <Content Include="src\images\icons\license-sel.png" />
+    <Content Include="src\images\icons\license.png" />
+    <Content Include="src\images\icons\listed-list.png" />
+    <Content Include="src\images\icons\offerItem.png" />
+    <Content Include="src\images\icons\products-sel.png" />
+    <Content Include="src\images\icons\products.png" />
+    <Content Include="src\images\icons\rel-mgt-bttn-bg.png" />
+    <Content Include="src\images\icons\rel-mgt-sel.png" />
+    <Content Include="src\images\icons\rel-mgt.png" />
+    <Content Include="src\images\icons\relationshipMgt-icon.png" />
+    <Content Include="src\images\icons\search-filter-bg.png" />
+    <Content Include="src\images\icons\settings-sel.png" />
+    <Content Include="src\images\icons\settings.png" />
+    <Content Include="src\images\icons\stores-sel.png" />
+    <Content Include="src\images\icons\stores.png" />
+    <Content Include="src\images\icons\uploadNew.png" />
+    <Content Include="src\images\input-bg.png" />
+    <Content Include="src\images\login-header-bg.png" />
+    <Content Include="src\images\login-logo.png" />
+    <Content Include="src\images\loginBttn-bg.png" />
+    <Content Include="src\images\logo-small.png" />
+    <Content Include="src\images\logout-icon.png" />
+    <Content Include="src\images\logo_placeholder.jpg" />
+    <Content Include="src\images\nav-main-bg.png" />
+    <Content Include="src\images\pasbook_01.png" />
+    <Content Include="src\images\pasbook_02.png" />
+    <Content Include="src\images\pasbook_03.png" />
+    <Content Include="src\images\pasbook_04.png" />
+    <Content Include="src\images\pasbook_06.png" />
+    <Content Include="src\images\pasbook_09.png" />
+    <Content Include="src\images\pasbook_13.png" />
+    <Content Include="src\images\pasbook_14.png" />
+    <Content Include="src\images\pasbook_15.png" />
+    <Content Include="src\images\pasbook_17.png" />
+    <Content Include="src\images\pasbook_19.png" />
+    <Content Include="src\images\pasbook_20.png" />
+    <Content Include="src\images\product-img-1.jpg" />
+    <Content Include="src\images\productImage-big1.png" />
+    <Content Include="src\images\SamplePDF.PNG" />
+    <Content Include="src\images\SampleQR.PNG" />
+    <Content Include="src\images\search-icon.png" />
+    <Content Include="src\images\search-top-bg.png" />
+    <Content Include="src\images\user-header-img.png" />
+    <Content Include="src\pages\catalog\brand-page\brand.html" />
+    <Content Include="src\components\side-bar\side-bar.html" />
     <Content Include="src\css\styles.css" />
     <Content Include="src\index.html" />
     <Content Include="test\index.html" />
@@ -37,6 +109,16 @@
     <Content Include="package.json" />
     <Content Include="test\.bowerrc" />
     <Content Include="test\bower.json" />
+    <Content Include="src\fonts\eots\PrentonRPCond-Regular.eot" />
+    <Content Include="src\fonts\eots\PrentonRPCondLight-Regular.eot" />
+    <Content Include="src\fonts\eots\PrentonRPCondMedium-Regular.eot" />
+    <Content Include="src\fonts\Prenton RP Cond Light.eot" />
+    <Content Include="src\fonts\Prenton RP Cond Light.otf" />
+    <Content Include="src\fonts\Prenton RP Cond Medium.eot" />
+    <Content Include="src\fonts\Prenton RP Cond Medium.otf" />
+    <Content Include="src\fonts\Prenton RP Cond.eot" />
+    <Content Include="src\fonts\Prenton RP Cond.otf" />
+    <Content Include="src\images\icons\Thumbs.db" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -45,14 +127,30 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="definitions\bootstrap\bootstrap.d.ts" />
+    <TypeScriptCompile Include="definitions\crossroads\crossroads.d.ts" />
+    <TypeScriptCompile Include="definitions\hasher\hasher.d.ts" />
+    <TypeScriptCompile Include="definitions\jasmine\jasmine.d.ts" />
+    <TypeScriptCompile Include="definitions\jquery.cookie\jquery.cookie.d.ts" />
+    <TypeScriptCompile Include="definitions\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="definitions\js-signals\js-signals.d.ts" />
+    <TypeScriptCompile Include="definitions\knockout-projections\knockout-projections.d.ts" />
+    <TypeScriptCompile Include="definitions\knockout\knockout-3.2.0.d.ts" />
+    <TypeScriptCompile Include="definitions\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="src\app\router.ts" />
     <TypeScriptCompile Include="src\app\startup.ts" />
-    <TypeScriptCompile Include="src\pages\home-page\home.ts" />
+    <TypeScriptCompile Include="src\components\dashboard\dashboard.ts" />
     <TypeScriptCompile Include="src\components\nav-bar\nav-bar.ts" />
+    <TypeScriptCompile Include="src\pages\catalog\brand-page\brand.ts" />
+    <TypeScriptCompile Include="src\components\side-bar\side-bar.ts" />
     <TypeScriptCompile Include="src\references.d.ts" />
-    <TypeScriptCompile Include="test\pages\home-page.ts" />
+    <TypeScriptCompile Include="test\pages\catalog\brand-page.ts" />
     <TypeScriptCompile Include="test\SpecRunner.browser.ts" />
     <TypeScriptCompile Include="test\SpecRunner.karma.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\pages\management\" />
+    <Folder Include="test\components\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

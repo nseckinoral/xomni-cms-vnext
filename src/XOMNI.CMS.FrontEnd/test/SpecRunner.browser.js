@@ -2,7 +2,7 @@ var main;
 (function (main) {
     // Reference your test modules here
     var testModules = [
-        'pages/home-page'
+        'pages/catalog/brand-page'
     ];
 
     // After the 'jasmine-boot' module creates the Jasmine environment, load all test modules then run them

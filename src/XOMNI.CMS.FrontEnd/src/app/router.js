@@ -16,14 +16,17 @@ define(["require", "exports", "knockout", "crossroads", "hasher"], function(requ
         */
         router.currentRoute = ko.observable({});
 
-        var allRoutes = [
-            { url: '', params: { page: 'home-page' } },
-            { url: 'about', params: { page: 'about-page' } }
+        var routes = [
+            { pattern: '', params: { page: 'dashboard' } },
+            { pattern: '/{container}/{page}/:id:', params: { page: '' } }
         ];
 
         // Register routes with crossroads.js
-        ko.utils.arrayForEach(allRoutes, function (route) {
-            crossroads.addRoute(route.url, function (requestParams) {
+        ko.utils.arrayForEach(routes, function (route) {
+            crossroads.addRoute(route.pattern, function (requestParams) {
+                if (route.pattern) {
+                    route.params.page = requestParams.container + "-" + requestParams.page + "-page";
+                }
                 router.currentRoute(ko.utils.extend(requestParams, route.params));
             });
         });

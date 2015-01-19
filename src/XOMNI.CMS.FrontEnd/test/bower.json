@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "jasmine": "~2.0.0",
+    "jasmine-ajax": "~2.99.0",
     "requirejs": "~2.1.11"
   }
 }

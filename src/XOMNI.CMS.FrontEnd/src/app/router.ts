@@ -18,14 +18,17 @@ module router {
      */
     export var currentRoute = ko.observable(<RouteEntry>{});
 
-    var allRoutes = [
-        { url: '',          params: { page: 'home-page' } },
-        { url: 'about',     params: { page: 'about-page' } }
+    var routes = [
+        { pattern: '', params: { page: 'dashboard' } },
+        { pattern: '/{container}/{page}/:id:', params: { page: ''} },
     ];
 
     // Register routes with crossroads.js
-    ko.utils.arrayForEach(allRoutes, (route) => {
-        crossroads.addRoute(route.url, (requestParams) => {
+    ko.utils.arrayForEach(routes, (route) => {
+        crossroads.addRoute(route.pattern, (requestParams) => {
+            if (route.pattern) {
+                route.params.page = requestParams.container + "-" + requestParams.page + "-page";
+            }
             currentRoute(<RouteEntry>ko.utils.extend(requestParams, route.params));
         });
     });
@@ -38,14 +41,7 @@ module router {
     hasher.init();
 
     export interface RouteEntry {
-        /**
-         * The URL pattern matched by this route entry
-         */
         url: string;
-
-        /**
-         * Parameters extracted from the URL, or defined on this route entry
-         */
         params: { [key: string]: string };
     }
 }
