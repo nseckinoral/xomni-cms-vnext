@@ -23,10 +23,8 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
         ],
         insertRequire: ['app/startup'],
         bundles: {
-            // If you want parts of the site to load on demand, remove them from the 'include' list
-            // above, and group them into bundles here.
-            // 'bundle-name': [ 'some/module', 'another/module' ],
-            // 'another-bundle-name': [ 'yet-another-module' ]
+            // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
+            //[[XO-SCAFFOLDER]]
         }
     });
 

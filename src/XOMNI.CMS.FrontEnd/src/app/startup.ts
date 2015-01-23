@@ -15,6 +15,7 @@ ko.components.register('about-page', {
 });
 
 // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
+//[[XO-SCAFFOLDER]]
 
 // Start the application
 ko.applyBindings({ route: router.currentRoute });
