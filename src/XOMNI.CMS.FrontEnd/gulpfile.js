@@ -24,7 +24,9 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
         insertRequire: ['app/startup'],
         bundles: {
             // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
-            //[[XO-SCAFFOLDER]]
+            'bundle-page-private-analytics-summary': [ 'pages/private/analytics-summary' ]
+			//[[XO-SCAFFOLDER]]
+
         }
     });
 
