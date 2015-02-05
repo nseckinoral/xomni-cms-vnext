@@ -17,7 +17,8 @@ namespace XOMNI.CMS.BackEnd.Model
         public int MenuGroupId { get; set; }
         public bool IsActive { get; set; }
         public List<MenuItem> ChildPages { get; set; }
-        public MenuItem ParentPage { get; set; }                
+        public MenuItem ParentPage { get; set; }
+        public bool PointsToNewCMS { get; set; }
         //public virtual List<ApiUserRight> UserRights { get; set; }
 
         public MenuItem()

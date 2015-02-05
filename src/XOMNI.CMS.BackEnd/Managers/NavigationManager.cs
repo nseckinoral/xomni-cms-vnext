@@ -13,31 +13,33 @@ namespace XOMNI.CMS.BackEnd.Managers
     {
         private SqlConnection SqlConnection;
         private string sql = @"SELECT 
-	                        ParentPage.[Id]
-                              ,ParentPage.[Title]
-                              ,ParentPage.[Url]
-                              ,ParentPage.[Order]
-                              ,ParentPage.[ParentPageId]
-                              ,ParentPage.[CssClass]
-                              ,ParentPage.[MenuGroupId]
-                              ,ParentPage.[IsActive] 
-	                          ,ChildPage.[Id]
-                              ,ChildPage.[Title]
-                              ,ChildPage.[Url]
-                              ,ChildPage.[Order]
-                              ,ChildPage.[ParentPageId]
-                              ,ChildPage.[CssClass]
-                              ,ChildPage.[MenuGroupId]
-                              ,ChildPage.[IsActive] 
-                        	  ,Mapping.UserRightId
-                        FROM Pages ParentPage
-                            INNER JOIN Pages ChildPage ON ChildPage.ParentPageId = ParentPage.Id
-                            INNER JOIN PageUserRightMapping Mapping ON Mapping.PageId = ParentPage.Id
-                        WHERE ParentPage.IsActive = 1 
-                            AND ChildPage.IsActive = 1
-                            AND Mapping.UserRightId = @userRightId
-                        ORDER BY 
-                            ParentPage.[Order], ChildPage.[Order]";
+							ParentPage.[Id]
+							  ,ParentPage.[Title]
+							  ,ParentPage.[Url]
+							  ,ParentPage.[Order]
+							  ,ParentPage.[ParentPageId]
+							  ,ParentPage.[CssClass]
+							  ,ParentPage.[MenuGroupId]
+							  ,ParentPage.[IsActive] 
+                              ,ParentPage.[PointsToNewCMS]
+							  ,ChildPage.[Id]
+							  ,ChildPage.[Title]
+							  ,ChildPage.[Url]
+							  ,ChildPage.[Order]
+							  ,ChildPage.[ParentPageId]
+							  ,ChildPage.[CssClass]
+							  ,ChildPage.[MenuGroupId]
+							  ,ChildPage.[IsActive] 
+                              ,ChildPage.[PointsToNewCMS]
+							  ,Mapping.UserRightId
+						FROM Pages ParentPage
+							INNER JOIN Pages ChildPage ON ChildPage.ParentPageId = ParentPage.Id
+							INNER JOIN PageUserRightMapping Mapping ON Mapping.PageId = ParentPage.Id
+						WHERE ParentPage.IsActive = 1 
+							AND ChildPage.IsActive = 1
+							AND Mapping.UserRightId = @userRightId
+						ORDER BY 
+							ParentPage.[Order], ChildPage.[Order]";
         public NavigationManager(SqlConnection sqlConnection)
         {
             this.SqlConnection = sqlConnection;
@@ -53,16 +55,18 @@ namespace XOMNI.CMS.BackEnd.Managers
 
                     if (!lookup.TryGetValue(parentMenuItem.Id, out menuItem))
                     {
+                        ChangeMenuUrlToAbsolute(parentMenuItem);
                         lookup.Add(parentMenuItem.Id, parentMenuItem);
                         menuItem = parentMenuItem;
                     }
 
+                    ChangeMenuUrlToAbsolute(childMenuItem);
                     menuItem.ChildPages.Add(childMenuItem);
                     childMenuItem.ParentPage = menuItem;
 
                     return menuItem;
                 }
-                , new {userRightId= userRightId}
+                , new { userRightId = userRightId }
             ).ContinueWith(t =>
             {
                 return t.Result.Distinct();
@@ -84,6 +88,28 @@ namespace XOMNI.CMS.BackEnd.Managers
                     SqlConnection.Dispose();
                     SqlConnection = null;
                 }
+            }
+        }
+
+        protected virtual void ChangeMenuUrlToAbsolute(MenuItem menuItem)
+        {
+            string baseUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+            string baseUrlForOldPortal = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority).Replace("vnext", String.Empty);
+
+            if (menuItem.Url != "#")
+            {
+                if (menuItem.PointsToNewCMS)
+                {
+                    menuItem.Url = baseUrl + menuItem.Url;
+                }
+                else
+                {
+                    menuItem.Url = baseUrlForOldPortal + menuItem.Url;
+                }
+            }
+            else
+            {
+                menuItem.Url = baseUrl + menuItem.Url;
             }
         }
     }
