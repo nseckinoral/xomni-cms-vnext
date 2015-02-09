@@ -146,7 +146,7 @@
     <TypeScriptCompile Include="src\components\side-bar\side-bar.ts" />
     <TypeScriptCompile Include="src\pages\private\analytics-summary-page\analytics-summary.ts" />
     <TypeScriptCompile Include="src\references.d.ts" />
-    <TypeScriptCompile Include="src\sdk\client-side-analytics-summary.ts" />
+    <TypeScriptCompile Include="sdk\client-side-analytics-summary.ts" />
     <TypeScriptCompile Include="test\pages\catalog\brand-page.ts" />
     <TypeScriptCompile Include="test\pages\private\analytics-summary-page\analytics-summary.ts" />
     <TypeScriptCompile Include="test\SpecRunner.browser.ts" />
