@@ -138,6 +138,8 @@
     <TypeScriptCompile Include="definitions\knockout-projections\knockout-projections.d.ts" />
     <TypeScriptCompile Include="definitions\knockout\knockout-3.2.0.d.ts" />
     <TypeScriptCompile Include="definitions\knockout\knockout.d.ts" />
+    <TypeScriptCompile Include="sdk\client-counters.ts" />
+    <TypeScriptCompile Include="sdk\core.ts" />
     <TypeScriptCompile Include="src\app\router.ts" />
     <TypeScriptCompile Include="src\app\startup.ts" />
     <TypeScriptCompile Include="src\components\dashboard\dashboard.ts" />

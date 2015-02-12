@@ -1,35 +1,29 @@
-﻿module XOMNIPrivateSDK {
-    export class BaseClient {
-
-    }
+﻿/// <reference path="core.ts" />
+module Xomni.Private.Analytics.ClientSideAnalyticsSummary {
     export class ClientSideAnalyticsLogSummaryClient extends BaseClient {
         private weeklyLogSummaryUri: string = '/private/analytics/clientcounters/{counterName}/summary/weekly?';
         private dailyLogSummaryUri: string = '/private/analytics/clientcounters/{counterName}/summary/daily?';
         private monthlyLogSummaryUri: string = '/private/analytics/clientcounters/{counterName}/summary/monthly?';
         private yearlyLogSummaryUri: string = '/private/analytics/clientcounters/{counterName}/summary/yearly?';
 
-        GetDailyLogs(counterName: string, startOADate: number, endOADate: number, success: (result: DailyCountSummary[]) => void, error: (error: any) => void) {
-            var httpProvider = new HttpProvider();
+        getDailyLogs(counterName: string, startOADate: number, endOADate: number, success: (result: DailyCountSummary[]) => void, error: (error: any) => void) {
             var uri = this.PrepareUri(this.dailyLogSummaryUri, counterName, startOADate, endOADate);
-            httpProvider.Get(uri, success, error);
+            this.httpProvider.get(uri, success, error);
         }
 
-        GetWeeklyLogs(counterName: string, startOADate: number, endOADate: number, success: (result: DailyCountSummary[]) => void, error: (error: any) => void) {
-            var httpProvider = new HttpProvider();
+        getWeeklyLogs(counterName: string, startOADate: number, endOADate: number, success: (result: WeeklyCountSummary[]) => void, error: (error: any) => void) {
             var uri = this.PrepareUri(this.weeklyLogSummaryUri, counterName, startOADate, endOADate);
-            httpProvider.Get(uri, success, error);
+            this.httpProvider.get(uri, success, error);
         }
 
-        GetMonthlyLogs(counterName: string, startOADate: number, endOADate: number, success: (result: DailyCountSummary[]) => void, error: (error: any) => void) {
-            var httpProvider = new HttpProvider();
+        getMonthlyLogs(counterName: string, startOADate: number, endOADate: number, success: (result: MonthlyCountSummary[]) => void, error: (error: any) => void) {
             var uri = this.PrepareUri(this.monthlyLogSummaryUri, counterName, startOADate, endOADate);
-            httpProvider.Get(uri, success, error);
+            this.httpProvider.get(uri, success, error);
         }
 
-        GetYearlyLogs(counterName: string, startOADate: number, endOADate: number, success: (result: DailyCountSummary[]) => void, error: (error: any) => void) {
-            var httpProvider = new HttpProvider();
+        getYearlyLogs(counterName: string, startOADate: number, endOADate: number, success: (result: YearlyCountSummary[]) => void, error: (error: any) => void) {
             var uri = this.PrepareUri(this.yearlyLogSummaryUri, counterName, startOADate, endOADate);
-            httpProvider.Get(uri, success, error);
+            this.httpProvider.get(uri, success, error);
         }
 
         private PrepareUri(baseUri: string, counterName: string, startOADate: number, endOADate: number): string {
@@ -38,54 +32,23 @@
         }
     }
 
-    class HttpProvider {
-        Get<T>(uri: string, success: (result: T) => void, error: (error: any) => void) {
-            var authorization: string = XOMNIPrivateSDK.currentContext.username + ":" + XOMNIPrivateSDK.currentContext.password;
-            $.ajax({
-                type: "Get",
-                url: currentContext.serviceUri + uri,
-                contentType: "application/json",
-                headers: {
-                    "Authorization": btoa(authorization),
-                    "Accept": "application/vnd.xomni.api-v3_0, */*"
-                },
-                success: (d, t, s) => {
-                    success(<T>d);
-                },
-                error: (r, t, e) => {
-                    error(t);
-                }
-            });
-        }
+    export interface BaseAnalyticsCountSummary {
+        totalCount: number;
     }
 
-    export class ClientContext {
-        constructor(public username: string, public password: string, public serviceUri: string) {
-        }
-        GetClientAnalyticsSummaryClient(): ClientSideAnalyticsLogSummaryClient {
-            return new ClientSideAnalyticsLogSummaryClient();
-        }
+    export interface YearlyCountSummary extends BaseAnalyticsCountSummary {
+        year: number;
     }
 
-    export class BaseAnalyticsCountSummary {
-        TotalCount: number;
+    export interface MonthlyCountSummary extends YearlyCountSummary {
+        month: number;
     }
 
-    export class YearlyCountSummary extends BaseAnalyticsCountSummary {
-        Year: number;
+    export interface WeeklyCountSummary extends MonthlyCountSummary {
+        weekOfYear: number;
     }
 
-    export class MonthlyCountSummary extends YearlyCountSummary {
-        Month: number;
+    export interface DailyCountSummary extends WeeklyCountSummary {
+        day: number;
     }
-
-    export class WeeklyCountSummary extends MonthlyCountSummary {
-        WeekOfYear: number;
-    }
-
-    export class DailyCountSummary extends WeeklyCountSummary {
-        Day: number;
-    }
-
-    export var currentContext: ClientContext;
 }
