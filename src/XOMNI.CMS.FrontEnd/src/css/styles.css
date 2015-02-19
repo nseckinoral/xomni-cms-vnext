@@ -1,5 +1,5 @@
 #page {
-	margin-top: 80px;
+    margin-top: 80px;
 }
 
 /* container styles */
@@ -1412,4 +1412,10 @@ select {
     .fontColorRed {
         color: red;
     }
+}
+
+.modal-vertical-centered {
+    transform: translate(0, 50%) !important;
+    -ms-transform: translate(0, 50%) !important; /* IE 9 */
+    -webkit-transform: translate(0, 50%) !important; /* Safari and Chrome */
 }

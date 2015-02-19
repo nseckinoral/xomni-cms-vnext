@@ -8,7 +8,7 @@
                 url: currentClientContext.serviceUri + uri,
                 contentType: "application/json",
                 headers: {
-                    "Authorization": btoa(authorization),
+                    "Authorization": "Basic " + btoa(authorization),
                     "Accept": "application/vnd.xomni.api-v3_0, */*"
                 },
                 success: (d, t, s) => {

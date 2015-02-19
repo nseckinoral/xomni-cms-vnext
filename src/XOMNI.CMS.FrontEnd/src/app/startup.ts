@@ -11,11 +11,11 @@ ko.components.register('catalog-brand-page', { require: 'pages/catalog/brand-pag
 
 // ... or for template-only components, you can just point to a .html file directly:
 ko.components.register('about-page', {
-  template: { require: 'text!pages/about-page/about.html' }
+    template: { require: 'text!pages/about-page/about.html' }
 });
 
 // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
-ko.components.register('page-private-analytics-summary', { require: 'pages/private/analytics-summary' });
+ko.components.register('private-analytics-summary-page', { require: 'pages/private/analytics-summary-page/analytics-summary' });
 //[[XO-SCAFFOLDER]]
 
 // Start the application

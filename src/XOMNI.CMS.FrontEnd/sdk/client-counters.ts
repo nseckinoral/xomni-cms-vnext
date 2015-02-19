@@ -1,7 +1,7 @@
 ﻿/// <reference path="core.ts" />
 module Xomni.Private.Analytics.ClientCounters {
     export class ClientCounterClient extends BaseClient {
-        private clientCounterUri: string = 'private/analytics/clientcounters';
+        private clientCounterUri: string = '/private/analytics/clientcounters';
 
         getClientCounterList(success: (result: ClientCounterListContainer) => void, error: (error: any) => void, continuationKey?: string) {
             var uri = this.clientCounterUri;
@@ -13,7 +13,7 @@ module Xomni.Private.Analytics.ClientCounters {
     }
 
     export interface ClientCounterListContainer {
-        continuationToken: string;
-        counterNames: string[];
+        ContinuationToken: string;
+        CounterNames: string[];
     }
 }

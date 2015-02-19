@@ -11,7 +11,7 @@
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -100,6 +100,8 @@
     <Content Include="src\css\styles.css" />
     <Content Include="src\index.html" />
     <Content Include="src\pages\private\analytics-summary-page\analytics-summary.html" />
+    <Content Include="src\scripts\jQDateRangeSlider-min.js" />
+    <Content Include="src\scripts\moment-msdate.js" />
     <Content Include="test\index.html" />
     <Content Include="test\require.config.js" />
     <Content Include="web.config" />
@@ -138,6 +140,7 @@
     <TypeScriptCompile Include="definitions\knockout-projections\knockout-projections.d.ts" />
     <TypeScriptCompile Include="definitions\knockout\knockout-3.2.0.d.ts" />
     <TypeScriptCompile Include="definitions\knockout\knockout.d.ts" />
+    <TypeScriptCompile Include="definitions\moment\moment.d.ts" />
     <TypeScriptCompile Include="sdk\client-counters.ts" />
     <TypeScriptCompile Include="sdk\core.ts" />
     <TypeScriptCompile Include="src\app\router.ts" />
@@ -174,7 +177,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49631</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:38947/</IISUrl>
+          <IISUrl>http://localhost/XOMNI.CMS.FrontEnd</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

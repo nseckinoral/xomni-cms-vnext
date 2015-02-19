@@ -33,22 +33,22 @@ module Xomni.Private.Analytics.ClientSideAnalyticsSummary {
     }
 
     export interface BaseAnalyticsCountSummary {
-        totalCount: number;
+        TotalCount: number;
     }
 
     export interface YearlyCountSummary extends BaseAnalyticsCountSummary {
-        year: number;
+        Year: number;
     }
 
     export interface MonthlyCountSummary extends YearlyCountSummary {
-        month: number;
+        Month: number;
     }
 
     export interface WeeklyCountSummary extends MonthlyCountSummary {
-        weekOfYear: number;
+        WeekOfYear: number;
     }
 
     export interface DailyCountSummary extends WeeklyCountSummary {
-        day: number;
+        Day: number;
     }
 }

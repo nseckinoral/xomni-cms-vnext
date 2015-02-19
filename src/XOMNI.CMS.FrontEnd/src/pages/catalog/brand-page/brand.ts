@@ -2,6 +2,7 @@
 import ko = require("knockout");
 import jquery = require("jquery");
 
+
 export var template: string = require("text!./brand.html");
 
 export class viewModel {
