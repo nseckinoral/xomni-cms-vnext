@@ -20,7 +20,6 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include="gulpfile.js" />
-    <Content Include="karma.conf.js" />
     <Content Include="src\app\require.config.js" />
     <Content Include="src\components\dashboard\dashboard.html" />
     <Content Include="src\components\nav-bar\nav-bar.html" />
@@ -102,16 +101,12 @@
     <Content Include="src\pages\private\analytics-summary-page\analytics-summary.html" />
     <Content Include="src\scripts\jQDateRangeSlider-min.js" />
     <Content Include="src\scripts\moment-msdate.js" />
-    <Content Include="test\index.html" />
-    <Content Include="test\require.config.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
     <Content Include="package.json" />
-    <Content Include="test\.bowerrc" />
-    <Content Include="test\bower.json" />
     <Content Include="src\fonts\eots\PrentonRPCond-Regular.eot" />
     <Content Include="src\fonts\eots\PrentonRPCondLight-Regular.eot" />
     <Content Include="src\fonts\eots\PrentonRPCondMedium-Regular.eot" />
@@ -152,14 +147,9 @@
     <TypeScriptCompile Include="src\pages\private\analytics-summary-page\analytics-summary.ts" />
     <TypeScriptCompile Include="src\references.d.ts" />
     <TypeScriptCompile Include="sdk\client-side-analytics-summary.ts" />
-    <TypeScriptCompile Include="test\pages\catalog\brand-page.ts" />
-    <TypeScriptCompile Include="test\pages\private\analytics-summary-page\analytics-summary.ts" />
-    <TypeScriptCompile Include="test\SpecRunner.browser.ts" />
-    <TypeScriptCompile Include="test\SpecRunner.karma.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\pages\management\" />
-    <Folder Include="test\components\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
