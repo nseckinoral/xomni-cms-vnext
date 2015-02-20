@@ -13,6 +13,12 @@ export class viewModel {
 
     constructor() {
         this.showLoadingDialog();
+        this.initializeSlider();
+        this.initializeSDK();
+        this.loadClientCounters();
+    }
+
+    initializeSlider() {
         var slider: any = $("#slider");
         var minDate = new Date();
         minDate.setFullYear(minDate.getFullYear() - 2);
@@ -33,16 +39,23 @@ export class viewModel {
         });
 
         slider.bind("userValuesChanged", (e, data) => {
-            this.loadChart();
+            if (this.selectedClientCounters.length > 0) {
+                this.loadChart();
+            }
         });
+    }
 
+    initializeSDK() {
+        var cookie = this.getCookie(location.hostname.replace('vnext', '') + 'SharedCMSCredentials');
+        console.log(cookie);
+        var credentials: any = $.parseJSON(cookie);
+        Xomni.currentContext = new Xomni.ClientContext(credentials.UserName, credentials.Password, location.protocol + '//' + location.hostname.replace('cmsvnext', 'api'));
+    }
 
-        var credentials: any = $.parseJSON(this.getCookie(location.hostname.replace('vnext', '') + 'SharedCMSCredentials'));
-        var username = credentials.UserName;
-        var password = credentials.Password;
-
-        Xomni.currentContext = new Xomni.ClientContext(username, password, location.protocol + '//' + location.hostname.replace('cmsvnext', 'api'));
+    loadClientCounters() {
         var client = new Xomni.Private.Analytics.ClientCounters.ClientCounterClient();
+        var errorFunc = (error) => { alert(error); };
+
         var successFunc = (counters: Xomni.Private.Analytics.ClientCounters.ClientCounterListContainer) => {
             for (var i = 0; i < counters.CounterNames.length; i++) {
                 this.clientCounters.push(counters.CounterNames[i]);
@@ -55,16 +68,25 @@ export class viewModel {
             }
         };
 
-        var errorFunc = (error) => { alert(error); }
         client.getClientCounterList(successFunc, errorFunc);
     }
 
     showLoadingDialog() {
-        $('#pleaseWaitDialog').modal({ keyboard: false, show: true, });
+        $('#pleaseWaitDialog').modal({ keyboard: false, show: true });
     }
 
     hideLoadingDialog() {
         $('#pleaseWaitDialog').modal('hide');
+    }
+
+    showErrorDialog() {
+        $('#dialogContent').text('An error occurred. Please try again.');
+        $('#genericDialog').modal({ keyboard: false, show: true });
+    }
+
+    showNoDataFoundDialog() {
+        $('#dialogContent').text('No data found for selected dates.');
+        $('#genericDialog').modal({ keyboard: false, show: true });
     }
 
     ///TODO : Use jquery cookie
@@ -73,8 +95,12 @@ export class viewModel {
         var ca = document.cookie.split(';');
         for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1);
-            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
         }
         return "";
     }
@@ -150,11 +176,7 @@ export class viewModel {
 
     createDailyChart() {
         var client = new Xomni.Private.Analytics.ClientSideAnalyticsSummary.ClientSideAnalyticsLogSummaryClient();
-        var slider: any = $("#slider");
-        var selectedDates = slider.dateRangeSlider("values");
-        var startDateWrapper: any = moment(selectedDates.min);
-        var endDateWrapper: any = moment(selectedDates.max);
-
+        var selectedDates = this.getSelectedDates();
         var data = {
             labels: [],
             series: []
@@ -162,34 +184,43 @@ export class viewModel {
 
         var resultCount: number = 0;
         for (var i = 0; i < this.selectedClientCounters().length; i++) {
-            client.getDailyLogs(this.selectedClientCounters()[i], Math.floor(startDateWrapper.toOADate()), Math.floor(endDateWrapper.toOADate()), res=> {
-                var array: Array<number> = [];
-                data.series.push(array);
-                for (var k = 0; k < res.length; k++) {
-                    var date: string = res[k].Month.toString() + '/' + res[k].Day.toString() + '/' + res[k].Year.toString();
-                    if (data.labels.indexOf(date) === -1) {
-                        data.labels.push(date);
+            client.getDailyLogs(this.selectedClientCounters()[i], selectedDates.startOADate, selectedDates.endOADate, res=> {
+                if (res.length > 0) {
+                    var array: Array<number> = [];
+                    data.series.push(array);
+                    for (var k = 0; k < res.length; k++) {
+                        var date: string = res[k].Month.toString() + '/' + res[k].Day.toString() + '/' + res[k].Year.toString();
+                        if (data.labels.indexOf(date) === -1) {
+                            data.labels.push(date);
+                        }
+                        array.push(res[k].TotalCount);
                     }
-                    array.push(res[k].TotalCount);
+                    resultCount++;
+                    if (resultCount === this.selectedClientCounters().length) {
+                        new Chartist.Line('.ct-chart', data, {
+                            showPoint: true,
+                            // Disable line smoothing
+                            lineSmooth: false
+                        });
+                        $(".ct-chart").show();
+                        this.hideLoadingDialog();
+                    }
                 }
-                resultCount++;
-                if (resultCount === this.selectedClientCounters().length) {
-                    new Chartist.Line('.ct-chart', data);
+                else {
                     this.hideLoadingDialog();
+                    this.showNoDataFoundDialog();
                 }
             }, err=> {
                     this.hideLoadingDialog();
-                    alert(err);
+                    $(".ct-chart").hide();
+                    this.showErrorDialog();
                 });
         }
     }
 
     createWeeklyChart() {
         var client = new Xomni.Private.Analytics.ClientSideAnalyticsSummary.ClientSideAnalyticsLogSummaryClient();
-        var slider: any = $("#slider");
-        var selectedDates = slider.dateRangeSlider("values");
-        var startDateWrapper: any = moment(selectedDates.min);
-        var endDateWrapper: any = moment(selectedDates.max);
+        var selectedDates = this.getSelectedDates();
         var data = {
             labels: [],
             series: []
@@ -197,34 +228,39 @@ export class viewModel {
 
         var resultCount: number = 0;
         for (var i = 0; i < this.selectedClientCounters().length; i++) {
-            client.getWeeklyLogs(this.selectedClientCounters()[i], Math.floor(startDateWrapper.toOADate()), Math.floor(endDateWrapper.toOADate()), res=> {
-                var array: Array<number> = [];
-                data.series.push(array);
-                for (var k = 0; k < res.length; k++) {
-                    var date: string = res[k].WeekOfYear.toString();
-                    if (data.labels.indexOf(date) === -1) {
-                        data.labels.push(date);
+            client.getWeeklyLogs(this.selectedClientCounters()[i], selectedDates.startOADate, selectedDates.endOADate, res=> {
+                if (res.length > 0) {
+                    var array: Array<number> = [];
+                    data.series.push(array);
+                    for (var k = 0; k < res.length; k++) {
+                        var date: string = res[k].WeekOfYear.toString();
+                        if (data.labels.indexOf(date) === -1) {
+                            data.labels.push(date);
+                        }
+                        array.push(res[k].TotalCount);
                     }
-                    array.push(res[k].TotalCount);
+                    resultCount++;
+                    if (resultCount === this.selectedClientCounters().length) {
+                        new Chartist.Line('.ct-chart', data);
+                        $(".ct-chart").show();
+                        this.hideLoadingDialog();
+                    }
                 }
-                resultCount++;
-                if (resultCount === this.selectedClientCounters().length) {
-                    new Chartist.Line('.ct-chart', data);
+                else {
                     this.hideLoadingDialog();
+                    this.showNoDataFoundDialog();
                 }
             }, err=> {
                     this.hideLoadingDialog();
-                    alert(err);
+                    $(".ct-chart").hide();
+                    this.showErrorDialog();
                 });
         }
     }
 
     createMonthlyChart() {
         var client = new Xomni.Private.Analytics.ClientSideAnalyticsSummary.ClientSideAnalyticsLogSummaryClient();
-        var slider: any = $("#slider");
-        var selectedDates = slider.dateRangeSlider("values");
-        var startDateWrapper: any = moment(selectedDates.min);
-        var endDateWrapper: any = moment(selectedDates.max);
+        var selectedDates = this.getSelectedDates();
         var data = {
             labels: [],
             series: []
@@ -232,34 +268,39 @@ export class viewModel {
 
         var resultCount: number = 0;
         for (var i = 0; i < this.selectedClientCounters().length; i++) {
-            client.getMonthlyLogs(this.selectedClientCounters()[i], Math.floor(startDateWrapper.toOADate()), Math.floor(endDateWrapper.toOADate()), res=> {
-                var array: Array<number> = [];
-                data.series.push(array);
-                for (var k = 0; k < res.length; k++) {
-                    var date: string = res[k].Month.toString() + '/' + res[k].Year.toString();
-                    if (data.labels.indexOf(date) === -1) {
-                        data.labels.push(date);
+            client.getMonthlyLogs(this.selectedClientCounters()[i], selectedDates.startOADate, selectedDates.endOADate, res=> {
+                if (res.length > 0) {
+                    var array: Array<number> = [];
+                    data.series.push(array);
+                    for (var k = 0; k < res.length; k++) {
+                        var date: string = res[k].Month.toString() + '/' + res[k].Year.toString();
+                        if (data.labels.indexOf(date) === -1) {
+                            data.labels.push(date);
+                        }
+                        array.push(res[k].TotalCount);
                     }
-                    array.push(res[k].TotalCount);
+                    resultCount++;
+                    if (resultCount === this.selectedClientCounters().length) {
+                        new Chartist.Line('.ct-chart', data);
+                        $(".ct-chart").show();
+                        this.hideLoadingDialog();
+                    }
                 }
-                resultCount++;
-                if (resultCount === this.selectedClientCounters().length) {
-                    new Chartist.Line('.ct-chart', data);
+                else {
                     this.hideLoadingDialog();
+                    this.showNoDataFoundDialog();
                 }
             }, err=> {
                     this.hideLoadingDialog();
-                    alert(err);
+                    $(".ct-chart").hide();
+                    this.showErrorDialog();
                 });
         }
     }
 
     createYearlyChart() {
         var client = new Xomni.Private.Analytics.ClientSideAnalyticsSummary.ClientSideAnalyticsLogSummaryClient();
-        var slider: any = $("#slider");
-        var selectedDates = slider.dateRangeSlider("values");
-        var startDateWrapper: any = moment(selectedDates.min);
-        var endDateWrapper: any = moment(selectedDates.max);
+        var selectedDates = this.getSelectedDates();
         var data = {
             labels: [],
             series: []
@@ -267,25 +308,49 @@ export class viewModel {
 
         var resultCount: number = 0;
         for (var i = 0; i < this.selectedClientCounters().length; i++) {
-            client.getYearlyLogs(this.selectedClientCounters()[i], Math.floor(startDateWrapper.toOADate()), Math.floor(endDateWrapper.toOADate()), res=> {
-                var array: Array<number> = [];
-                data.series.push(array);
-                for (var k = 0; k < res.length; k++) {
-                    var date: string = res[k].Year.toString();
-                    if (data.labels.indexOf(date) === -1) {
-                        data.labels.push(date);
+            client.getYearlyLogs(this.selectedClientCounters()[i], selectedDates.startOADate, selectedDates.endOADate, res=> {
+                if (res.length > 0) {
+                    var array: Array<number> = [];
+                    data.series.push(array);
+                    for (var k = 0; k < res.length; k++) {
+                        var date: string = res[k].Year.toString();
+                        if (data.labels.indexOf(date) === -1) {
+                            data.labels.push(date);
+                        }
+                        array.push(res[k].TotalCount);
                     }
-                    array.push(res[k].TotalCount);
+                    resultCount++;
+                    if (resultCount === this.selectedClientCounters().length) {
+                        new Chartist.Line('.ct-chart', data);
+                        $(".ct-chart").show();
+                        this.hideLoadingDialog();
+                    }
                 }
-                resultCount++;
-                if (resultCount === this.selectedClientCounters().length) {
-                    new Chartist.Line('.ct-chart', data);
+                else {
                     this.hideLoadingDialog();
+                    this.showNoDataFoundDialog();
                 }
             }, err=> {
                     this.hideLoadingDialog();
-                    alert(err);
+                    $(".ct-chart").hide();
+                    this.showErrorDialog();
                 });
         }
     }
+
+    private getSelectedDates(): SliderSelectedDates {
+        var slider: any = $("#slider");
+        var selectedDates = slider.dateRangeSlider("values");
+        var startDateWrapper: any = moment(selectedDates.min);
+        var endDateWrapper: any = moment(selectedDates.max);
+        return {
+            startOADate: Math.floor(startDateWrapper.toOADate()),
+            endOADate: Math.floor(endDateWrapper.toOADate())
+        };
+    }
+}
+
+interface SliderSelectedDates {
+    startOADate: number;
+    endOADate: number;
 }
