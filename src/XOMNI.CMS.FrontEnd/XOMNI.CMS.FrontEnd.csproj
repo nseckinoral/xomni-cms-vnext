@@ -125,6 +125,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="..\..\..\xomni-sdk-ts-preview\xomni-sdk-ts-preview\src\client-counters.ts">
+      <Link>sdk\client-counters.ts</Link>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="..\..\..\xomni-sdk-ts-preview\xomni-sdk-ts-preview\src\client-side-analytics-summary.ts">
+      <Link>sdk\client-side-analytics-summary.ts</Link>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="..\..\..\xomni-sdk-ts-preview\xomni-sdk-ts-preview\src\core.ts">
+      <Link>sdk\core.ts</Link>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="definitions\bootstrap\bootstrap.d.ts" />
     <TypeScriptCompile Include="definitions\crossroads\crossroads.d.ts" />
     <TypeScriptCompile Include="definitions\hasher\hasher.d.ts" />
@@ -136,8 +145,6 @@
     <TypeScriptCompile Include="definitions\knockout\knockout-3.2.0.d.ts" />
     <TypeScriptCompile Include="definitions\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="definitions\moment\moment.d.ts" />
-    <TypeScriptCompile Include="sdk\client-counters.ts" />
-    <TypeScriptCompile Include="sdk\core.ts" />
     <TypeScriptCompile Include="src\app\router.ts" />
     <TypeScriptCompile Include="src\app\startup.ts" />
     <TypeScriptCompile Include="src\components\dashboard\dashboard.ts" />
@@ -146,7 +153,6 @@
     <TypeScriptCompile Include="src\components\side-bar\side-bar.ts" />
     <TypeScriptCompile Include="src\pages\private\analytics-summary-page\analytics-summary.ts" />
     <TypeScriptCompile Include="src\references.d.ts" />
-    <TypeScriptCompile Include="sdk\client-side-analytics-summary.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\pages\management\" />

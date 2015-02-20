@@ -1,5 +1,4 @@
-﻿/// <reference path="../../../../sdk/core.ts" />
-/// <reference path="../../../../definitions/moment/moment.d.ts" />
+﻿/// <reference path="../../../../definitions/moment/moment.d.ts" />
 /// <amd-dependency path="text!./analytics-summary.html" />
 import $ = require("jquery");
 import ko = require("knockout");
