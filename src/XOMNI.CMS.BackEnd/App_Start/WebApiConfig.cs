@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using XOMNI.CMS.BackEnd.Managers;
+using XOMNI.SDK.Master;
 
 namespace XOMNI.CMS.BackEnd
 {
@@ -32,15 +33,22 @@ namespace XOMNI.CMS.BackEnd
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<NavigationManager>().As<INavigationManager>()
                 .InstancePerRequest();
+            builder.RegisterType<LicenceManager>().As<ILicenceManager>()
+                .InstancePerRequest();
             builder.RegisterType<SqlConnection>().As<SqlConnection>().WithParameter(
                 "connectionString",
                 ConfigurationManager.ConnectionStrings["cmsDbConnectionString"].ConnectionString)
               .InstancePerRequest();
+            builder.RegisterType<MasterAPIClientContext>().As<MasterAPIClientContext>()
+                .WithParameter("username", ConfigurationManager.ConnectionStrings["masterAPIUsername"].ConnectionString)
+                .WithParameter("password", ConfigurationManager.ConnectionStrings["masterAPIPassword"].ConnectionString)
+                .WithParameter("serviceUri", ConfigurationManager.ConnectionStrings["masterAPIUri"].ConnectionString);
+
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
             // Json formatting
-            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling 
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
                 = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
             // Enable CORS
