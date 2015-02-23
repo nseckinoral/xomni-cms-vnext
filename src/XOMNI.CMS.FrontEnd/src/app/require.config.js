@@ -25,5 +25,5 @@ var require = {
         "jqrangeslider": { deps: ["jqueryui"] },
         "moment-msdate": { deps: ["moment"] }
     },
-    deps: ["knockout"]
+    deps: ["knockout" ,"bootstrap"]
 };
