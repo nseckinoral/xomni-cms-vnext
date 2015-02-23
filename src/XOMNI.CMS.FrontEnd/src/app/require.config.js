@@ -6,6 +6,8 @@ var require = {
         "crossroads": "bower_modules/crossroads/dist/crossroads.min",
         "hasher": "bower_modules/hasher/dist/js/hasher.min",
         "jquery": "bower_modules/jquery/dist/jquery",
+        "jqueryui": "bower_modules/jqueryui/jquery-ui.min",
+        "jqrangeslider": "scripts/jQDateRangeSlider-min",
         "jquery-cookie": "bower_modules/jquery-cookie/jquery.cookie",
         "knockout": "bower_modules/knockout/dist/knockout",
         "knockout-projections": "bower_modules/knockout-projections/dist/knockout-projections",
@@ -15,10 +17,12 @@ var require = {
         //"xomni": "bower_modules/xomni/core",
         "chartist": "bower_modules/chartist/dist/chartist"
         //"jquery-ui": "bower_modules/jquery-ui/jquery-ui.min",
-        //"jqueryrangeslider": "scripts/jQDateRangeSlider-min"
     },
     shim: {
         "bootstrap": { deps: ["jquery"] },
-        "jquery-cookie": { deps: ["jquery-cookie"] }
-    }
+        "jquery-cookie": { deps: ["jquery"] },
+        "jqueryui": { deps: ["jquery"] },
+        "jqrangeslider": { deps: ["jqueryui"] },
+    },
+    deps : ["knockout"]
 };

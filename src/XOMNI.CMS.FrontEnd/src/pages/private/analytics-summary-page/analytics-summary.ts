@@ -1,5 +1,7 @@
 ﻿/// <reference path="../../../../definitions/moment/moment.d.ts" />
+/// <amd-dependency path="jqrangeslider" />
 /// <amd-dependency path="text!./analytics-summary.html" />
+
 import $ = require("jquery");
 import ko = require("knockout");
 import Chartist = require("chartist");
@@ -18,7 +20,7 @@ export class viewModel {
     }
 
     initializeSlider() {
-        var slider: any = $("#slider");
+        var slider = $("#slider");
         var minDate = new Date();
         minDate.setFullYear(minDate.getFullYear() - 2);
         var maxDate = new Date();
@@ -37,7 +39,7 @@ export class viewModel {
             }
         });
 
-        slider.bind("userValuesChanged", (e, data) => {
+        slider.bind("userValuesChanged", (e) => {
             if (this.selectedClientCounters.length > 0) {
                 this.loadChart();
             }
