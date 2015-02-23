@@ -14,10 +14,11 @@ namespace XOMNI.CMS.BackEnd.Controllers
         {
             this.NavigationManager = navigationManager;
         }
-        
+
         public Task<IEnumerable<MenuItem>> GetAsync(int userRightId)
         {
-            return NavigationManager.GetAsync(userRightId);   
+            string referrer = Request.Headers.Referrer.AbsoluteUri;
+            return NavigationManager.GetAsync(userRightId, referrer);
         }
     }
 }

@@ -9,6 +9,6 @@ namespace XOMNI.CMS.BackEnd.Managers
 {
     public interface INavigationManager
     {
-        Task<IEnumerable<MenuItem>> GetAsync(int userRightId);
+        Task<IEnumerable<MenuItem>> GetAsync(int userRightId, string hostUrl);
     }
 }

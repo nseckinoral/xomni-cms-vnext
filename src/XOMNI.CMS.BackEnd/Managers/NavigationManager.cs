@@ -45,7 +45,7 @@ namespace XOMNI.CMS.BackEnd.Managers
             this.SqlConnection = sqlConnection;
         }
 
-        public Task<IEnumerable<MenuItem>> GetAsync(int userRightId)
+        public Task<IEnumerable<MenuItem>> GetAsync(int userRightId, string hostUrl)
         {
             Dictionary<int, MenuItem> lookup = new Dictionary<int, MenuItem>();
             return SqlConnection.QueryAsync<MenuItem, MenuItem, MenuItem>(sql,
@@ -55,12 +55,12 @@ namespace XOMNI.CMS.BackEnd.Managers
 
                     if (!lookup.TryGetValue(parentMenuItem.Id, out menuItem))
                     {
-                        ChangeMenuUrlToAbsolute(parentMenuItem);
+                        ChangeMenuUrlToAbsolute(parentMenuItem, hostUrl);
                         lookup.Add(parentMenuItem.Id, parentMenuItem);
                         menuItem = parentMenuItem;
                     }
 
-                    ChangeMenuUrlToAbsolute(childMenuItem);
+                    ChangeMenuUrlToAbsolute(childMenuItem, hostUrl);
                     menuItem.ChildPages.Add(childMenuItem);
                     childMenuItem.ParentPage = menuItem;
 
@@ -91,10 +91,10 @@ namespace XOMNI.CMS.BackEnd.Managers
             }
         }
 
-        protected virtual void ChangeMenuUrlToAbsolute(MenuItem menuItem)
+        protected virtual void ChangeMenuUrlToAbsolute(MenuItem menuItem, string hostUrl)
         {
-            string baseUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-            string baseUrlForOldPortal = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority).Replace("vnext", String.Empty);
+            string baseUrl = new Uri(hostUrl).GetLeftPart(UriPartial.Authority);
+            string baseUrlForOldPortal = baseUrl.Replace("vnext", String.Empty);
 
             if (menuItem.Url != "#")
             {

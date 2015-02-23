@@ -40,9 +40,9 @@ namespace XOMNI.CMS.BackEnd
                 ConfigurationManager.ConnectionStrings["cmsDbConnectionString"].ConnectionString)
               .InstancePerRequest();
             builder.RegisterType<MasterAPIClientContext>().As<MasterAPIClientContext>()
-                .WithParameter("username", ConfigurationManager.ConnectionStrings["masterAPIUsername"].ConnectionString)
-                .WithParameter("password", ConfigurationManager.ConnectionStrings["masterAPIPassword"].ConnectionString)
-                .WithParameter("serviceUri", ConfigurationManager.ConnectionStrings["masterAPIUri"].ConnectionString);
+                .WithParameter("userName", ConfigurationManager.AppSettings["masterAPIUsername"])
+                .WithParameter("password", ConfigurationManager.AppSettings["masterAPIPassword"])
+                .WithParameter("serviceUri", ConfigurationManager.AppSettings["masterAPIUri"]);
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
