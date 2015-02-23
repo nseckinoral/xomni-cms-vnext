@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XOMNI.CMS.BackEnd.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XOMNI.CMS.FrontEnd", "src\XOMNI.CMS.FrontEnd\XOMNI.CMS.FrontEnd.csproj", "{98E2D28F-324F-48D1-A8BD-ED237E4160C3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{895DB904-EE47-4D0E-A0E7-9DB644DB9421}"
+	ProjectSection(SolutionItems) = preProject
+		src\XOMNI.CMS.BackEnd\Dependencies\XOMNI.SDK.Master.dll = src\XOMNI.CMS.BackEnd\Dependencies\XOMNI.SDK.Master.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

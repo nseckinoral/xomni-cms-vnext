@@ -87,6 +87,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="XOMNI.SDK.Master">
+      <HintPath>Dependencies\XOMNI.SDK.Master.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -96,10 +99,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\LicenceController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Managers\ILicenceManager.cs" />
+    <Compile Include="Managers\LicenceManager.cs" />
     <Compile Include="Managers\NavigationManager.cs" />
     <Compile Include="Managers\INavigationManager.cs" />
     <Compile Include="Models\ApiUserRight.cs" />
