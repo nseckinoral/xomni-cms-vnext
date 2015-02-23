@@ -1,10 +1,12 @@
-﻿/// <reference path="../../../../definitions/moment/moment.d.ts" />
-/// <amd-dependency path="jqrangeslider" />
+﻿/// <amd-dependency path="jqrangeslider" />
+/// <amd-dependency path="moment-msdate" />
 /// <amd-dependency path="text!./analytics-summary.html" />
 
 import $ = require("jquery");
 import ko = require("knockout");
 import Chartist = require("chartist");
+import moment = require("moment");
+
 export var template: string = require("text!./analytics-summary.html");
 
 export class viewModel {
@@ -13,10 +15,18 @@ export class viewModel {
     public selectedClientCounters = ko.observableArray([]);
 
     constructor() {
-        this.showLoadingDialog();
+        //this.showLoadingDialog();
         this.initializeSlider();
-        this.initializeSDK();
-        this.loadClientCounters();
+        //this.initializeSDK();
+        //this.loadClientCounters();
+        new Chartist.Line('.ct-chart', {
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            series: [
+                [12, 9, 7, 8, 5],
+                [2, 1, 3.5, 7, 3],
+                [1, 3, 4, 5, 6]
+            ]
+        });
     }
 
     initializeSlider() {
@@ -342,8 +352,8 @@ export class viewModel {
     private getSelectedDates(): SliderSelectedDates {
         var slider: any = $("#slider");
         var selectedDates = slider.dateRangeSlider("values");
-        var startDateWrapper: any = moment(selectedDates.min);
-        var endDateWrapper: any = moment(selectedDates.max);
+        var startDateWrapper = moment(selectedDates.min);
+        var endDateWrapper = moment(selectedDates.max);
         return {
             startOADate: Math.floor(startDateWrapper.toOADate()),
             endOADate: Math.floor(endDateWrapper.toOADate())

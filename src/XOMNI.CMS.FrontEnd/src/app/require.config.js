@@ -14,15 +14,16 @@ var require = {
         "signals": "bower_modules/js-signals/dist/signals.min",
         "text": "bower_modules/requirejs-text/text",
         "moment": "bower_modules/moment/min/moment.min",
+        "moment-msdate": "scripts/moment-msdate",
         //"xomni": "bower_modules/xomni/core",
         "chartist": "bower_modules/chartist/dist/chartist"
-        //"jquery-ui": "bower_modules/jquery-ui/jquery-ui.min",
     },
     shim: {
         "bootstrap": { deps: ["jquery"] },
         "jquery-cookie": { deps: ["jquery"] },
         "jqueryui": { deps: ["jquery"] },
         "jqrangeslider": { deps: ["jqueryui"] },
+        "moment-msdate": { deps: ["moment"] }
     },
-    deps : ["knockout"]
+    deps: ["knockout"]
 };

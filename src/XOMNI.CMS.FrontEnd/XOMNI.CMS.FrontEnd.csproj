@@ -148,6 +148,7 @@
     <TypeScriptCompile Include="definitions\knockout-projections\knockout-projections.d.ts" />
     <TypeScriptCompile Include="definitions\knockout\knockout-3.2.0.d.ts" />
     <TypeScriptCompile Include="definitions\knockout\knockout.d.ts" />
+    <TypeScriptCompile Include="definitions\moment-msdate\moment-msdate.d.ts" />
     <TypeScriptCompile Include="definitions\moment\moment.d.ts" />
     <TypeScriptCompile Include="src\app\router.ts" />
     <TypeScriptCompile Include="src\app\startup.ts" />
