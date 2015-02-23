@@ -2,10 +2,9 @@
 /// <amd-dependency path="text!./analytics-summary.html" />
 import $ = require("jquery");
 import ko = require("knockout");
-
+import Chartist = require("chartist");
 export var template: string = require("text!./analytics-summary.html");
 
-declare var Chartist;
 export class viewModel {
     public selectedCounterType = ko.observable("daily");
     public clientCounters = ko.observableArray([]);
