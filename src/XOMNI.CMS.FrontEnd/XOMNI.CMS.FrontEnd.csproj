@@ -25,6 +25,7 @@
     <Content Include="src\components\licence-bar\licence-bar.html" />
     <Content Include="src\components\nav-bar\nav-bar.html" />
     <Content Include="src\css\dashboard.css" />
+    <Content Include="src\css\jqrangeslider\iThing.css" />
     <Content Include="src\css\reset.css" />
     <Content Include="src\css\toggle-switch.css" />
     <Content Include="src\fonts\eots\_notes\dwsync.xml" />
@@ -140,12 +141,15 @@
     <TypeScriptCompile Include="definitions\crossroads\crossroads.d.ts" />
     <TypeScriptCompile Include="definitions\hasher\hasher.d.ts" />
     <TypeScriptCompile Include="definitions\jasmine\jasmine.d.ts" />
+    <TypeScriptCompile Include="definitions\jqrangeslider\jqrangeslider.d.ts" />
     <TypeScriptCompile Include="definitions\jquery.cookie\jquery.cookie.d.ts" />
+    <TypeScriptCompile Include="definitions\jqueryui\jqueryui.d.ts" />
     <TypeScriptCompile Include="definitions\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="definitions\js-signals\js-signals.d.ts" />
     <TypeScriptCompile Include="definitions\knockout-projections\knockout-projections.d.ts" />
     <TypeScriptCompile Include="definitions\knockout\knockout-3.2.0.d.ts" />
     <TypeScriptCompile Include="definitions\knockout\knockout.d.ts" />
+    <TypeScriptCompile Include="definitions\moment-msdate\moment-msdate.d.ts" />
     <TypeScriptCompile Include="definitions\moment\moment.d.ts" />
     <TypeScriptCompile Include="src\app\router.ts" />
     <TypeScriptCompile Include="src\app\startup.ts" />
