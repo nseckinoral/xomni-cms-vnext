@@ -4,6 +4,7 @@ define(["require", "exports", "knockout", "./router"], function(require, exports
     ko.components.register('nav-bar', { require: 'components/nav-bar/nav-bar' });
     ko.components.register('side-bar', { require: 'components/side-bar/side-bar' });
     ko.components.register('catalog-brand-page', { require: 'pages/catalog/brand-page/brand' });
+    ko.components.register('licence-bar', { require: 'components/licence-bar/licence-bar' });
 
     // ... or for template-only components, you can just point to a .html file directly:
     ko.components.register('about-page', {

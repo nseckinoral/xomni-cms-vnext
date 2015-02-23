@@ -22,6 +22,7 @@
     <Content Include="gulpfile.js" />
     <Content Include="src\app\require.config.js" />
     <Content Include="src\components\dashboard\dashboard.html" />
+    <Content Include="src\components\licence-bar\licence-bar.html" />
     <Content Include="src\components\nav-bar\nav-bar.html" />
     <Content Include="src\css\dashboard.css" />
     <Content Include="src\css\reset.css" />
@@ -149,6 +150,7 @@
     <TypeScriptCompile Include="src\app\router.ts" />
     <TypeScriptCompile Include="src\app\startup.ts" />
     <TypeScriptCompile Include="src\components\dashboard\dashboard.ts" />
+    <TypeScriptCompile Include="src\components\licence-bar\licence-bar.ts" />
     <TypeScriptCompile Include="src\components\nav-bar\nav-bar.ts" />
     <TypeScriptCompile Include="src\pages\catalog\brand-page\brand.ts" />
     <TypeScriptCompile Include="src\components\side-bar\side-bar.ts" />

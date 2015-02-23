@@ -7,31 +7,32 @@ var gulp = require('gulp'), rjs = require('gulp-requirejs-bundler'), concat = re
 
 // Config
 var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require.config.js') + '; require;');
-    requireJsOptimizerConfig = merge(requireJsRuntimeConfig, {
-        out: 'scripts.js',
-        baseUrl: './src',
-        name: 'app/startup',
-        paths: {
-            requireLib: 'bower_modules/requirejs/require'
-        },
-        include: [
-            'requireLib',
-            'components/nav-bar/nav-bar',
-            'components/side-bar/side-bar',
-            'pages/home-page/home',
-            'text!pages/about-page/about.html'
-        ],
-        insertRequire: ['app/startup'],
-        bundles: {
-            // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
-            'bundle-page-private-analytics-summary': [ 'pages/private/analytics-summary' ]
-			//[[XO-SCAFFOLDER]]
+requireJsOptimizerConfig = merge(requireJsRuntimeConfig, {
+    out: 'scripts.js',
+    baseUrl: './src',
+    name: 'app/startup',
+    paths: {
+        requireLib: 'bower_modules/requirejs/require'
+    },
+    include: [
+        'requireLib',
+        'components/nav-bar/nav-bar',
+        'components/side-bar/side-bar',
+        'components/licence-bar/licence-bar',
+        'pages/home-page/home',
+        'text!pages/about-page/about.html'
+    ],
+    insertRequire: ['app/startup'],
+    bundles: {
+        // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
+        'bundle-page-private-analytics-summary': ['pages/private/analytics-summary']
+        //[[XO-SCAFFOLDER]]
 
-        }
-    });
+    }
+});
 
 // Compile all .ts files, producing .js and source map files alongside them
-gulp.task('ts', function() {
+gulp.task('ts', function () {
     return gulp.src(['**/*.ts'])
         .pipe(typescript({
             module: 'amd',
@@ -60,7 +61,7 @@ gulp.task('css', function () {
 });
 
 // Copies index.html, replacing <script> and <link> tags to reference production URLs
-gulp.task('html', function() {
+gulp.task('html', function () {
     return gulp.src('./src/index.html')
         .pipe(htmlreplace({
             'css': 'css.css',
@@ -80,17 +81,17 @@ gulp.task('font', function () {
 });
 
 // Removes all files from ./dist/, and the .js/.js.map files compiled from .ts
-gulp.task('clean', function() {
+gulp.task('clean', function () {
     var distContents = gulp.src('./dist/**/*', { read: false }),
         generatedJs = gulp.src(['src/**/*.js', 'src/**/*.js.map', 'test/**/*.js', 'test/**/*.js.map'], { read: false })
-            .pipe(es.mapSync(function(data) {
+            .pipe(es.mapSync(function (data) {
                 // Include only the .js/.js.map files that correspond to a .ts file
                 return fs.existsSync(data.path.replace(/\.js(\.map)?$/, '.ts')) ? data : undefined;
             }));
     return es.merge(distContents, generatedJs).pipe(clean());
 });
 
-gulp.task('default', ['html', 'js', 'css', 'img', 'font'], function(callback) {
+gulp.task('default', ['html', 'js', 'css', 'img', 'font'], function (callback) {
     callback();
     console.log('\nPlaced optimized files in ' + chalk.magenta('dist/\n'));
 });
