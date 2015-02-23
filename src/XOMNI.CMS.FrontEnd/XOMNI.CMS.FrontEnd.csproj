@@ -135,6 +135,7 @@
       <Link>sdk\core.ts</Link>
     </TypeScriptCompile>
     <TypeScriptCompile Include="definitions\bootstrap\bootstrap.d.ts" />
+    <TypeScriptCompile Include="definitions\chartist\chartist.d.ts" />
     <TypeScriptCompile Include="definitions\crossroads\crossroads.d.ts" />
     <TypeScriptCompile Include="definitions\hasher\hasher.d.ts" />
     <TypeScriptCompile Include="definitions\jasmine\jasmine.d.ts" />
