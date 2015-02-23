@@ -18,7 +18,7 @@ namespace XOMNI.CMS.BackEnd.Tests.Managers
         {
             using (var sqlConnection = new SqlConnection(@"Server=.\SQL12; Initial Catalog=XOMNI.CMS.Debug; Integrated Security=True;"))
             {
-                var menuItems = await (new NavigationManager(sqlConnection).GetAsync(2));           
+                var menuItems = await (new NavigationManager(sqlConnection).GetAsync(2, "test.vnextstaging.xomni.com"));
             }
         }
     }
