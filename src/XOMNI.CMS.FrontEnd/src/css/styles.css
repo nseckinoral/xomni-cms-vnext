@@ -1419,3 +1419,22 @@ select {
     -ms-transform: translate(0, 50%) !important; /* IE 9 */
     -webkit-transform: translate(0, 50%) !important; /* Safari and Chrome */
 }
+
+.client-side-align {
+    margin-top: 10px;
+}
+
+.client-side-summary-types {
+    float: right;
+    margin-right: 70px;
+    margin-bottom: 10px;
+}
+
+.client-counter-list {
+    width: 100px;
+    max-height: 200px;
+}
+
+.progress-bar-full-width {
+    width: 100%;
+}

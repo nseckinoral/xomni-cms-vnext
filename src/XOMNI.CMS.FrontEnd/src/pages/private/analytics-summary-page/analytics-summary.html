@@ -1,32 +1,36 @@
 ﻿<article id="mainContent" class="boxshd contentBox textshd">
     <h1>Client Side Analytics Summary</h1>
-    <div>
-        <input type="radio" name="counterTypeGroup" value="daily" data-bind="checked: selectedCounterType,  click:dailySelected" /> <span>Daily</span>
-        <input type="radio" name="counterTypeGroup" value="weekly" data-bind="checked: selectedCounterType, click:weeklySelected" /> <span>Weekly</span>
-        <input type="radio" name="counterTypeGroup" value="monthly" data-bind="checked: selectedCounterType,click:monthlySelected" /><span> Monthly</span>
-        <input type="radio" name="counterTypeGroup" value="yearly" data-bind="checked: selectedCounterType, click:yearlySelected" /> <span>Yearly</span>
-    </div>
-    <div>
-        <div id="slider"></div>
+    <div class="client-side-container">
         <div>
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#counterModal">
-                Client Counters
-            </button>
+            <input type="radio" name="counterTypeGroup" value="daily" data-bind="checked: selectedCounterType,  click:dailySelected" /> <span>Daily</span>
+            <input type="radio" name="counterTypeGroup" value="weekly" data-bind="checked: selectedCounterType, click:weeklySelected" /> <span>Weekly</span>
+            <input type="radio" name="counterTypeGroup" value="monthly" data-bind="checked: selectedCounterType,click:monthlySelected" /><span> Monthly</span>
+            <input type="radio" name="counterTypeGroup" value="yearly" data-bind="checked: selectedCounterType, click:yearlySelected" /> <span>Yearly</span>
         </div>
-    </div>
-    <div>
-        <div class="ct-chart ct-perfect-fourth"></div>
+        <div>
+            <div id="slider" class="client-side-align"></div>
+            <div class="client-side-align">
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#counterModal">
+                    Client Counters
+                </button>
+            </div>
+        </div>
+        <div>
+            <div class="ct-chart ct-perfect-fourth">
+
+            </div>
+        </div>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="counterModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-vertical-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Counters</h4>
+                    <h1 id="myModalLabel">Client Side Counters</h1>
                 </div>
                 <div class="modal-body">
-                    <select style="width:100px;" data-bind="options:clientCounters,selectedOptions:selectedClientCounters" size="6" multiple="multiple"></select>
+                    <select class="client-counter-list" data-bind="options:clientCounters,selectedOptions:selectedClientCounters" size="6" multiple="multiple"></select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-bind="click:loadChart" data-dismiss="modal">Close</button>
@@ -43,7 +47,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="progress progress-striped active">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        <div class="progress-bar progress-bar-full-width" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                         </div>
                     </div>
                 </div>
@@ -55,6 +59,7 @@
         <div class="modal-dialog modal-vertical-centered">
             <div class="modal-content">
                 <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h1>Error</h1>
                 </div>
                 <div id="dialogContent" class="modal-body">

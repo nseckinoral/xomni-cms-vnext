@@ -43,7 +43,7 @@ export class viewModel {
         });
 
         slider.bind("userValuesChanged", (e) => {
-            if (this.selectedClientCounters.length > 0) {
+            if (this.selectedClientCounters().length > 0) {
                 this.loadChart();
             }
         });
@@ -51,9 +51,13 @@ export class viewModel {
 
     initializeSDK() {
         var cookie = this.getCookie(location.hostname.replace('vnext', '') + 'SharedCMSCredentials');
-        console.log(cookie);
-        var credentials: any = $.parseJSON(cookie);
-        Xomni.currentContext = new Xomni.ClientContext(credentials.UserName, credentials.Password, location.protocol + '//' + location.hostname.replace('cmsvnext', 'api'));
+        if (cookie === '') {
+            this.redirectToLoginPage();
+        }
+        else {
+            var credentials: any = $.parseJSON(cookie);
+            Xomni.currentContext = new Xomni.ClientContext(credentials.UserName, credentials.Password, location.protocol + '//' + location.hostname.replace('cmsvnext', 'api'));
+        }
     }
 
     loadClientCounters() {
@@ -212,6 +216,7 @@ export class viewModel {
                 }
                 else {
                     this.hideLoadingDialog();
+                    $(".ct-chart").hide();
                     this.showNoDataFoundDialog();
                 }
             }, err=> {
@@ -252,6 +257,7 @@ export class viewModel {
                 }
                 else {
                     this.hideLoadingDialog();
+                    $(".ct-chart").hide();
                     this.showNoDataFoundDialog();
                 }
             }, err=> {
@@ -292,6 +298,7 @@ export class viewModel {
                 }
                 else {
                     this.hideLoadingDialog();
+                    $(".ct-chart").hide();
                     this.showNoDataFoundDialog();
                 }
             }, err=> {
@@ -332,6 +339,7 @@ export class viewModel {
                 }
                 else {
                     this.hideLoadingDialog();
+                    $(".ct-chart").hide();
                     this.showNoDataFoundDialog();
                 }
             }, err=> {
@@ -351,6 +359,11 @@ export class viewModel {
             startOADate: Math.floor(startDateWrapper.toOADate()),
             endOADate: Math.floor(endDateWrapper.toOADate())
         };
+    }
+
+    private redirectToLoginPage() {
+        var uri = location.protocol + '//' + location.hostname.replace('vnext', '') + '/Login.aspx?ReturnUrl=' + location.href;
+        window.location.href = uri;
     }
 }
 
