@@ -9,9 +9,6 @@ dist/
 src/**/*.js
 src/**/*.js.map
 src/**/*.d.ts
-sdk/**/*.js
-sdk/**/*.js.map
-sdk/**/*.d.ts
 
 # ... except specific ones, which should be tracked
 !src/app/require.config.js
