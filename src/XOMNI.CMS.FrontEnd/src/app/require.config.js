@@ -15,7 +15,7 @@ var require = {
         "text": "bower_modules/requirejs-text/text",
         "moment": "bower_modules/moment/min/moment.min",
         "moment-msdate": "scripts/moment-msdate",
-        //"xomni": "bower_modules/xomni/core",
+        "xomni": "../sdk/xomni",
         "chartist": "bower_modules/chartist/dist/chartist"
     },
     shim: {
@@ -23,7 +23,8 @@ var require = {
         "jquery-cookie": { deps: ["jquery"] },
         "jqueryui": { deps: ["jquery"] },
         "jqrangeslider": { deps: ["jqueryui"] },
-        "moment-msdate": { deps: ["moment"] }
+        "moment-msdate": { deps: ["moment"] },
+        "xomni": { deps: ["jquery"] }
     },
     deps: ["knockout" ,"bootstrap"]
 };

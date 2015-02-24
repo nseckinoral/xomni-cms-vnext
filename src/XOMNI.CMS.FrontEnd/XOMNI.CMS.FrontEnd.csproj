@@ -20,6 +20,7 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include="gulpfile.js" />
+    <Content Include="sdk\xomni.js" />
     <Content Include="src\app\require.config.js" />
     <Content Include="src\components\dashboard\dashboard.html" />
     <Content Include="src\components\licence-bar\licence-bar.html" />
@@ -119,6 +120,7 @@
     <Content Include="src\fonts\Prenton RP Cond.eot" />
     <Content Include="src\fonts\Prenton RP Cond.otf" />
     <Content Include="src\images\icons\Thumbs.db" />
+    <Content Include="sdk\xomni.js.map" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -127,15 +129,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="..\..\..\xomni-sdk-ts-preview\xomni-sdk-ts-preview\src\client-counters.ts">
-      <Link>sdk\client-counters.ts</Link>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="..\..\..\xomni-sdk-ts-preview\xomni-sdk-ts-preview\src\client-side-analytics-summary.ts">
-      <Link>sdk\client-side-analytics-summary.ts</Link>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="..\..\..\xomni-sdk-ts-preview\xomni-sdk-ts-preview\src\core.ts">
-      <Link>sdk\core.ts</Link>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="definitions\bootstrap\bootstrap.d.ts" />
     <TypeScriptCompile Include="definitions\chartist\chartist.d.ts" />
     <TypeScriptCompile Include="definitions\crossroads\crossroads.d.ts" />
@@ -151,6 +144,7 @@
     <TypeScriptCompile Include="definitions\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="definitions\moment-msdate\moment-msdate.d.ts" />
     <TypeScriptCompile Include="definitions\moment\moment.d.ts" />
+    <TypeScriptCompile Include="sdk\xomni.d.ts" />
     <TypeScriptCompile Include="src\app\router.ts" />
     <TypeScriptCompile Include="src\app\startup.ts" />
     <TypeScriptCompile Include="src\components\dashboard\dashboard.ts" />

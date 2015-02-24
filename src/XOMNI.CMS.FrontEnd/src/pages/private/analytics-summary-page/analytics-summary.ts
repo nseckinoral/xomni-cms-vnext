@@ -1,5 +1,6 @@
 ﻿/// <amd-dependency path="jqrangeslider" />
 /// <amd-dependency path="moment-msdate" />
+/// <amd-dependency path="xomni" />
 /// <amd-dependency path="text!./analytics-summary.html" />
 
 import $ = require("jquery");
