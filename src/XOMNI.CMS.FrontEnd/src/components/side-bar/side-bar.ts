@@ -25,4 +25,37 @@ export class viewModel {
             }
         });
     }
+    
+    MainItemClick(item, event) {        
+        var followingSibling = $(event.target).next();
+        if (followingSibling.css('display') == 'none') {
+            followingSibling.slideDown();
+            $(event.target).parent().switchClass("menu_navigation_arrow_up", "menu_navigation_arrow_down");
+        }
+        else {
+            followingSibling.slideUp();
+            $(event.target).parent().switchClass("menu_navigation_arrow_down", "menu_navigation_arrow_up");
+        }
+    }
+
+    slideChildsUp(elements) {  
+        $(elements[1]).children("ul").slideUp();
+        $(elements[1]).addClass("menu_navigation_arrow_up");
+
+        ko.contextFor(elements[1]).$data.ChildPages.forEach(function (v) {
+            if (v.Url.indexOf(window.location.hash) != -1) {
+                $(elements[1]).children("ul").slideDown();
+                $(elements[1]).switchClass("menu_navigation_arrow_up", "menu_navigation_arrow_down");
+
+                $(elements[1]).children("ul").children("li").each(function (index) {
+                    if (ko.contextFor(this).$data.Url.indexOf(window.location.hash) != -1) {
+                        $(this).addClass("menu_navigation_highlight");
+                    }
+                    else {
+                        $(this).removeClass("menu_navigation_highlight");
+                    }
+                });
+            }            
+        });
+    }
 }
