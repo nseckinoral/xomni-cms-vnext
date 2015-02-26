@@ -80,7 +80,8 @@ body {
     border-radius: 2px;
     background: url("../images/logout-icon.png") no-repeat 6px 7px rgba(255, 255, 255, 0.10);
 }
-/*user credentials and license cap box ends*//* Navigation Menu starts*/
+/*user credentials and license cap box ends*/
+
 /*Top Banner with XOMNI Logo starts*/
 header[role="banner"] {
     height: 90px;
@@ -120,6 +121,8 @@ header[role="banner"] .logo {
     width: 100%;
 }
 /* Central Content Area ends*/
+
+/* Navigation Menu starts*/
 .menu[role="navigation"]{
     background: #efefef;
 }
