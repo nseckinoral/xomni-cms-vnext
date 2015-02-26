@@ -25,7 +25,6 @@
     <Content Include="src\components\dashboard\dashboard.html" />
     <Content Include="src\components\licence-bar\licence-bar.html" />
     <Content Include="src\components\nav-bar\nav-bar.html" />
-    <Content Include="src\css\dashboard.css" />
     <Content Include="src\css\jqrangeslider\iThing.css" />
     <Content Include="src\css\reset.css" />
     <Content Include="src\css\toggle-switch.css" />
