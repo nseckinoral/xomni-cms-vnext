@@ -98,7 +98,6 @@ header[role="banner"] .logo {
 /* Central Content Area starts*/
 .pageContainer h1 {
     display: block;
-    margin: 15px 15px 5px 15px;
     border-bottom: 1px solid #e2e2e2;
     color: #4c4c4c;
     position: relative;
@@ -112,7 +111,6 @@ header[role="banner"] .logo {
 .leftContainer {
     display: block;
     overflow: hidden;
-    padding: 1px 2px 5px 15px;
     margin-bottom: 45px;
 }
 
