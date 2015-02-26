@@ -27,16 +27,23 @@ export class viewModel {
     }
     
     MainItemClick(item, event) {        
-        var followingSibling = $(event.target).next();
+        var target;
+        if (event.target.nodeName == "SPAN") {
+            target = $(event.target).parent();
+        }
+        else {
+            target = $(event.target)
+        };
+        var followingSibling = target.next();
         if (followingSibling.css('display') == 'none') {
             followingSibling.slideDown();
-            $(event.target).parent().removeClass("menu_navigation_arrow_up");
-            $(event.target).parent().addClass("menu_navigation_arrow_down");
+            target.parent().removeClass("menu_navigation_arrow_up");
+            target.parent().addClass("menu_navigation_arrow_down");
         }
         else {
             followingSibling.slideUp();
-            $(event.target).parent().removeClass("menu_navigation_arrow_down");
-            $(event.target).parent().addClass("menu_navigation_arrow_up");
+            target.parent().removeClass("menu_navigation_arrow_down");
+            target.parent().addClass("menu_navigation_arrow_up");
         }
     }
 
