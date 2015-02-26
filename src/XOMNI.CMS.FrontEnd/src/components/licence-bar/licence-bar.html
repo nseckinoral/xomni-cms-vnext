@@ -1,7 +1,5 @@
-﻿<div class="forUser" style="width: 370px;">
-    <span class="username">
-        <span data-bind="text: username"></span>
-        <p>License Cap : <span data-bind="text:licenceCap"></span></p>
-        <input type="button" class="hbttn logout" value="Log out">
-    </span>
+﻿<div class="user">
+    <p data-bind="text: username"></p>
+    <p data-bind="visible: licenceCap > 0">License Cap : <span data-bind="text: licenceCap"></span></p>
+    <input type="button" class="logout" value="Log out" />
 </div>
