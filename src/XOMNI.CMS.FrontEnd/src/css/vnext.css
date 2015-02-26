@@ -2,6 +2,13 @@
     margin: 0;
     padding: 0;
 }
+
+body {
+    font-size: 12px;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
 /*nav-bar starts*/
 .menu[role="menubar"] {
         height: 37px;
