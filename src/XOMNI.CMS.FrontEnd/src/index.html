@@ -17,22 +17,17 @@
     <link href="css/vnext.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="container">
-        <!-- main header << STARTS >> -->
-        <header id="mainHeader" role="banner">
-            <a class="logo" href="#">
-                <img src="images/logo-small.png" />
-            </a>
+    <div>
+        <header role="banner">
+            <img class="logo" src="images/logo-small.png" />
             <licence-bar params="route: route"></licence-bar>
         </header>
         <nav-bar params="route: route"></nav-bar>
-        <div id="content">
-            <div class="pageContainer">
-                <div class="sideMenu">
-                    <side-bar params="route: route"></side-bar>
-                </div>
-                <div class="mainContentArea" data-bind="component: { name: route().page, params: route }">
-                </div>
+        <div class="pageContainer">
+            <div class="rightContainer">
+                <side-bar params="route: route"></side-bar>
+            </div>
+            <div class="leftContainer" data-bind="component: { name: route().page, params: route }">
             </div>
         </div>
     </div>

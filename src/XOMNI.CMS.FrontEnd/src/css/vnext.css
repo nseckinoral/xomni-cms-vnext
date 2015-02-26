@@ -74,6 +74,45 @@
     background: url("../images/logout-icon.png") no-repeat 6px 7px rgba(255, 255, 255, 0.10);
 }
 /*user credentials and license cap box ends*//* Navigation Menu starts*/
+/*Top Banner with XOMNI Logo starts*/
+header[role="banner"] {
+    height: 90px;
+    background: url("../images/blue-bg-pattern.png") repeat-x top white;
+    position: relative;
+    color: White;
+}
+
+header[role="banner"] .logo {
+        float: left;
+}
+/*Top Banner with XOMNI Logo ends*/
+
+/* Central Content Area starts*/
+.pageContainer h1 {
+    display: block;
+    margin: 15px 15px 5px 15px;
+    border-bottom: 1px solid #e2e2e2;
+    color: #4c4c4c;
+    position: relative;
+}
+
+.rightContainer {
+    float: left;
+    width: 250px;
+}
+
+.leftContainer {
+    display: block;
+    overflow: hidden;
+    padding: 1px 2px 5px 15px;
+    margin-bottom: 45px;
+}
+
+.pageContainer {
+    float: left;
+    width: 100%;
+}
+/* Central Content Area ends*/
 .menu[role="navigation"]{
     background: #efefef;
 }
