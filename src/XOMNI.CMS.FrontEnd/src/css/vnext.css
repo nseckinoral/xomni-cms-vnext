@@ -2,6 +2,55 @@
     margin: 0;
     padding: 0;
 }
+/*nav-bar starts*/
+.menu[role="menubar"] {
+        height: 37px;
+        background: url("../images/nav-main-bg.png") repeat-x top #d9d9d9;
+        width: 100%;
+        padding-top: 5px;
+        font-family: 'Prenton', Arial, sans-serif;
+        letter-spacing: 1px;
+        text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
+    }
+
+.menu[role="menubar"] ul {
+    padding-left: 15px;
+}
+
+.menu[role="menubar"] ul li {
+    display: inline;
+}
+
+.menu[role="menubar"] ul li a {
+    height: 35px;
+    border-top: 2px solid rgba(122, 174, 8, 0);
+    padding: 0 30px 0 25px;
+    color: #5a5a5a;
+    font-size: 16px;
+    font-weight: bold;
+    float: left;
+    line-height: 35px;
+}
+
+.menu[role="menubar"] ul li a img {
+    padding-top: 7px;
+    float: left;
+    padding-right: 7px;
+}
+
+.menu[role="menubar"] ul li a:hover {
+    border-top: 2px solid rgba(122, 174, 8, 0.3);
+    background-color: rgba(245, 245, 245, 0.4);
+}
+
+.menu[role="menubar"] .selected, 
+.menu[role="menubar"] .selected:hover {
+    border-top: 2px solid rgba(122, 174, 8, 1);
+    background-color: #f5f5f5;
+    color: #192500;
+}
+/*nav-bar ends*/
+
 /*user credentials and license cap box starts*/
 .user{
         width: 410px;
