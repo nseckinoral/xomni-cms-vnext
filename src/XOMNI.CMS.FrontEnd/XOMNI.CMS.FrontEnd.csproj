@@ -27,7 +27,6 @@
     <Content Include="src\components\nav-bar\nav-bar.html" />
     <Content Include="src\css\jqrangeslider\iThing.css" />
     <Content Include="src\css\reset.css" />
-    <Content Include="src\css\toggle-switch.css" />
     <Content Include="src\fonts\eots\_notes\dwsync.xml" />
     <Content Include="src\images\addRelBttn-bg.png" />
     <Content Include="src\images\AztecSample.PNG" />
