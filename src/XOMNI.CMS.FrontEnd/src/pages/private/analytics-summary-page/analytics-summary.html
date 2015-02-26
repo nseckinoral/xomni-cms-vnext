@@ -1,11 +1,11 @@
 ﻿<article role="form">
     <h1>Client Side Analytics Summary</h1>
-    <div class="client-side-container">
+    <div>
         <div>
-            <input type="radio" name="counterTypeGroup" value="daily" data-bind="checked: selectedCounterType,  click:dailySelected" /> <span>Daily</span>
-            <input type="radio" name="counterTypeGroup" value="weekly" data-bind="checked: selectedCounterType, click:weeklySelected" /> <span>Weekly</span>
-            <input type="radio" name="counterTypeGroup" value="monthly" data-bind="checked: selectedCounterType,click:monthlySelected" /><span> Monthly</span>
-            <input type="radio" name="counterTypeGroup" value="yearly" data-bind="checked: selectedCounterType, click:yearlySelected" /> <span>Yearly</span>
+            <input type="radio" id="rad1" name="counterTypeGroup" value="daily" data-bind="checked: selectedCounterType,  click:dailySelected" /><label for="rad1">Daily</label>
+            <input type="radio" id="rad2" name="counterTypeGroup" value="weekly" data-bind="checked: selectedCounterType, click:weeklySelected" /><label for="rad2">Weekly</label>
+            <input type="radio" id="rad3" name="counterTypeGroup" value="monthly" data-bind="checked: selectedCounterType,click:monthlySelected" /><label for="rad3"> Monthly</label>
+            <input type="radio" id="rad4" name="counterTypeGroup" value="yearly" data-bind="checked: selectedCounterType, click:yearlySelected" /><label for="rad4">Yearly</label>
         </div>
         <div>
             <div id="slider" class="client-side-align"></div>
