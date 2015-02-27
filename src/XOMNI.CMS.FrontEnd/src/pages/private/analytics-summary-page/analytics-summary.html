@@ -7,7 +7,7 @@
             <input type="radio" id="rad3" name="counterTypeGroup" value="monthly" data-bind="checked: selectedCounterType,click:monthlySelected" /><label for="rad3"> Monthly</label>
             <input type="radio" id="rad4" name="counterTypeGroup" value="yearly" data-bind="checked: selectedCounterType, click:yearlySelected" /><label for="rad4">Yearly</label>
             <button type="button" data-toggle="modal" data-target="#counterModal" style="margin-left:15px;">
-                    Client Counters
+                Client Counters
             </button>
         </div>
         <div>
@@ -30,7 +30,7 @@
                     <select class="selectpicker" data-bind="options:clientCounters,selectedOptions:selectedClientCounters" multiple></select>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bind="click:loadChart" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-bind="click:loadChart" data-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>

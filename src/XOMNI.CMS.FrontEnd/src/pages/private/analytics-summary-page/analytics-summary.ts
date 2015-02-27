@@ -43,9 +43,7 @@ export class viewModel {
         });
 
         slider.bind("userValuesChanged", (e) => {
-            if (this.selectedClientCounters().length > 0) {
-                this.loadChart();
-            }
+            this.loadChart();
         });
     }
 
@@ -157,29 +155,30 @@ export class viewModel {
         return true;
     }
 
-    loadChart(): boolean {
-        this.showLoadingDialog();
-        if (this.selectedClientCounters().length != 0) {
-            switch (this.selectedCounterType()) {
-                case ("daily"): {
-                    this.createDailyChart();
-                    break;
-                }
-                case ("weekly"): {
-                    this.createWeeklyChart();
-                    break;
-                }
-                case ("monthly"): {
-                    this.createMonthlyChart();
-                    break;
-                }
-                case ("yearly"): {
-                    this.createYearlyChart();
-                    break;
+    loadChart() {
+        if (this.selectedClientCounters().length > 0) {
+            this.showLoadingDialog();
+            if (this.selectedClientCounters().length != 0) {
+                switch (this.selectedCounterType()) {
+                    case ("daily"): {
+                        this.createDailyChart();
+                        break;
+                    }
+                    case ("weekly"): {
+                        this.createWeeklyChart();
+                        break;
+                    }
+                    case ("monthly"): {
+                        this.createMonthlyChart();
+                        break;
+                    }
+                    case ("yearly"): {
+                        this.createYearlyChart();
+                        break;
+                    }
                 }
             }
         }
-        return true;
     }
 
     createDailyChart() {
