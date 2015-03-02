@@ -26,7 +26,7 @@ export class viewModel {
         });
     }
     
-    MainItemClick(item, event) {        
+    mainItemClick(item, event) {        
         var target;
         if (event.target.nodeName == "SPAN") {
             target = $(event.target).parent();
