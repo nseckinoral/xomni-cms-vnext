@@ -45,6 +45,7 @@ export class viewModel {
             target.parent().removeClass("menu_navigation_arrow_down");
             target.parent().addClass("menu_navigation_arrow_up");
         }
+        event.stopPropagation();
     }
 
     slideChildsUp(elements) {  
