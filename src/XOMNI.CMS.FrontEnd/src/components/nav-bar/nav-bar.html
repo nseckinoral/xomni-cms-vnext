@@ -1,18 +1,18 @@
 <nav role="menubar" class="menu">
     <ul>
         <li>
-            <a href="#">
+            <a data-bind="attr:{href:dashboardLink}">
                 <img src="images/icons/dashboard-sel.png">Dashboard
             </a>
         </li>
         <li>
             <!--Call changeMenuGroup method with appropriate menugroup id when dynamically menu group change needed.-->
-            <a href="#">
+            <a data-bind="attr:{href:catalogLink}">
                 <img src="images/icons/license.png" />Catalog
             </a>
         </li>
         <li data-bind="visible: managementEnabled">
-            <a href="#">
+            <a data-bind="attr:{href:managementLink}">
                 <img src="images/icons/settings.png" />Management
             </a>
         </li>
