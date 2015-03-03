@@ -120,6 +120,9 @@
     <Content Include="src\fonts\Prenton RP Cond.otf" />
     <Content Include="src\images\icons\Thumbs.db" />
     <Content Include="sdk\xomni.js.map" />
+    <Content Include="src\appSettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

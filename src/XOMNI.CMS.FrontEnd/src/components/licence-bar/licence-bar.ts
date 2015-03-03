@@ -17,7 +17,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     public fetchNavigationData(): any {
         var tenantName: string = this.getTenantName();
-        jquery.ajax("http://localhost:38314/api/licence?tenantName=" + tenantName, {
+        jquery.ajax(cms.infrastructure.Configuration.AppSettings.BackendAPIURL + "/api/licence?tenantName=" + tenantName, {
             type: "get",
             contentType: "application/json",
             success: (d, t, s) => {

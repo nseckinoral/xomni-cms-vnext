@@ -10,6 +10,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     private menuItems: Array<MenuItem> = [];
     constructor(params: any) {
         super();
+        //Uncomment this code when menu group based nav bar loading needed.
         //params.shouter.subscribe(t=> {
         //    this.loadSideMenu(t);
         //}, this, 'MenuGroupId');
@@ -18,7 +19,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     public fetchNavigationData(userRightId: number, success: (result: MenuItem[]) => void): any {
-        jquery.ajax("http://localhost:38314/api/navigation?userRightId=" + userRightId, {
+        jquery.ajax(cms.infrastructure.Configuration.AppSettings.BackendAPIURL + "/api/navigation?userRightId=" + userRightId, {
             type: "get",
             contentType: "application/json",
             success: (d, t, s) => {

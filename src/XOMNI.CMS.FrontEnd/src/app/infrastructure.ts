@@ -29,7 +29,6 @@ export module infrastructure {
 
         public userIsInRole(role: Roles): boolean {
             var user = this.getAuthenticatedUserInfo();
-            console.log(Roles[role]);
             return user.Roles.indexOf(Roles[role]) !== -1;
         }
     }
@@ -51,5 +50,23 @@ export module infrastructure {
     export enum Roles {
         PrivateAPI,
         ManagementAPI
+    }
+
+    export class Configuration {
+        public static AppSettings: AppSettings;
+        private static isLoaded: boolean;
+        public static loadAppSettings(callback: () => void) {
+            $.ajax("appSettings.json", {
+                async: true,
+                success: (t, d) => {
+                    this.AppSettings = <AppSettings>t;
+                    callback();
+                }
+            });
+        }
+    }
+
+    export interface AppSettings {
+        BackendAPIURL: string;
     }
 }
