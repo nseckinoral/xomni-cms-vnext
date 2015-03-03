@@ -22,12 +22,12 @@
             <img class="logo" src="images/logo-small.png" />
             <licence-bar params="route: route"></licence-bar>
         </header>
-        <nav-bar params="route: route"></nav-bar>
+        <nav-bar params="{route:route,shouter:shouter}"></nav-bar>
         <div class="pageContainer">
             <div class="rightContainer">
-                <side-bar params="route: route"></side-bar>
+                <side-bar params="{route:route,shouter:shouter}"></side-bar>
             </div>
-            <div class="leftContainer" data-bind="component: { name: route().page, params: route }">
+            <div class="leftContainer" data-bind="component: { name: route().page, params: {route:route,shouter:shouter}}">
             </div>
         </div>
     </div>
