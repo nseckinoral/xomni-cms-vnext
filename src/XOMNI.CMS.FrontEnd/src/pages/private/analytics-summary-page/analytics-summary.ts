@@ -48,8 +48,9 @@ export class viewModel {
     }
 
     initializeSDK() {
-        var cookie = this.getCookie(location.hostname.replace('vnext', '') + 'SharedCMSCredentials');
-        if (cookie === '') {
+        var cookie = document.cookie.split(';')[0].split('=')[1];
+        console.log(cookie);
+        if (cookie === '' || cookie === undefined) {
             this.redirectToLoginPage();
         }
         else {
@@ -93,22 +94,6 @@ export class viewModel {
     showNoDataFoundDialog() {
         $('#dialogContent').text('No data found for selected dates.');
         $('#genericDialog').modal({ keyboard: false, show: true });
-    }
-
-    ///TODO : Use jquery cookie
-    getCookie(cookieName: string): any {
-        var name = cookieName + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-        }
-        return "";
     }
 
     dailySelected(): boolean {
