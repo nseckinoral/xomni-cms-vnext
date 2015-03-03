@@ -3,8 +3,8 @@
 </div>
 <script id="side-bar-item-template" type="text/html">
 	<li class="menu_navigation_arrow_down">
-		<h3 data-bind="click: $parent.MainItemClick">
-			<span data-bind="text: Title, click: $parent.MainItemClick"></span>
+		<h3 data-bind="click: $parent.mainItemClick">
+			<span data-bind="text: Title, click: $parent.mainItemClick"></span>
 		</h3>		
 		<ul data-bind="template: { name: 'side-bar-sub-item-template', foreach: ChildPages}"></ul>
 	</li>

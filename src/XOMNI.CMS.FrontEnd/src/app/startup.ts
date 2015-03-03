@@ -19,5 +19,6 @@ ko.components.register('private-analytics-summary-page', { require: 'pages/priva
 //[[XO-SCAFFOLDER]]
 
 // Start the application
-ko.applyBindings({ route: router.currentRoute });
+var shouter = new ko.subscribable();
+ko.applyBindings({ route: router.currentRoute, shouter: shouter });
 
