@@ -144,6 +144,7 @@
     <TypeScriptCompile Include="definitions\moment-msdate\moment-msdate.d.ts" />
     <TypeScriptCompile Include="definitions\moment\moment.d.ts" />
     <TypeScriptCompile Include="sdk\xomni.d.ts" />
+    <TypeScriptCompile Include="src\app\infrastructure.ts" />
     <TypeScriptCompile Include="src\app\router.ts" />
     <TypeScriptCompile Include="src\app\startup.ts" />
     <TypeScriptCompile Include="src\components\dashboard\dashboard.ts" />

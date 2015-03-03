@@ -1,13 +1,15 @@
 /// <amd-dependency path="text!./side-bar.html" />
 import ko = require("knockout");
 import jquery = require("jquery");
+import cms = require("app/infrastructure");
 export var template: string = require("text!./side-bar.html");
 
-export class viewModel {
+export class viewModel extends cms.infrastructure.baseViewModel {
     public route: any;
     public navigationItems = ko.observableArray([]);
     private menuItems: Array<MenuItem> = [];
     constructor(params: any) {
+        super();
         //params.shouter.subscribe(t=> {
         //    this.loadSideMenu(t);
         //}, this, 'MenuGroupId');
@@ -75,14 +77,11 @@ export class viewModel {
     }
 
     getUserRightId(): number {
-        var cookie = document.cookie.split(';')[0].split('=')[1];
-        var credentials: any = $.parseJSON(cookie);
-        var roles: string[] = credentials.Roles;
         var userRightId: number;
-        if (roles.indexOf('ManagementAPI') != -1) {
+        if (this.userIsInRole(cms.infrastructure.Roles.ManagementAPI)) {
             userRightId = 3;
         }
-        else if (roles.indexOf('PrivateAPI') != -1) {
+        else if (this.userIsInRole(cms.infrastructure.Roles.PrivateAPI)) {
             userRightId = 2;
         }
 
