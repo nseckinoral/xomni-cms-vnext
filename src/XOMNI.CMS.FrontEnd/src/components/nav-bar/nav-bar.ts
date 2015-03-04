@@ -1,35 +1,26 @@
 /// <amd-dependency path="text!./nav-bar.html" />
 import ko = require("knockout");
+import cms = require("app/infrastructure");
 export var template: string = require("text!./nav-bar.html");
 
-export class viewModel {
+export class viewModel extends cms.infrastructure.baseViewModel {
     private shouter: any;
     public route: any;
     private managementEnabled = ko.observable(false);
+    private oldCMSUrl = this.getOldCMSUrl();
+    private managementLink = ko.observable(this.oldCMSUrl + '/Stores/List.aspx');
+    private catalogLink = ko.observable(this.oldCMSUrl + '/Brands/List.aspx');
+    private dashboardLink = ko.observable(this.oldCMSUrl + '/Dashboard.aspx');
+
     constructor(params: any) {
+        super();
         this.route = params.route;
         this.shouter = params.shouter;
-        if (this.getUserRightId() === 3) {
-            this.managementEnabled(true);
-        }
+        this.managementEnabled(this.userIsInRole(cms.infrastructure.Roles.ManagementAPI));
     }
 
-    changeMenuGroup(menuGroupId: number) {
-        this.shouter.notifySubscribers(menuGroupId, "MenuGroupId");
-    }
-
-    getUserRightId(): number {
-        var cookie = document.cookie.split(';')[0].split('=')[1];
-        var credentials: any = $.parseJSON(cookie);
-        var roles: string[] = credentials.Roles;
-        var userRightId: number;
-        if (roles.indexOf('ManagementAPI') != -1) {
-            userRightId = 3;
-        }
-        else if (roles.indexOf('PrivateAPI') != -1) {
-            userRightId = 2;
-        }
-
-        return userRightId;
-    }
+    //Uncomment this method when menu group based nav bar loading needed.
+    //changeMenuGroup(menuGroupId: number) {
+    //    this.shouter.notifySubscribers(menuGroupId, "MenuGroupId");
+    //}
 }

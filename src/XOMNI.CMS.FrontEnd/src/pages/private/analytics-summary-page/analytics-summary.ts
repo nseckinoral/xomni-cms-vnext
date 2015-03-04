@@ -2,23 +2,25 @@
 /// <amd-dependency path="moment-msdate" />
 /// <amd-dependency path="xomni" />
 /// <amd-dependency path="text!./analytics-summary.html" />
+/// <amd-dependency path="jquery-cookie" />
 
 import $ = require("jquery");
 import ko = require("knockout");
 import Chartist = require("chartist");
 import moment = require("moment");
+import cms = require("app/infrastructure");
 
 export var template: string = require("text!./analytics-summary.html");
 
-export class viewModel {
+export class viewModel extends cms.infrastructure.baseViewModel {
     public selectedCounterType = ko.observable("daily");
     public clientCounters = ko.observableArray([]);
     public selectedClientCounters = ko.observableArray([]);
 
     constructor() {
+        super();
         this.showLoadingDialog();
         this.initializeSlider();
-        this.initializeSDK();
         this.loadClientCounters();
     }
 
@@ -45,18 +47,6 @@ export class viewModel {
         slider.bind("userValuesChanged", (e) => {
             this.loadChart();
         });
-    }
-
-    initializeSDK() {
-        var cookie = document.cookie.split(';')[0].split('=')[1];
-        console.log(cookie);
-        if (cookie === '' || cookie === undefined) {
-            this.redirectToLoginPage();
-        }
-        else {
-            var credentials: any = $.parseJSON(cookie);
-            Xomni.currentContext = new Xomni.ClientContext(credentials.UserName, credentials.Password, location.protocol + '//' + location.hostname.replace('cmsvnext', 'api'));
-        }
     }
 
     loadClientCounters() {
@@ -345,10 +335,7 @@ export class viewModel {
         };
     }
 
-    private redirectToLoginPage() {
-        var uri = location.protocol + '//' + location.hostname.replace('vnext', '') + '/Login.aspx?ReturnUrl=' + location.href;
-        window.location.href = uri;
-    }
+
 }
 
 interface SliderSelectedDates {

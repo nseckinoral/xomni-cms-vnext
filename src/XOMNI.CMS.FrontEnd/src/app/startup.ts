@@ -2,6 +2,7 @@ import $ = require("jquery");
 import ko = require("knockout");
 import bootstrap = require("bootstrap");
 import router = require("./router");
+import cms = require("app/infrastructure");
 
 // Components can be packaged as AMD modules, such as the following:
 ko.components.register('dashboard', { require: 'components/dashboard/dashboard' });
@@ -19,6 +20,8 @@ ko.components.register('private-analytics-summary-page', { require: 'pages/priva
 //[[XO-SCAFFOLDER]]
 
 // Start the application
-var shouter = new ko.subscribable();
-ko.applyBindings({ route: router.currentRoute, shouter: shouter });
+cms.infrastructure.Configuration.loadAppSettings(() => {
+    var shouter = new ko.subscribable();
+    ko.applyBindings({ route: router.currentRoute, shouter: shouter });
+});
 
