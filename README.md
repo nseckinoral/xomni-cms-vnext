@@ -1,3 +1,7 @@
+[![Issue Stats](http://issuestats.com/github/XomniCloud/xomni-cms-vnext/badge/pr?style=flat)](http://issuestats.com/github/XomniCloud/xomni-sdk-dotnet)
+![Forks](https://img.shields.io/github/forks/xomnicloud/xomni-cms-vnext.svg)
+![Open Issues](https://img.shields.io/github/issues/xomnicloud/xomni-cms-vnext.svg)
+
 #XOMNI CMS vNext
 Our next generation CMS is located in this repository. 
 
