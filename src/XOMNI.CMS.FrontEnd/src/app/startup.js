@@ -1,4 +1,4 @@
-define(["require", "exports", "knockout", "./router"], function(require, exports, ko, router) {
+define(["require", "exports", "knockout", "./router", "app/infrastructure"], function(require, exports, ko, router, cms) {
     // Components can be packaged as AMD modules, such as the following:
     ko.components.register('dashboard', { require: 'components/dashboard/dashboard' });
     ko.components.register('nav-bar', { require: 'components/nav-bar/nav-bar' });
@@ -16,6 +16,9 @@ define(["require", "exports", "knockout", "./router"], function(require, exports
 
     //[[XO-SCAFFOLDER]]
     // Start the application
-    ko.applyBindings({ route: router.currentRoute });
+    cms.infrastructure.Configuration.loadAppSettings(function () {
+        var shouter = new ko.subscribable();
+        ko.applyBindings({ route: router.currentRoute, shouter: shouter });
+    });
 });
 //# sourceMappingURL=startup.js.map
