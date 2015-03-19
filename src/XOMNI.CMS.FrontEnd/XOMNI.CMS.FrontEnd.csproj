@@ -200,7 +200,7 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Target Name="BeforeBuild">
     <ItemGroup>
-      <Content Include="src\bower_modules\*.*" />
+      <Content Include="src\bower_modules\**\*" />
     </ItemGroup>
   </Target>
 </Project>
