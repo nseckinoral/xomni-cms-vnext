@@ -51,7 +51,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     loadClientCounters() {
         var client = new Xomni.Private.Analytics.ClientCounters.ClientCounterClient();
-        var errorFunc = (error) => { alert(error); };
+        var errorFunc = (error) => { this.hideLoadingDialog(); };
 
         var successFunc = (counters: Xomni.Private.Analytics.ClientCounters.ClientCounterListContainer) => {
             for (var i = 0; i < counters.CounterNames.length; i++) {
