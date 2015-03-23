@@ -1,8 +1,8 @@
-/// <amd-dependency path="text!./side-bar.html" />
+/// <amd-dependency path="text!./navigation.html" />
 import ko = require("knockout");
 import jquery = require("jquery");
 import cms = require("app/infrastructure");
-export var template: string = require("text!./side-bar.html");
+export var template: string = require("text!./navigation.html");
 
 export class viewModel extends cms.infrastructure.baseViewModel {
     public route: any;

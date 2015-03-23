@@ -1,7 +1,7 @@
-/// <amd-dependency path="text!./nav-bar.html" />
+/// <amd-dependency path="text!./menubar.html" />
 import ko = require("knockout");
 import cms = require("app/infrastructure");
-export var template: string = require("text!./nav-bar.html");
+export var template: string = require("text!./menubar.html");
 
 export class viewModel extends cms.infrastructure.baseViewModel {
     private shouter: any;
