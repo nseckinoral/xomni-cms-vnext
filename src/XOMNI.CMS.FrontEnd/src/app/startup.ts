@@ -6,8 +6,8 @@ import cms = require("app/infrastructure");
 
 // Components can be packaged as AMD modules, such as the following:
 ko.components.register('dashboard', { require: 'components/dashboard/dashboard' });
-ko.components.register('nav-bar', { require: 'components/nav-bar/nav-bar' });
-ko.components.register('side-bar', { require: 'components/side-bar/side-bar' });
+ko.components.register('menubar', { require: 'components/menubar/menubar' });
+ko.components.register('navigation', { require: 'components/navigation/navigation' });
 ko.components.register('catalog-brand-page', { require: 'pages/catalog/brand-page/brand' });
 ko.components.register('licence-bar', { require: 'components/licence-bar/licence-bar' });
 // ... or for template-only components, you can just point to a .html file directly:
