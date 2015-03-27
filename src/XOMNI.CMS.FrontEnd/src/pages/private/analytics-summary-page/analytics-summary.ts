@@ -53,19 +53,19 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         var client = new Xomni.Private.Analytics.ClientCounters.ClientCounterClient();
         var errorFunc = (error) => { this.hideLoadingDialog(); };
 
-        var successFunc = (counters: Xomni.Private.Analytics.ClientCounters.ClientCounterListContainer) => {
+        var successFunc = (counters: Models.Private.Analytics.ClientCounterListContainer) => {
             for (var i = 0; i < counters.CounterNames.length; i++) {
                 this.clientCounters.push(counters.CounterNames[i]);
             }
             if (counters.ContinuationToken !== null) {
-                client.getClientCounterList(successFunc, errorFunc, counters.ContinuationToken);
+                client.get(successFunc, errorFunc, counters.ContinuationToken);
             }
             else {
                 this.hideLoadingDialog();
             }
         };
 
-        client.getClientCounterList(successFunc, errorFunc);
+        client.get(successFunc, errorFunc);
     }
 
     showLoadingDialog() {
