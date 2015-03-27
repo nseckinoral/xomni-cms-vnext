@@ -100,6 +100,7 @@
     <Content Include="src\components\navigation\navigation.html" />
     <Content Include="src\css\styles.css" />
     <Content Include="src\index.html" />
+    <Content Include="src\pages\management\integration-endpoint-page\integration-endpoint.html" />
     <Content Include="src\pages\private\analytics-summary-page\analytics-summary.html" />
     <Content Include="src\scripts\jQDateRangeSlider-min.js" />
     <Content Include="src\scripts\moment-msdate.js" />
@@ -155,12 +156,11 @@
     <TypeScriptCompile Include="src\components\menubar\menubar.ts" />
     <TypeScriptCompile Include="src\pages\catalog\brand-page\brand.ts" />
     <TypeScriptCompile Include="src\components\navigation\navigation.ts" />
+    <TypeScriptCompile Include="src\pages\management\integration-endpoint-page\integration-endpoint.ts" />
     <TypeScriptCompile Include="src\pages\private\analytics-summary-page\analytics-summary.ts" />
     <TypeScriptCompile Include="src\references.d.ts" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\pages\management\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
