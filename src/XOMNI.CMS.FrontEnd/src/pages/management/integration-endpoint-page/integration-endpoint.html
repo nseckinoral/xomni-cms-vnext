@@ -2,10 +2,18 @@
     <h1>Integration Endpoint </h1>
 
     <div data-bind="if: isEnabled(), visible: isEnabled()">
-        <p>Service Name : <span data-bind="text: endpointDetail().ServiceName"></span></p>
-        <p>Management Portal Url : <span data-bind="text: endpointDetail().ManagementPortalUrl"></span></p>
-        <p>Status : <span data-bind="text: endpointCreateStatus"></span></p>
-
+        <p>
+            Service Name :
+            <span data-bind="text: endpointDetail().ServiceName"></span>
+        </p>
+        <p data-bind="visible: endpointDetail().ManagementPortalUrl">
+            Management portal url
+            <span data-bind="text: endpointDetail().ManagementPortalUrl"></span>
+        </p>
+        <p>
+            Status :
+            <span data-bind="text: endpointCreateStatus"></span>
+        </p>
         <button type="button" data-bind="click: deleteEndpoint" style="margin-left:15px;">
             Delete
         </button>
@@ -13,8 +21,10 @@
 
     <div data-bind="if: !isEnabled(), visible: !isEnabled()">
         <div>
-            <p>Admin Mail: 
-                <input data-bind="textInput: endpointCreateRequest.AdminMail" /></p>
+            <p>
+                Admin Mail:
+                <input data-bind="textInput: endpointCreateRequest.AdminMail" />
+            </p>
             <p>Service Name: <input data-bind="textInput: endpointCreateRequest.ServiceName" /></p>
             <select data-bind="value: endpointCreateRequest.ServiceTier">
                 <option value="1">Developer</option>

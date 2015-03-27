@@ -26,7 +26,7 @@
                 type: HttpMethod[httpMethod],
                 url: currentClientContext.serviceUri + uri,
                 contentType: "application/json",
-                data: data,
+                data: JSON.stringify(data),
                 headers: {
                     "Authorization": "Basic " + btoa(authorization),
                     "Accept": "application/vnd.xomni.api-v3_1, */*"

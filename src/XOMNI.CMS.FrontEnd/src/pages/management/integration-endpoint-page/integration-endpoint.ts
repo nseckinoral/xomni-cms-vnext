@@ -22,35 +22,35 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     initalize() {
-        //this.client.get(
-        //    (t) => {
-        //        this.hideLoadingDialog();
-        //        this.endpointDetail(t);
-        //        this.endpointCreateStatus(Models.Management.Integration.EndpointStatusType[t.Status]);
-        //    },
-        //    (e) => {
-        //        this.hideLoadingDialog();
-        //        if (e.HttpStatusCode == 404) {
-        //            this.isEnabled(false);
-        //        }
-        //        else {
-        //            this.hideLoadingDialog();
-        //            this.showErrorDialog();
-        //        }
-        //    }
-        //);
+        this.client.get(
+            (t) => {
+                this.hideLoadingDialog();
+                this.endpointDetail(t);
+                this.endpointCreateStatus(Models.Management.Integration.EndpointStatusType[t.Status]);
+                this.isEnabled(true); 
+            },
+            (e) => {
+                this.hideLoadingDialog();
+                if (e.HttpStatusCode == 404) {
+                    this.isEnabled(false);
+                }
+                else {
+                    this.hideLoadingDialog();
+                    this.showErrorDialog();
+                }
+            }
+        );
     }
 
     createEndpoint() {
         this.showLoadingDialog();
         this.client.post(
             <Models.Management.Integration.EndpointCreateRequest> {
-                AdminMail: (<any>this.endpointCreateRequest).ServiceName,
-                ServiceName: (<any>this.endpointCreateRequest).AdminMail,
+                AdminMail: (<any>this.endpointCreateRequest).AdminMail,
+                ServiceName: (<any>this.endpointCreateRequest).ServiceName,
                 ServiceTier: (<any>this.endpointCreateRequest).ServiceTier
             },
             () => {
-                this.isEnabled(true);
                 this.initalize();
             },
             (e) => {
