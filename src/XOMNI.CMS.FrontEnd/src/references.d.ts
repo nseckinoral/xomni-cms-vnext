@@ -6,6 +6,6 @@
 /// <reference path="../definitions/bootstrap/bootstrap.d.ts" />
 /// <reference path="../definitions/crossroads/crossroads.d.ts" />
 /// <reference path="../definitions/hasher/hasher.d.ts" />
-/// <reference path="../sdk/xomni.d.ts" />
+/// <reference path="../definitions/xomni/xomni.d.ts" />
 declare var require;
 declare var define;

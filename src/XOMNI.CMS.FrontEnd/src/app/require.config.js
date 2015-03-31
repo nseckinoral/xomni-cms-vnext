@@ -15,7 +15,7 @@ var require = {
         "text": "bower_modules/requirejs-text/text",
         "moment": "bower_modules/moment/min/moment.min",
         "moment-msdate": "scripts/moment-msdate",
-        "xomni": "../sdk/xomni",
+        "xomni": "../definitions/xomni/xomni",
         "chartist": "bower_modules/chartist/dist/chartist"
     },
     shim: {
