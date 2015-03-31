@@ -9,13 +9,30 @@ export module infrastructure {
             Xomni.currentContext = new Xomni.ClientContext(userInfo.UserName, userInfo.Password, location.protocol + '//' + location.hostname.replace('cmsvnext', 'api'));
         }
         public getAuthenticatedUserInfo(): AuthenticatedUser {
-            $.cookie.json = true;
-            var cookieName: string = location.hostname.replace('vnext', '') + 'SharedCMSCredentials';
-            var cookie = $.cookie(cookieName);
-            if (cookie === undefined) {
-                this.redirectToLoginPage();
+            var user: AuthenticatedUser;
+            if (Configuration.AppSettings.ByPassCookieAuthentication) {
+                user = {
+                    UserName: Configuration.AppSettings.APIUsername,
+                    Password: Configuration.AppSettings.APIPassword,
+                    Identity: {
+                        AuthenticationType: "Basic",
+                        IsAuthenticated: true,
+                        Name: Configuration.AppSettings.APIUsername,
+                        Password: Configuration.AppSettings.APIPassword
+                    },
+                    Roles: new Array(Roles[Roles.ManagementAPI], Roles[Roles.PrivateAPI])
+                };
             }
-            return <AuthenticatedUser>cookie;
+            else {
+                $.cookie.json = true;
+                var cookieName: string = location.hostname.replace('vnext', '') + 'SharedCMSCredentials';
+                var cookie = $.cookie(cookieName);
+                if (cookie === undefined) {
+                    this.redirectToLoginPage();
+                }
+                user = <AuthenticatedUser>cookie;
+            }
+            return user;
         }
 
         private redirectToLoginPage() {
@@ -68,5 +85,8 @@ export module infrastructure {
 
     export interface AppSettings {
         BackendAPIURL: string;
+        APIUsername: string;
+        APIPassword: string;
+        ByPassCookieAuthentication: boolean;
     }
 }
