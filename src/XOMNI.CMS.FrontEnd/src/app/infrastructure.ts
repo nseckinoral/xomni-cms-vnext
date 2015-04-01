@@ -10,7 +10,7 @@ export module infrastructure {
         }
         public getAuthenticatedUserInfo(): AuthenticatedUser {
             var user: AuthenticatedUser;
-            if (Configuration.AppSettings.ByPassCookieAuthentication) {
+            if (Configuration.AppSettings.IsDebug) {
                 user = {
                     UserName: Configuration.AppSettings.APIUsername,
                     Password: Configuration.AppSettings.APIPassword,
@@ -87,6 +87,6 @@ export module infrastructure {
         BackendAPIURL: string;
         APIUsername: string;
         APIPassword: string;
-        ByPassCookieAuthentication: boolean;
+        IsDebug: boolean;
     }
 }
