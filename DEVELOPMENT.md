@@ -26,4 +26,5 @@ We recommend everyone to take a look at the "CONTRIBUTING.md" document before st
         * {private/management}/{page name}-page
           * {private/management}/{page-name}-page/{page-name}.html
           * {private/management}/{page-name}-page/{page-name}.ts
-        * Defined pages examplified above can be accessed from uri like '#/pages/{private}/{page-name}'
+        * Defined pages examplified above can be accessed from uri like **'#/pages/{private/management}/{page-name}'**
+  * By default configuration CMS vNext authentication based on old CMS Authentication cookie which means a local working old CMS copy is required for development environment. You can simply disable cookie based authentication (Set IsDebug to true) and enter XOMNI API credentials (ApiUserName, ApiUserPassword) in **src/appSettings.json** to have a workaround for this situtation.
