@@ -19,6 +19,7 @@ requireJsOptimizerConfig = merge(requireJsRuntimeConfig, {
         'components/menubar/menubar',
         'components/navigation/navigation',
         'components/licence-bar/licence-bar',
+        'components/loading-modal/loading-modal',
         'pages/home-page/home',
         'text!pages/about-page/about.html'
     ],

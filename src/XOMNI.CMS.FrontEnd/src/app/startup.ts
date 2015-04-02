@@ -11,6 +11,7 @@ ko.components.register('menubar', { require: 'components/menubar/menubar' });
 ko.components.register('navigation', { require: 'components/navigation/navigation' });
 ko.components.register('catalog-brand-page', { require: 'pages/catalog/brand-page/brand' });
 ko.components.register('licence-bar', { require: 'components/licence-bar/licence-bar' });
+ko.components.register('loading-modal', { require: 'components/loading-modal/loading-modal' });
 // ... or for template-only components, you can just point to a .html file directly:
 ko.components.register('about-page', {
     template: { require: 'text!pages/about-page/about.html' }
