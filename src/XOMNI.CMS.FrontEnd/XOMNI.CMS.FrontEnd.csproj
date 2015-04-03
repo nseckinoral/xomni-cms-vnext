@@ -149,6 +149,7 @@
     <TypeScriptCompile Include="definitions\moment-msdate\moment-msdate.d.ts" />
     <TypeScriptCompile Include="definitions\moment\moment.d.ts" />
     <TypeScriptCompile Include="definitions\xomni\xomni.d.ts" />
+    <TypeScriptCompile Include="definitions\knockout-validation\knockout.validation.d.ts" />
     <TypeScriptCompile Include="src\app\infrastructure.ts" />
     <TypeScriptCompile Include="src\app\router.ts" />
     <TypeScriptCompile Include="src\app\startup.ts" />

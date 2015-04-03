@@ -1,3 +1,4 @@
+/// <amd-dependency path="validation" />
 import $ = require("jquery");
 import ko = require("knockout");
 import bootstrap = require("bootstrap");
@@ -24,5 +25,5 @@ ko.components.register('management-integration-endpoint-page', { require: 'pages
 cms.infrastructure.Configuration.loadAppSettings(() => {
     var shouter = new ko.subscribable();
     ko.applyBindings({ route: router.currentRoute, shouter: shouter });
+    ko.validation.init({ messagesOnModified: true, errorMessageClass: "validationMessage" });
 });
-

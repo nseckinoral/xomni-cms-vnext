@@ -16,7 +16,8 @@ var require = {
         "moment": "bower_modules/moment/min/moment.min",
         "moment-msdate": "scripts/moment-msdate",
         "xomni": "../definitions/xomni/xomni",
-        "chartist": "bower_modules/chartist/dist/chartist"
+        "chartist": "bower_modules/chartist/dist/chartist",
+        "validation": "bower_modules/knockout-validation/dist/knockout.validation"
     },
     shim: {
         "bootstrap": { deps: ["jquery"] },
@@ -26,5 +27,5 @@ var require = {
         "moment-msdate": { deps: ["moment"] },
         "xomni": { deps: ["jquery"] }
     },
-    deps: ["knockout" ,"bootstrap"]
+    deps: ["knockout", "bootstrap"]
 };

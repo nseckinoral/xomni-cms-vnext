@@ -10,9 +10,13 @@ export var template: string = require("text!./integration-endpoint.html");
 export class viewModel extends cms.infrastructure.baseViewModel {
     public client = new Xomni.Management.Integration.Endpoint.EndpointClient();
     public isEnabled = ko.observable(false);
-    public endpointDetail = ko.observable<Models.Management.Integration.EndpointDetail>();
-    public endpointCreateRequest = ko.observable<Models.Management.Integration.EndpointCreateRequest>();
+    public adminMail = ko.observable<string>().extend({ required: true, email: true });
+    public serviceName = ko.observable<string>().extend({ required: true });
+    public serviceTier = ko.observable<number>().extend({ required: true });
+    public managementPortalUrl = ko.observable<string>();
     public endpointCreateStatus = ko.observable<string>();
+    public serviceTierOptions = ko.observableArray([{ Id: 1, Description: "Developer" }, { Id: 2, Description: "Standart" }, { Id: 3, Description: "Premium" }]);
+    public validationErrors = validation.group([this.adminMail, this.serviceName, this.serviceTier]);
 
     constructor() {
         super();
@@ -25,9 +29,10 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         this.client.get(
             (t) => {
                 this.hideLoadingDialog();
-                this.endpointDetail(t);
+                this.managementPortalUrl(t.ManagementPortalUrl);
+                this.serviceName(t.ServiceName);
                 this.endpointCreateStatus(Models.Management.Integration.EndpointStatusType[t.Status]);
-                this.isEnabled(true); 
+                this.isEnabled(true);
             },
             (e) => {
                 this.hideLoadingDialog();
@@ -39,25 +44,29 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     this.showErrorDialog();
                 }
             }
-        );
+            );
     }
 
     createEndpoint() {
-        this.showLoadingDialog();
-        this.client.post(
-            <Models.Management.Integration.EndpointCreateRequest> {
-                AdminMail: (<any>this.endpointCreateRequest).AdminMail,
-                ServiceName: (<any>this.endpointCreateRequest).ServiceName,
-                ServiceTier: (<any>this.endpointCreateRequest).ServiceTier
+        if (this.validationErrors().length == 0) {
+            this.showLoadingDialog();
+            this.client.post({
+                AdminMail: this.adminMail(),
+                ServiceName: this.serviceName(),
+                ServiceTier: this.serviceTier()
             },
-            () => {
-                this.initalize();
-            },
-            (e) => {
-                this.hideLoadingDialog();
-                this.showErrorDialog();
-            }
-        ); 
+                () => {
+                    this.initalize();
+                },
+                (e) => {
+                    this.hideLoadingDialog();
+                    this.showErrorDialog();
+                }
+                );
+        }
+        else {
+            this.validationErrors.showAllMessages();
+        }
     }
 
     deleteEndpoint() {
@@ -70,7 +79,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 this.hideLoadingDialog();
                 this.showErrorDialog();
             }
-        ); 
+            );
     }
 
     showLoadingDialog() {
