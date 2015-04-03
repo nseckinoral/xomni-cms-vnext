@@ -51,7 +51,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     loadClientCounters() {
         var client = new Xomni.Private.Analytics.ClientCounters.ClientCounterClient();
         var errorFunc = (error) => {
-            cms.infrastructure.showLoading(false);
+
         };
 
         var successFunc = (counters: Models.Private.Analytics.ClientCounterListContainer) => {
@@ -60,9 +60,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             }
             if (counters.ContinuationToken !== null) {
                 client.get(successFunc, errorFunc, counters.ContinuationToken);
-            }
-            else {
-                cms.infrastructure.showLoading(false);
             }
         };
 
@@ -171,16 +168,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                             lineSmooth: false
                         });
                         $(".ct-chart").show();
-                        cms.infrastructure.showLoading(false);
                     }
                 }
                 else {
-                    cms.infrastructure.showLoading(false);
                     $(".ct-chart").hide();
                     this.showNoDataFoundDialog();
                 }
             }, err=> {
-                    cms.infrastructure.showLoading(false);
                     $(".ct-chart").hide();
                     this.showErrorDialog();
                 });
@@ -212,16 +206,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     if (resultCount === this.selectedClientCounters().length) {
                         new Chartist.Line('.ct-chart', data);
                         $(".ct-chart").show();
-                        cms.infrastructure.showLoading(false);
                     }
                 }
                 else {
-                    cms.infrastructure.showLoading(false);
                     $(".ct-chart").hide();
                     this.showNoDataFoundDialog();
                 }
             }, err=> {
-                    cms.infrastructure.showLoading(false);
                     $(".ct-chart").hide();
                     this.showErrorDialog();
                 });
@@ -253,16 +244,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     if (resultCount === this.selectedClientCounters().length) {
                         new Chartist.Line('.ct-chart', data);
                         $(".ct-chart").show();
-                        cms.infrastructure.showLoading(false);
                     }
                 }
                 else {
-                    cms.infrastructure.showLoading(false);
                     $(".ct-chart").hide();
                     this.showNoDataFoundDialog();
                 }
             }, err=> {
-                    cms.infrastructure.showLoading(false);
                     $(".ct-chart").hide();
                     this.showErrorDialog();
                 });
@@ -294,16 +282,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     if (resultCount === this.selectedClientCounters().length) {
                         new Chartist.Line('.ct-chart', data);
                         $(".ct-chart").show();
-                        cms.infrastructure.showLoading(false);
                     }
                 }
                 else {
-                    cms.infrastructure.showLoading(false);
                     $(".ct-chart").hide();
                     this.showNoDataFoundDialog();
                 }
             }, err=> {
-                    cms.infrastructure.showLoading(false);
                     $(".ct-chart").hide();
                     this.showErrorDialog();
                 });

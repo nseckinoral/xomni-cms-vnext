@@ -32,7 +32,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 this.isEnabled(true);
             },
             (e) => {
-                cms.infrastructure.showLoading(false);
                 if (e.HttpStatusCode == 404) {
                     this.isEnabled(false);
                 }
@@ -55,7 +54,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     this.initalize();
                 },
                 (e) => {
-                    cms.infrastructure.showLoading(false);
                     this.showErrorDialog();
                 }
                 );
@@ -71,7 +69,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 this.initalize();
             },
             (e) => {
-                cms.infrastructure.showLoading(false);
                 this.showErrorDialog();
             }
             );
