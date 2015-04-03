@@ -1,13 +1,30 @@
 ﻿/// <amd-dependency path="jquery-cookie" />
 /// <amd-dependency path="xomni" />
+
 import $ = require("jquery");
+import ko = require("knockout");
 
 export module infrastructure {
+    export var shouter = new ko.subscribable();
+    export var showLoading = ko.observable<boolean>();
+
+    $.ajaxSettings.beforeSend = () => {
+        showLoading(true);
+    }
+    $.ajaxSettings.complete = () => {
+        showLoading(false);
+    }
+
+    showLoading.subscribe(t=> {
+        shouter.notifySubscribers(t, "showLoading");
+    });
+
     export class baseViewModel {
         constructor() {
             var userInfo = this.getAuthenticatedUserInfo();
             Xomni.currentContext = new Xomni.ClientContext(userInfo.UserName, userInfo.Password, location.protocol + '//' + location.hostname.replace('cmsvnext', 'api'));
         }
+
         public getAuthenticatedUserInfo(): AuthenticatedUser {
             var user: AuthenticatedUser;
             if (Configuration.AppSettings.IsDebug) {
@@ -47,6 +64,14 @@ export module infrastructure {
         public userIsInRole(role: Roles): boolean {
             var user = this.getAuthenticatedUserInfo();
             return user.Roles.indexOf(Roles[role]) !== -1;
+        }
+
+        public showCustomErrorDialog(errorText: string) {
+            shouter.notifySubscribers(errorText, "showError");
+        }
+
+        public showErrorDialog() {
+            shouter.notifySubscribers("An error occurred. Please try again.", "showError");
         }
     }
 

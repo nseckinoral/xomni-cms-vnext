@@ -11,9 +11,9 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     constructor(params: any) {
         super();
         //Uncomment this code when menu group based nav bar loading needed.
-        //params.shouter.subscribe(t=> {
+        //cms.infrastructure.shouter.subscribe(t=> {
         //    this.loadSideMenu(t);
-        //}, this, 'MenuGroupId');
+        //}, this, 'menuGroupId');
         this.route = params.route;
         this.loadSideMenu(1);
     }
