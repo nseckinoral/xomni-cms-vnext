@@ -22,13 +22,16 @@
             <img class="logo" src="images/logo-small.png" />
             <licence-bar params="route: route"></licence-bar>
         </header>
-        <menubar params="{route:route,shouter:shouter}"></menubar>
+        <menubar params="{route:route}"></menubar>
         <div class="pageContainer">
             <div class="rightContainer">
-                <navigation params="{route:route,shouter:shouter}"></navigation>
+                <navigation params="{route:route}"></navigation>
             </div>
-            <div class="leftContainer" data-bind="component: { name: route().page, params: {route:route,shouter:shouter}}">
+            <div class="leftContainer" data-bind="component: { name: route().page, params: {route:route}}">
+
             </div>
+            <error-dialog></error-dialog>
+            <loading-modal></loading-modal>
         </div>
     </div>
 </body>

@@ -24,7 +24,9 @@
     <Content Include="src\app\require.config.js" />
     <Content Include="src\components\dashboard\dashboard.html" />
     <Content Include="src\components\licence-bar\licence-bar.html" />
+    <Content Include="src\components\loading-modal\loading-modal.html" />
     <Content Include="src\components\menubar\menubar.html" />
+    <Content Include="src\components\error-dialog\error-dialog.html" />
     <Content Include="src\css\jqrangeslider\iThing.css" />
     <Content Include="src\css\reset.css" />
     <Content Include="src\css\vnext.css" />
@@ -155,7 +157,9 @@
     <TypeScriptCompile Include="src\app\startup.ts" />
     <TypeScriptCompile Include="src\components\dashboard\dashboard.ts" />
     <TypeScriptCompile Include="src\components\licence-bar\licence-bar.ts" />
+    <TypeScriptCompile Include="src\components\loading-modal\loading-modal.ts" />
     <TypeScriptCompile Include="src\components\menubar\menubar.ts" />
+    <TypeScriptCompile Include="src\components\error-dialog\error-dialog.ts" />
     <TypeScriptCompile Include="src\pages\catalog\brand-page\brand.ts" />
     <TypeScriptCompile Include="src\components\navigation\navigation.ts" />
     <TypeScriptCompile Include="src\pages\management\integration-endpoint-page\integration-endpoint.ts" />

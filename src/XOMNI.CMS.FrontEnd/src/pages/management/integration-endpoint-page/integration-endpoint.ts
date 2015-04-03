@@ -16,31 +16,28 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public managementPortalUrl = ko.observable<string>();
     public endpointCreateStatus = ko.observable<string>();
     public serviceTierOptions = ko.observableArray([{ Id: 1, Description: "Developer" }, { Id: 2, Description: "Standart" }, { Id: 3, Description: "Premium" }]);
-    public validationErrors = validation.group([this.adminMail, this.serviceName, this.serviceTier]);
+    public validationErrors = ko.validation.group([this.adminMail, this.serviceName, this.serviceTier]);
 
     constructor() {
         super();
-        this.showLoadingDialog();
         this.initalize();
-        this.hideLoadingDialog();
     }
 
     initalize() {
         this.client.get(
             (t) => {
-                this.hideLoadingDialog();
                 this.managementPortalUrl(t.ManagementPortalUrl);
                 this.serviceName(t.ServiceName);
                 this.endpointCreateStatus(Models.Management.Integration.EndpointStatusType[t.Status]);
                 this.isEnabled(true);
             },
             (e) => {
-                this.hideLoadingDialog();
+                cms.infrastructure.showLoading(false);
                 if (e.HttpStatusCode == 404) {
                     this.isEnabled(false);
                 }
                 else {
-                    this.hideLoadingDialog();
+                    cms.infrastructure.showLoading(false);
                     this.showErrorDialog();
                 }
             }
@@ -49,7 +46,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     createEndpoint() {
         if (this.validationErrors().length == 0) {
-            this.showLoadingDialog();
             this.client.post({
                 AdminMail: this.adminMail(),
                 ServiceName: this.serviceName(),
@@ -59,7 +55,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     this.initalize();
                 },
                 (e) => {
-                    this.hideLoadingDialog();
+                    cms.infrastructure.showLoading(false);
                     this.showErrorDialog();
                 }
                 );
@@ -70,33 +66,18 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     deleteEndpoint() {
-        this.showLoadingDialog();
         this.client.delete(
             () => {
                 this.initalize();
             },
             (e) => {
-                this.hideLoadingDialog();
+                cms.infrastructure.showLoading(false);
                 this.showErrorDialog();
             }
             );
     }
 
-    showLoadingDialog() {
-        $('#pleaseWaitDialog').modal({ keyboard: false, show: true });
-    }
-
-    hideLoadingDialog() {
-        $('#pleaseWaitDialog').modal('hide');
-    }
-
-    showErrorDialog() {
-        $('#dialogContent').text('An error occurred. Please try again.');
-        $('#genericDialog').modal({ keyboard: false, show: true });
-    }
-
     showNoDataFoundDialog() {
-        $('#dialogContent').text('No data found for selected dates.');
-        $('#genericDialog').modal({ keyboard: false, show: true });
+        this.showCustomErrorDialog("No data found for selected dates.");
     }
 }
