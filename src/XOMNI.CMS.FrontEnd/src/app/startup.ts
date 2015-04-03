@@ -11,6 +11,8 @@ ko.components.register('menubar', { require: 'components/menubar/menubar' });
 ko.components.register('navigation', { require: 'components/navigation/navigation' });
 ko.components.register('catalog-brand-page', { require: 'pages/catalog/brand-page/brand' });
 ko.components.register('licence-bar', { require: 'components/licence-bar/licence-bar' });
+ko.components.register('loading-modal', { require: 'components/loading-modal/loading-modal' });
+ko.components.register('error-dialog', { require: 'components/error-dialog/error-dialog' });
 // ... or for template-only components, you can just point to a .html file directly:
 ko.components.register('about-page', {
     template: { require: 'text!pages/about-page/about.html' }
@@ -23,7 +25,6 @@ ko.components.register('management-integration-endpoint-page', { require: 'pages
 
 // Start the application
 cms.infrastructure.Configuration.loadAppSettings(() => {
-    var shouter = new ko.subscribable();
-    ko.applyBindings({ route: router.currentRoute, shouter: shouter });
+    ko.applyBindings({ route: router.currentRoute });
     ko.validation.init({ messagesOnModified: true, errorMessageClass: "validationMessage" });
 });
