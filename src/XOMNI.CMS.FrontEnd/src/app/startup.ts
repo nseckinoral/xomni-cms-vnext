@@ -21,6 +21,7 @@ ko.components.register('about-page', {
 // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
 ko.components.register('private-analytics-summary-page', { require: 'pages/private/analytics-summary-page/analytics-summary' });
 ko.components.register('management-integration-endpoint-page', { require: 'pages/management/integration-endpoint-page/integration-endpoint' });
+ko.components.register('management-tenant-settings-page', { require: 'pages/management/tenant-settings-page/tenant-settings' });
 //[[XO-SCAFFOLDER]]
 
 // Start the application

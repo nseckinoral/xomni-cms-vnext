@@ -28,10 +28,9 @@ requireJsOptimizerConfig = merge(requireJsRuntimeConfig, {
     bundles: {
         // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
         'bundle-page-private-analytics-summary': ['pages/private/analytics-summary'],
-        'bundle-page-management-integration-endpoint': [ 'pages/management/integration-endpoint' ]
-			//[[XO-SCAFFOLDER]]
-
-
+        'bundle-page-management-integration-endpoint': ['pages/management/integration-endpoint'],
+        'bundle-page-management-tenant-settings': ['pages/management/tenant-settings']
+        //[[XO-SCAFFOLDER]]
     }
 });
 
