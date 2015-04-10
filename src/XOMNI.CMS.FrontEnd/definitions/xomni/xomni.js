@@ -1,5 +1,47 @@
 ﻿var Xomni;
 (function (Xomni) {
+    var Dictionary = (function () {
+        function Dictionary(init) {
+            this.keyArray = [];
+            this.valueArray = [];
+            if (init) {
+                for (var i = 0; i < init.length; i++) {
+                    this.keyArray.push(init[i].key);
+                    this.valueArray.push(init[i].value);
+                }
+            }
+        }
+        Dictionary.prototype.add = function (key, value) {
+            this.keyArray.push(key);
+            this.valueArray.push(value);
+        };
+
+        Dictionary.prototype.remove = function (key) {
+            var index = this.keyArray.indexOf(key, 0);
+            this.keyArray.splice(index, 1);
+            this.valueArray.splice(index, 1);
+        };
+
+        Dictionary.prototype.keys = function () {
+            return this.keyArray;
+        };
+
+        Dictionary.prototype.values = function () {
+            return this.valueArray;
+        };
+
+        Dictionary.prototype.containsKey = function (key) {
+            if (this.keyArray.indexOf(key) === undefined) {
+                return false;
+            }
+            return true;
+        };
+        return Dictionary;
+    })();
+    Xomni.Dictionary = Dictionary;
+})(Xomni || (Xomni = {}));
+var Xomni;
+(function (Xomni) {
     var HttpProvider = (function () {
         function HttpProvider() {
         }
@@ -152,6 +194,43 @@ var Xomni;
 (function (Xomni) {
     (function (Management) {
         (function (Configuration) {
+            (function (Settings) {
+                var SettingsClient = (function (_super) {
+                    __extends(SettingsClient, _super);
+                    function SettingsClient() {
+                        _super.apply(this, arguments);
+                        this.uri = "/management/configuration/settings";
+                    }
+                    SettingsClient.prototype.put = function (settings, success, error) {
+                        if (settings.PassbookCertificatePassword) {
+                            Xomni.Utils.Validator.isLessThan(settings.PassbookCertificatePassword.length, "PassbookCertificatePassword", 250);
+                        }
+                        if (settings.PassbookTeamIdentifier) {
+                            Xomni.Utils.Validator.isLessThan(settings.PassbookTeamIdentifier.length, "PassbookTeamIdentifier", 250);
+                        }
+                        if (settings.PassbookOrganizationName) {
+                            Xomni.Utils.Validator.isLessThan(settings.PassbookOrganizationName.length, "PassbookOrganizationName", 250);
+                        }
+                        this.httpProvider.put(this.uri, settings, success, error);
+                    };
+
+                    SettingsClient.prototype.get = function (success, error) {
+                        this.httpProvider.get(this.uri, success, error);
+                    };
+                    return SettingsClient;
+                })(Xomni.BaseClient);
+                Settings.SettingsClient = SettingsClient;
+            })(Configuration.Settings || (Configuration.Settings = {}));
+            var Settings = Configuration.Settings;
+        })(Management.Configuration || (Management.Configuration = {}));
+        var Configuration = Management.Configuration;
+    })(Xomni.Management || (Xomni.Management = {}));
+    var Management = Xomni.Management;
+})(Xomni || (Xomni = {}));
+var Xomni;
+(function (Xomni) {
+    (function (Management) {
+        (function (Configuration) {
             (function (Store) {
                 var StoreClient = (function (_super) {
                     __extends(StoreClient, _super);
@@ -201,85 +280,6 @@ var Xomni;
         var Configuration = Management.Configuration;
     })(Xomni.Management || (Xomni.Management = {}));
     var Management = Xomni.Management;
-})(Xomni || (Xomni = {}));
-var Xomni;
-(function (Xomni) {
-    (function (Management) {
-        (function (Configuration) {
-            (function (Settings) {
-                var SettingsClient = (function (_super) {
-                    __extends(SettingsClient, _super);
-                    function SettingsClient() {
-                        _super.apply(this, arguments);
-                        this.uri = "/management/configuration/settings";
-                    }
-                    SettingsClient.prototype.put = function (settings, success, error) {
-                        if (settings.PassbookCertificatePassword) {
-                            Xomni.Utils.Validator.isLessThan(settings.PassbookCertificatePassword.length, "PassbookCertificatePassword", 250);
-                        }
-                        if (settings.PassbookTeamIdentifier) {
-                            Xomni.Utils.Validator.isLessThan(settings.PassbookTeamIdentifier.length, "PassbookTeamIdentifier", 250);
-                        }
-                        if (settings.PassbookOrganizationName) {
-                            Xomni.Utils.Validator.isLessThan(settings.PassbookOrganizationName.length, "PassbookOrganizationName", 250);
-                        }
-                        this.httpProvider.put(this.uri, settings, success, error);
-                    };
-
-                    SettingsClient.prototype.get = function (success, error) {
-                        this.httpProvider.get(this.uri, success, error);
-                    };
-                    return SettingsClient;
-                })(Xomni.BaseClient);
-                Settings.SettingsClient = SettingsClient;
-            })(Configuration.Settings || (Configuration.Settings = {}));
-            var Settings = Configuration.Settings;
-        })(Management.Configuration || (Management.Configuration = {}));
-        var Configuration = Management.Configuration;
-    })(Xomni.Management || (Xomni.Management = {}));
-    var Management = Xomni.Management;
-})(Xomni || (Xomni = {}));
-var Xomni;
-(function (Xomni) {
-    var Dictionary = (function () {
-        function Dictionary(init) {
-            this.keyArray = [];
-            this.valueArray = [];
-            if (init) {
-                for (var i = 0; i < init.length; i++) {
-                    this.keyArray.push(init[i].key);
-                    this.valueArray.push(init[i].value);
-                }
-            }
-        }
-        Dictionary.prototype.add = function (key, value) {
-            this.keyArray.push(key);
-            this.valueArray.push(value);
-        };
-
-        Dictionary.prototype.remove = function (key) {
-            var index = this.keyArray.indexOf(key, 0);
-            this.keyArray.splice(index, 1);
-            this.valueArray.splice(index, 1);
-        };
-
-        Dictionary.prototype.keys = function () {
-            return this.keyArray;
-        };
-
-        Dictionary.prototype.values = function () {
-            return this.valueArray;
-        };
-
-        Dictionary.prototype.containsKey = function (key) {
-            if (this.keyArray.indexOf(key) === undefined) {
-                return false;
-            }
-            return true;
-        };
-        return Dictionary;
-    })();
-    Xomni.Dictionary = Dictionary;
 })(Xomni || (Xomni = {}));
 var Xomni;
 (function (Xomni) {
@@ -443,38 +443,6 @@ var Xomni;
     })(Xomni.Management || (Xomni.Management = {}));
     var Management = Xomni.Management;
 })(Xomni || (Xomni = {}));
-var Models;
-(function (Models) {
-    (function (Management) {
-        (function (Configuration) {
-            (function (FacebookDisplayType) {
-                FacebookDisplayType[FacebookDisplayType["Page"] = 0] = "Page";
-                FacebookDisplayType[FacebookDisplayType["Popup"] = 1] = "Popup";
-                FacebookDisplayType[FacebookDisplayType["Touch"] = 2] = "Touch";
-            })(Configuration.FacebookDisplayType || (Configuration.FacebookDisplayType = {}));
-            var FacebookDisplayType = Configuration.FacebookDisplayType;
-        })(Management.Configuration || (Management.Configuration = {}));
-        var Configuration = Management.Configuration;
-    })(Models.Management || (Models.Management = {}));
-    var Management = Models.Management;
-})(Models || (Models = {}));
-;
-var Models;
-(function (Models) {
-    (function (Management) {
-        (function (Integration) {
-            (function (ServiceTierType) {
-                ServiceTierType[ServiceTierType["Developer"] = 0] = "Developer";
-                ServiceTierType[ServiceTierType["Standart"] = 1] = "Standart";
-                ServiceTierType[ServiceTierType["Premium"] = 2] = "Premium";
-            })(Integration.ServiceTierType || (Integration.ServiceTierType = {}));
-            var ServiceTierType = Integration.ServiceTierType;
-        })(Management.Integration || (Management.Integration = {}));
-        var Integration = Management.Integration;
-    })(Models.Management || (Models.Management = {}));
-    var Management = Models.Management;
-})(Models || (Models = {}));
-;
 var Xomni;
 (function (Xomni) {
     (function (Management) {
@@ -534,6 +502,180 @@ var Xomni;
     })(Xomni.Management || (Xomni.Management = {}));
     var Management = Xomni.Management;
 })(Xomni || (Xomni = {}));
+var Xomni;
+(function (Xomni) {
+    (function (Management) {
+        (function (Social) {
+            (function (Facebook) {
+                var FacebookClient = (function (_super) {
+                    __extends(FacebookClient, _super);
+                    function FacebookClient() {
+                        _super.apply(this, arguments);
+                        this.uri = "/management/social/facebookdisplaytypes";
+                    }
+                    FacebookClient.prototype.get = function (success, error) {
+                        var _this = this;
+                        this.httpProvider.get(this.uri, function (types) {
+                            var dict = _this.convertToDictionary(types);
+                            success(dict);
+                        }, error);
+                    };
+
+                    FacebookClient.prototype.convertToDictionary = function (types) {
+                        var dict = new Xomni.Dictionary();
+                        for (var key in types) {
+                            if (types.hasOwnProperty(key)) {
+                                dict.add(key, types[key]);
+                            }
+                        }
+                        return dict;
+                    };
+                    return FacebookClient;
+                })(Xomni.BaseClient);
+                Facebook.FacebookClient = FacebookClient;
+            })(Social.Facebook || (Social.Facebook = {}));
+            var Facebook = Social.Facebook;
+        })(Management.Social || (Management.Social = {}));
+        var Social = Management.Social;
+    })(Xomni.Management || (Xomni.Management = {}));
+    var Management = Xomni.Management;
+})(Xomni || (Xomni = {}));
+var Xomni;
+(function (Xomni) {
+    (function (Management) {
+        (function (Storage) {
+            (function (Assets) {
+                var AssetClient = (function (_super) {
+                    __extends(AssetClient, _super);
+                    function AssetClient() {
+                        _super.apply(this, arguments);
+                        this.singleOperationBaseUrl = "/management/storage/asset";
+                        this.listOperationBaseUrl = "/management/storage/assets";
+                    }
+                    AssetClient.prototype.getList = function (skip, take, success, error) {
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("skip", skip, 0);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("take", take, 1);
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameter(this.listOperationBaseUrl, new Xomni.Dictionary([
+                            { key: "skip", value: skip.toString() },
+                            { key: "take", value: take.toString() }
+                        ]));
+                        this.httpProvider.get(uri, success, error);
+                    };
+
+                    AssetClient.prototype.get = function (assetId, success, error) {
+                        var _this = this;
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("assetId", assetId, 0);
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameter(this.singleOperationBaseUrl, new Xomni.Dictionary([
+                            { key: "id", value: assetId.toString() }
+                        ]));
+                        this.httpProvider.get(uri, (function (r) {
+                            success({
+                                Id: r.Id,
+                                FileName: r.FileName,
+                                MimeType: r.MimeType,
+                                FileBody: _this.StringToUint8Array(atob(r.FileBody))
+                            });
+                        }), error);
+                    };
+
+                    AssetClient.prototype.delete = function (assetId, success, error) {
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("assetId", assetId, 0);
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameter(this.singleOperationBaseUrl, new Xomni.Dictionary([
+                            { key: "id", value: assetId.toString() }
+                        ]));
+                        this.httpProvider.delete(uri, success, error);
+                    };
+
+                    AssetClient.prototype.post = function (tenantAssetDetail, success, error) {
+                        Xomni.Utils.Validator.isDefined("tenantAssetDetail", tenantAssetDetail);
+                        Xomni.Utils.Validator.isDefined("FileName", tenantAssetDetail.FileName);
+                        Xomni.Utils.Validator.isDefined("MimeType", tenantAssetDetail.MimeType);
+                        Xomni.Utils.Validator.isDefined("FileBody", tenantAssetDetail.FileBody);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("FileName length", tenantAssetDetail.FileName.length, 1);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("Mimetype length", tenantAssetDetail.MimeType.length, 1);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("File body", tenantAssetDetail.FileBody.length, 1);
+                        this.httpProvider.post(this.singleOperationBaseUrl, {
+                            FileName: tenantAssetDetail.FileName,
+                            FileBody: btoa(this.Uint8ArrayToString(tenantAssetDetail.FileBody)),
+                            MimeType: tenantAssetDetail.MimeType
+                        }, success, error);
+                    };
+
+                    AssetClient.prototype.put = function (tenantAssetDetail, success, error) {
+                        Xomni.Utils.Validator.isDefined("tenantAssetDetail", tenantAssetDetail);
+                        Xomni.Utils.Validator.isDefined("Id", tenantAssetDetail.Id);
+                        Xomni.Utils.Validator.isDefined("FileName", tenantAssetDetail.FileName);
+                        Xomni.Utils.Validator.isDefined("MimeType", tenantAssetDetail.MimeType);
+                        Xomni.Utils.Validator.isDefined("FileBody", tenantAssetDetail.FileBody);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("Id", tenantAssetDetail.Id, 1);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("FileName length", tenantAssetDetail.FileName.length, 1);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("Mimetype length", tenantAssetDetail.MimeType.length, 1);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("File body", tenantAssetDetail.FileBody.length, 1);
+                        this.httpProvider.put(this.singleOperationBaseUrl, {
+                            Id: tenantAssetDetail.Id,
+                            FileName: tenantAssetDetail.FileName,
+                            FileBody: btoa(this.Uint8ArrayToString(tenantAssetDetail.FileBody)),
+                            MimeType: tenantAssetDetail.MimeType
+                        }, success, error);
+                    };
+
+                    AssetClient.prototype.StringToUint8Array = function (str) {
+                        var bufView = new Uint8Array(str.length);
+                        for (var i = 0, strLen = str.length; i < strLen; i++) {
+                            bufView[i] = str.charCodeAt(i);
+                        }
+                        return bufView;
+                    };
+
+                    AssetClient.prototype.Uint8ArrayToString = function (arr) {
+                        var result = '';
+                        for (var i = 0; i < arr.length; i++) {
+                            result += String.fromCharCode(arr[i]);
+                        }
+                        return result;
+                    };
+                    return AssetClient;
+                })(Xomni.BaseClient);
+                Assets.AssetClient = AssetClient;
+            })(Storage.Assets || (Storage.Assets = {}));
+            var Assets = Storage.Assets;
+        })(Management.Storage || (Management.Storage = {}));
+        var Storage = Management.Storage;
+    })(Xomni.Management || (Xomni.Management = {}));
+    var Management = Xomni.Management;
+})(Xomni || (Xomni = {}));
+var Models;
+(function (Models) {
+    (function (Management) {
+        (function (Configuration) {
+            (function (FacebookDisplayType) {
+                FacebookDisplayType[FacebookDisplayType["Page"] = 0] = "Page";
+                FacebookDisplayType[FacebookDisplayType["Popup"] = 1] = "Popup";
+                FacebookDisplayType[FacebookDisplayType["Touch"] = 2] = "Touch";
+            })(Configuration.FacebookDisplayType || (Configuration.FacebookDisplayType = {}));
+            var FacebookDisplayType = Configuration.FacebookDisplayType;
+        })(Management.Configuration || (Management.Configuration = {}));
+        var Configuration = Management.Configuration;
+    })(Models.Management || (Models.Management = {}));
+    var Management = Models.Management;
+})(Models || (Models = {}));
+;
+var Models;
+(function (Models) {
+    (function (Management) {
+        (function (Integration) {
+            (function (ServiceTierType) {
+                ServiceTierType[ServiceTierType["Developer"] = 0] = "Developer";
+                ServiceTierType[ServiceTierType["Standart"] = 1] = "Standart";
+                ServiceTierType[ServiceTierType["Premium"] = 2] = "Premium";
+            })(Integration.ServiceTierType || (Integration.ServiceTierType = {}));
+            var ServiceTierType = Integration.ServiceTierType;
+        })(Management.Integration || (Management.Integration = {}));
+        var Integration = Management.Integration;
+    })(Models.Management || (Models.Management = {}));
+    var Management = Models.Management;
+})(Models || (Models = {}));
+;
 var Xomni;
 (function (Xomni) {
     (function (Private) {
@@ -631,44 +773,6 @@ var Xomni;
         var Analytics = Private.Analytics;
     })(Xomni.Private || (Xomni.Private = {}));
     var Private = Xomni.Private;
-})(Xomni || (Xomni = {}));
-var Xomni;
-(function (Xomni) {
-    (function (Management) {
-        (function (Social) {
-            (function (Facebook) {
-                var FacebookClient = (function (_super) {
-                    __extends(FacebookClient, _super);
-                    function FacebookClient() {
-                        _super.apply(this, arguments);
-                        this.uri = "/management/social/facebookdisplaytypes";
-                    }
-                    FacebookClient.prototype.get = function (success, error) {
-                        var _this = this;
-                        this.httpProvider.get(this.uri, function (types) {
-                            var dict = _this.convertToDictionary(types);
-                            success(dict);
-                        }, error);
-                    };
-
-                    FacebookClient.prototype.convertToDictionary = function (types) {
-                        var dict = new Xomni.Dictionary();
-                        for (var key in types) {
-                            if (types.hasOwnProperty(key)) {
-                                dict.add(key, types[key]);
-                            }
-                        }
-                        return dict;
-                    };
-                    return FacebookClient;
-                })(Xomni.BaseClient);
-                Facebook.FacebookClient = FacebookClient;
-            })(Social.Facebook || (Social.Facebook = {}));
-            var Facebook = Social.Facebook;
-        })(Management.Social || (Management.Social = {}));
-        var Social = Management.Social;
-    })(Xomni.Management || (Xomni.Management = {}));
-    var Management = Xomni.Management;
 })(Xomni || (Xomni = {}));
 var Xomni;
 (function (Xomni) {

@@ -103,6 +103,7 @@
     <Content Include="src\css\styles.css" />
     <Content Include="src\index.html" />
     <Content Include="src\pages\management\integration-endpoint-page\integration-endpoint.html" />
+    <Content Include="src\pages\management\tenant-settings-page\tenant-settings.html" />
     <Content Include="src\pages\private\analytics-summary-page\analytics-summary.html" />
     <Content Include="src\scripts\jQDateRangeSlider-min.js" />
     <Content Include="src\scripts\moment-msdate.js" />
@@ -150,8 +151,8 @@
     <TypeScriptCompile Include="definitions\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="definitions\moment-msdate\moment-msdate.d.ts" />
     <TypeScriptCompile Include="definitions\moment\moment.d.ts" />
-    <TypeScriptCompile Include="definitions\xomni\xomni.d.ts" />
     <TypeScriptCompile Include="definitions\knockout-validation\knockout.validation.d.ts" />
+    <TypeScriptCompile Include="definitions\xomni\xomni.d.ts" />
     <TypeScriptCompile Include="src\app\infrastructure.ts" />
     <TypeScriptCompile Include="src\app\router.ts" />
     <TypeScriptCompile Include="src\app\startup.ts" />
@@ -163,12 +164,11 @@
     <TypeScriptCompile Include="src\pages\catalog\brand-page\brand.ts" />
     <TypeScriptCompile Include="src\components\navigation\navigation.ts" />
     <TypeScriptCompile Include="src\pages\management\integration-endpoint-page\integration-endpoint.ts" />
+    <TypeScriptCompile Include="src\pages\management\tenant-settings-page\tenant-settings.ts" />
     <TypeScriptCompile Include="src\pages\private\analytics-summary-page\analytics-summary.ts" />
     <TypeScriptCompile Include="src\references.d.ts" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\pages\management\tenant-settings-page\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
