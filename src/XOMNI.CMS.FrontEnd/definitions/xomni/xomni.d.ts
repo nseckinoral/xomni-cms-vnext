@@ -18,6 +18,29 @@
     }
     var currentContext: ClientContext;
 }
+declare module Xomni.Management.Company.DeviceMetadata {
+    class DeviceMetadataClient extends BaseClient {
+        private baseUri;
+        public post(licenceId: number, deviceId: string, metadata: Models.Management.Company.Metadata, success: (result: Models.Management.Company.Metadata) => void, error: (error: Models.ExceptionResult) => void): void;
+        public put(licenceId: number, deviceId: string, metadata: Models.Management.Company.Metadata, success: (result: Models.Management.Company.Metadata) => void, error: (error: Models.ExceptionResult) => void): void;
+        public delete(licenceId: number, deviceId: string, metadataKey: string, success: () => void, error: (error: Models.ExceptionResult) => void): void;
+        public deleteAll(licenceId: number, deviceId: string, success: () => void, error: (error: Models.ExceptionResult) => void): void;
+        public get(licenceId: number, deviceId: string, success: (result: Models.Management.Company.Metadata[]) => void, error: (error: Models.ExceptionResult) => void): void;
+        private validateLicenceIdAndDeviceId(licenceId, deviceId);
+        private validateMetadata(metadata);
+    }
+}
+declare module Xomni.Management.Company.DeviceTypes {
+    class DeviceTypesClient extends BaseClient {
+        private baseUri;
+        public post(deviceType: Models.Management.Company.DeviceType, success: (result: Models.Management.Company.DeviceType) => void, error: (error: Models.ExceptionResult) => void): void;
+        public put(deviceType: Models.Management.Company.DeviceType, success: (result: Models.Management.Company.DeviceType) => void, error: (error: Models.ExceptionResult) => void): void;
+        public delete(deviceTypeId: number, success: () => void, error: (error: Models.ExceptionResult) => void): void;
+        public get(deviceTypeId: number, success: (result: Models.Management.Company.DeviceType) => void, error: (error: Models.ExceptionResult) => void): void;
+        public getList(skip: number, take: number, succes: (result: Models.PaginatedContainer<Models.Management.Company.DeviceType>) => void, error: (error: Models.ExceptionResult) => void): void;
+        private validateDeviceType(deviceType);
+    }
+}
 declare module Xomni.Management.Configuration.ImageSizeProfile {
     class ImageSizeProfileClient extends BaseClient {
         private singleOperationBaseUrl;
@@ -90,6 +113,13 @@ declare module Xomni.Management.Integration.Endpoint {
         public delete(success: () => void, error: (error: Models.ExceptionResult) => void): void;
     }
 }
+declare module Xomni.Management.Integration.MSG {
+    class MSGClient extends BaseClient {
+        private uri;
+        public get(success: (result: Models.Management.Integration.MSGIntegration) => void, error: (error: Models.ExceptionResult) => void): void;
+        public post(createRequest: Models.Management.Integration.MSGIntegrationRequest, success: (result: Models.Management.Integration.MSGIntegrationResponse) => void, error: (error: Models.ExceptionResult) => void): void;
+    }
+}
 declare module Xomni.Management.Security.License {
     class LicenseClient extends BaseClient {
         private singleOperationBaseUrl;
@@ -104,12 +134,37 @@ declare module Xomni.Management.Security.License {
         public getUnassignedLicenses(onlyUnassignedUsers: boolean, success: (result: Models.PaginatedContainer<Models.Management.Security.License>) => void, error: (error: Models.ExceptionResult) => void): void;
     }
 }
+declare module Xomni.Management.Storage.Assets {
+    class AssetClient extends BaseClient {
+        private singleOperationBaseUrl;
+        private listOperationBaseUrl;
+        public getList(skip: number, take: number, success: (result: Models.PaginatedContainer<Models.Management.Storage.TenantAsset>) => void, error: (error: Models.ExceptionResult) => void): void;
+        public get(assetId: number, success: (result: Models.Management.Storage.TenantAssetDetail) => void, error: (error: Models.ExceptionResult) => void): void;
+        public delete(assetId: number, success: () => void, error: (error: Models.ExceptionResult) => void): void;
+        public post(tenantAssetDetail: Models.Management.Storage.TenantAssetDetail, success: (result: Models.Management.Storage.TenantAsset) => void, error: (error: Models.ExceptionResult) => void): void;
+        public put(tenantAssetDetail: Models.Management.Storage.TenantAssetDetail, success: (result: Models.Management.Storage.TenantAsset) => void, error: (error: Models.ExceptionResult) => void): void;
+        private StringToUint8Array(str);
+        private Uint8ArrayToString(arr);
+    }
+}
 declare module Models {
     interface ExceptionResult {
         IdentifierGuid: string;
         IdentifierTick: number;
         FriendlyDescription: string;
         HttpStatusCode: number;
+    }
+}
+declare module Models.Management.Company {
+    interface Metadata {
+        Key: string;
+        Value: string;
+    }
+}
+declare module Models.Management.Company {
+    interface DeviceType {
+        Id: number;
+        Description: string;
     }
 }
 declare module Models.Management.Configuration {
@@ -162,8 +217,8 @@ declare module Models.Management.Configuration {
         CacheExpirationTime: number;
         IsPassbookEnabled: boolean;
         PassbookPassTypeIdentifier: string;
-        PassbookWWDRCACertificateTenantAssetId: string;
-        PassbookCertificateTenantAssetId: string;
+        PassbookWWDRCACertificateTenantAssetId: number;
+        PassbookCertificateTenantAssetId: number;
         PassbookCertificatePassword: string;
         PassbookTeamIdentifier: string;
         PassbookOrganizationName: string;
@@ -172,6 +227,7 @@ declare module Models.Management.Configuration {
         TwitterConsumerKey: string;
         TwitterConsumerKeySecret: string;
         TwitterRedirectUri: string;
+        MailUnsubscribeRedirectionUri: string;
     }
 }
 declare module Models.Management.Configuration {
@@ -186,6 +242,26 @@ declare module Models.Management.Integration {
         AdminMail: string;
         ServiceName: string;
         ServiceTier: ServiceTierType;
+    }
+}
+declare module Models.Management.Integration {
+    interface MSGIntegrationRequest {
+        Email: string;
+        FirstName: string;
+        LastName: string;
+    }
+}
+declare module Models.Management.Integration {
+    interface MSGIntegrationResponse {
+        Email: string;
+        SsoUrl: string;
+        Password: string;
+    }
+}
+declare module Models.Management.Integration {
+    interface MSGIntegration {
+        Email: string;
+        SsoUrl: string;
     }
 }
 declare module Models.Management.Integration {
@@ -239,6 +315,11 @@ declare module Models.Management.Security {
         Name: string;
         Password: string;
         StoreId: number;
+    }
+}
+declare module Models.Management.Storage {
+    interface TenantAssetDetail extends TenantAsset {
+        FileBody: Uint8Array;
     }
 }
 declare module Models {
@@ -307,8 +388,8 @@ declare module Xomni.Management.Social.Facebook {
 declare module Xomni.Utils {
     class UrlGenerator {
         static PrepareOperationUrl(baseUrl: string, additionalQueryString: string): string;
-        static PrepareOperationUrlWithMultipleParameter(baseUrl: string, additionalQueryString: Dictionary<string, string>): string;
-        static ReplaceUri(baseUri: string, oldStringPattern: string, newStringPattern: string): string;
+        static PrepareOperationUrlWithMultipleParameters(baseUrl: string, additionalQueryString: Dictionary<string, string>): string;
+        static ReplaceUri(baseUrl: string, patterns: Dictionary<string, string>): string;
     }
 }
 declare module Xomni.Utils {
@@ -316,5 +397,12 @@ declare module Xomni.Utils {
         static isDefined(argName: string, argValue: any): void;
         static isGreaterThanOrEqual(argName: string, argValue: number, bound: number): void;
         static isLessThan(minValue: number, minParameterName: string, maxValue: number, maxParameterName?: string): void;
+    }
+}
+declare module Models.Management.Storage {
+    interface TenantAsset {
+        Id: number;
+        FileName: string;
+        MimeType: string;
     }
 }

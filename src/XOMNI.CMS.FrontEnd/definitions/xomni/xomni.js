@@ -97,6 +97,155 @@ var __extends = this.__extends || function (d, b) {
 var Xomni;
 (function (Xomni) {
     (function (Management) {
+        (function (Company) {
+            (function (DeviceMetadata) {
+                var DeviceMetadataClient = (function (_super) {
+                    __extends(DeviceMetadataClient, _super);
+                    function DeviceMetadataClient() {
+                        _super.apply(this, arguments);
+                        this.baseUri = "/management/company/licences/{licenceId}/devices/{deviceId}/metadata/";
+                    }
+                    DeviceMetadataClient.prototype.post = function (licenceId, deviceId, metadata, success, error) {
+                        this.validateLicenceIdAndDeviceId(licenceId, deviceId);
+                        this.validateMetadata(metadata);
+                        var uri = Xomni.Utils.UrlGenerator.ReplaceUri(this.baseUri, new Xomni.Dictionary([
+                            { key: "{licenceId}", value: licenceId.toString() },
+                            { key: "{deviceId}", value: deviceId }
+                        ]));
+
+                        this.httpProvider.post(uri, metadata, success, error);
+                    };
+
+                    DeviceMetadataClient.prototype.put = function (licenceId, deviceId, metadata, success, error) {
+                        this.validateLicenceIdAndDeviceId(licenceId, deviceId);
+                        this.validateMetadata(metadata);
+                        var uri = Xomni.Utils.UrlGenerator.ReplaceUri(this.baseUri, new Xomni.Dictionary([
+                            { key: "{licenceId}", value: licenceId.toString() },
+                            { key: "{deviceId}", value: deviceId }
+                        ]));
+
+                        this.httpProvider.put(uri, metadata, success, error);
+                    };
+
+                    DeviceMetadataClient.prototype.delete = function (licenceId, deviceId, metadataKey, success, error) {
+                        this.validateLicenceIdAndDeviceId(licenceId, deviceId);
+                        Xomni.Utils.Validator.isDefined("metadataKey", metadataKey);
+                        var uri = Xomni.Utils.UrlGenerator.ReplaceUri(this.baseUri, new Xomni.Dictionary([
+                            { key: "{licenceId}", value: licenceId.toString() },
+                            { key: "{deviceId}", value: deviceId }
+                        ]));
+                        uri = Xomni.Utils.UrlGenerator.PrepareOperationUrl(uri, metadataKey);
+
+                        this.httpProvider.delete(uri, success, error);
+                    };
+
+                    DeviceMetadataClient.prototype.deleteAll = function (licenceId, deviceId, success, error) {
+                        this.validateLicenceIdAndDeviceId(licenceId, deviceId);
+                        var uri = Xomni.Utils.UrlGenerator.ReplaceUri(this.baseUri, new Xomni.Dictionary([
+                            { key: "{licenceId}", value: licenceId.toString() },
+                            { key: "{deviceId}", value: deviceId }
+                        ]));
+
+                        this.httpProvider.delete(uri, success, error);
+                    };
+
+                    DeviceMetadataClient.prototype.get = function (licenceId, deviceId, success, error) {
+                        this.validateLicenceIdAndDeviceId(licenceId, deviceId);
+                        var uri = Xomni.Utils.UrlGenerator.ReplaceUri(this.baseUri, new Xomni.Dictionary([
+                            { key: "{licenceId}", value: licenceId.toString() },
+                            { key: "{deviceId}", value: deviceId }
+                        ]));
+
+                        this.httpProvider.get(uri, success, error);
+                    };
+
+                    DeviceMetadataClient.prototype.validateLicenceIdAndDeviceId = function (licenceId, deviceId) {
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("licenceId", licenceId, 1);
+                        Xomni.Utils.Validator.isDefined("deviceId", deviceId);
+                    };
+
+                    DeviceMetadataClient.prototype.validateMetadata = function (metadata) {
+                        Xomni.Utils.Validator.isDefined("metadata", metadata);
+                        Xomni.Utils.Validator.isDefined("key", metadata.Key);
+                        Xomni.Utils.Validator.isDefined("value", metadata.Value);
+                    };
+                    return DeviceMetadataClient;
+                })(Xomni.BaseClient);
+                DeviceMetadata.DeviceMetadataClient = DeviceMetadataClient;
+            })(Company.DeviceMetadata || (Company.DeviceMetadata = {}));
+            var DeviceMetadata = Company.DeviceMetadata;
+        })(Management.Company || (Management.Company = {}));
+        var Company = Management.Company;
+    })(Xomni.Management || (Xomni.Management = {}));
+    var Management = Xomni.Management;
+})(Xomni || (Xomni = {}));
+var Xomni;
+(function (Xomni) {
+    (function (Management) {
+        (function (Company) {
+            (function (DeviceTypes) {
+                var DeviceTypesClient = (function (_super) {
+                    __extends(DeviceTypesClient, _super);
+                    function DeviceTypesClient() {
+                        _super.apply(this, arguments);
+                        this.baseUri = "/management/company/devicetypes";
+                    }
+                    DeviceTypesClient.prototype.post = function (deviceType, success, error) {
+                        this.validateDeviceType(deviceType);
+
+                        this.httpProvider.post(this.baseUri, deviceType, success, error);
+                    };
+
+                    DeviceTypesClient.prototype.put = function (deviceType, success, error) {
+                        this.validateDeviceType(deviceType);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("id", deviceType.Id, 1);
+
+                        this.httpProvider.put(this.baseUri, deviceType, success, error);
+                    };
+
+                    DeviceTypesClient.prototype.delete = function (deviceTypeId, success, error) {
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("deviceTypeId", deviceTypeId, 1);
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrl(this.baseUri, deviceTypeId.toString());
+
+                        this.httpProvider.delete(uri, success, error);
+                    };
+
+                    DeviceTypesClient.prototype.get = function (deviceTypeId, success, error) {
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("deviceTypeId", deviceTypeId, 1);
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrl(this.baseUri, deviceTypeId.toString());
+
+                        this.httpProvider.get(uri, success, error);
+                    };
+
+                    DeviceTypesClient.prototype.getList = function (skip, take, succes, error) {
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("skip", skip, 0);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("take", take, 1);
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(this.baseUri, new Xomni.Dictionary([
+                            { key: "skip", value: skip.toString() },
+                            { key: "take", value: take.toString() }
+                        ]));
+
+                        this.httpProvider.get(uri, succes, error);
+                    };
+
+                    DeviceTypesClient.prototype.validateDeviceType = function (deviceType) {
+                        Xomni.Utils.Validator.isDefined("deviceType", deviceType);
+                        Xomni.Utils.Validator.isDefined("description", deviceType.Description);
+                        Xomni.Utils.Validator.isLessThan(deviceType.Description.length, "description length", 150);
+                    };
+                    return DeviceTypesClient;
+                })(Xomni.BaseClient);
+                DeviceTypes.DeviceTypesClient = DeviceTypesClient;
+            })(Company.DeviceTypes || (Company.DeviceTypes = {}));
+            var DeviceTypes = Company.DeviceTypes;
+        })(Management.Company || (Management.Company = {}));
+        var Company = Management.Company;
+    })(Xomni.Management || (Xomni.Management = {}));
+    var Management = Xomni.Management;
+})(Xomni || (Xomni = {}));
+var Xomni;
+(function (Xomni) {
+    (function (Management) {
         (function (Configuration) {
             (function (ImageSizeProfile) {
                 var ImageSizeProfileClient = (function (_super) {
@@ -109,7 +258,7 @@ var Xomni;
                     ImageSizeProfileClient.prototype.getList = function (skip, take, success, error) {
                         Xomni.Utils.Validator.isGreaterThanOrEqual("skip", skip, 0);
                         Xomni.Utils.Validator.isGreaterThanOrEqual("take", take, 1);
-                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameter(this.listOperationBaseUrl, new Xomni.Dictionary([
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(this.listOperationBaseUrl, new Xomni.Dictionary([
                             { key: "skip", value: skip.toString() },
                             { key: "take", value: take.toString() }
                         ]));
@@ -118,7 +267,7 @@ var Xomni;
 
                     ImageSizeProfileClient.prototype.get = function (imageSizeProfileId, success, error) {
                         Xomni.Utils.Validator.isGreaterThanOrEqual("imageSizeProfileId", imageSizeProfileId, 0);
-                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameter(this.singleOperationBaseUrl, new Xomni.Dictionary([
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(this.singleOperationBaseUrl, new Xomni.Dictionary([
                             { key: "id", value: imageSizeProfileId.toString() }
                         ]));
                         this.httpProvider.get(uri, success, error);
@@ -133,7 +282,7 @@ var Xomni;
 
                     ImageSizeProfileClient.prototype.delete = function (imageSizeProfileId, success, error) {
                         Xomni.Utils.Validator.isGreaterThanOrEqual("imageSizeProfileId", imageSizeProfileId, 0);
-                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameter(this.singleOperationBaseUrl, new Xomni.Dictionary([
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(this.singleOperationBaseUrl, new Xomni.Dictionary([
                             { key: "id", value: imageSizeProfileId.toString() }
                         ]));
                         this.httpProvider.delete(uri, success, error);
@@ -186,7 +335,7 @@ var Xomni;
                     StoreClient.prototype.getList = function (skip, take, success, error) {
                         Xomni.Utils.Validator.isGreaterThanOrEqual("skip", skip, 0);
                         Xomni.Utils.Validator.isGreaterThanOrEqual("take", take, 1);
-                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameter(this.listOperationBaseUrl, new Xomni.Dictionary([
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(this.listOperationBaseUrl, new Xomni.Dictionary([
                             { key: "skip", value: skip.toString() },
                             { key: "take", value: take.toString() }
                         ]));
@@ -370,6 +519,46 @@ var Xomni;
 var Xomni;
 (function (Xomni) {
     (function (Management) {
+        (function (Integration) {
+            (function (MSG) {
+                var MSGClient = (function (_super) {
+                    __extends(MSGClient, _super);
+                    function MSGClient() {
+                        _super.apply(this, arguments);
+                        this.uri = "/management/integration/msg";
+                    }
+                    MSGClient.prototype.get = function (success, error) {
+                        this.httpProvider.get(this.uri, success, error);
+                    };
+
+                    MSGClient.prototype.post = function (createRequest, success, error) {
+                        if (!createRequest.Email) {
+                            throw new Error("Email could not be null or empty.");
+                        }
+
+                        if (!createRequest.FirstName) {
+                            throw new Error("FirstName could not be null or empty.");
+                        }
+
+                        if (!createRequest.LastName) {
+                            throw new Error("LastName could not be null or empty.");
+                        }
+
+                        this.httpProvider.post(this.uri, createRequest, success, error);
+                    };
+                    return MSGClient;
+                })(Xomni.BaseClient);
+                MSG.MSGClient = MSGClient;
+            })(Integration.MSG || (Integration.MSG = {}));
+            var MSG = Integration.MSG;
+        })(Management.Integration || (Management.Integration = {}));
+        var Integration = Management.Integration;
+    })(Xomni.Management || (Xomni.Management = {}));
+    var Management = Xomni.Management;
+})(Xomni || (Xomni = {}));
+var Xomni;
+(function (Xomni) {
+    (function (Management) {
         (function (Security) {
             (function (License) {
                 var LicenseClient = (function (_super) {
@@ -389,7 +578,7 @@ var Xomni;
                     LicenseClient.prototype.getList = function (skip, take, success, error) {
                         Xomni.Utils.Validator.isGreaterThanOrEqual("skip", skip, 0);
                         Xomni.Utils.Validator.isGreaterThanOrEqual("take", take, 1);
-                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameter(this.listOperationBaseUrl, new Xomni.Dictionary([
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(this.listOperationBaseUrl, new Xomni.Dictionary([
                             { key: "skip", value: skip.toString() },
                             { key: "take", value: take.toString() }
                         ]));
@@ -419,7 +608,7 @@ var Xomni;
                     LicenseClient.prototype.getAuditLogs = function (skip, take, success, error) {
                         Xomni.Utils.Validator.isGreaterThanOrEqual("skip", skip, 0);
                         Xomni.Utils.Validator.isGreaterThanOrEqual("take", take, 1);
-                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameter(this.auditBaseUrl, new Xomni.Dictionary([
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(this.auditBaseUrl, new Xomni.Dictionary([
                             { key: "skip", value: skip.toString() },
                             { key: "take", value: take.toString() }
                         ]));
@@ -428,7 +617,7 @@ var Xomni;
 
                     LicenseClient.prototype.getUnassignedLicenses = function (onlyUnassignedUsers, success, error) {
                         Xomni.Utils.Validator.isDefined("onlyUnassignedUsers", onlyUnassignedUsers);
-                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameter(this.listOperationBaseUrl, new Xomni.Dictionary([
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(this.listOperationBaseUrl, new Xomni.Dictionary([
                             { key: "onlyUnassignedUsers", value: String(onlyUnassignedUsers) }
                         ]));
                         this.httpProvider.get(uri, success, error);
@@ -440,6 +629,110 @@ var Xomni;
             var License = Security.License;
         })(Management.Security || (Management.Security = {}));
         var Security = Management.Security;
+    })(Xomni.Management || (Xomni.Management = {}));
+    var Management = Xomni.Management;
+})(Xomni || (Xomni = {}));
+var Xomni;
+(function (Xomni) {
+    (function (Management) {
+        (function (Storage) {
+            (function (Assets) {
+                var AssetClient = (function (_super) {
+                    __extends(AssetClient, _super);
+                    function AssetClient() {
+                        _super.apply(this, arguments);
+                        this.singleOperationBaseUrl = "/management/storage/asset";
+                        this.listOperationBaseUrl = "/management/storage/assets";
+                    }
+                    AssetClient.prototype.getList = function (skip, take, success, error) {
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("skip", skip, 0);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("take", take, 1);
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(this.listOperationBaseUrl, new Xomni.Dictionary([
+                            { key: "skip", value: skip.toString() },
+                            { key: "take", value: take.toString() }
+                        ]));
+                        this.httpProvider.get(uri, success, error);
+                    };
+
+                    AssetClient.prototype.get = function (assetId, success, error) {
+                        var _this = this;
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("assetId", assetId, 0);
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(this.singleOperationBaseUrl, new Xomni.Dictionary([
+                            { key: "id", value: assetId.toString() }
+                        ]));
+                        this.httpProvider.get(uri, (function (r) {
+                            success({
+                                Id: r.Id,
+                                FileName: r.FileName,
+                                MimeType: r.MimeType,
+                                FileBody: _this.StringToUint8Array(atob(r.FileBody))
+                            });
+                        }), error);
+                    };
+
+                    AssetClient.prototype.delete = function (assetId, success, error) {
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("assetId", assetId, 0);
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(this.singleOperationBaseUrl, new Xomni.Dictionary([
+                            { key: "id", value: assetId.toString() }
+                        ]));
+                        this.httpProvider.delete(uri, success, error);
+                    };
+
+                    AssetClient.prototype.post = function (tenantAssetDetail, success, error) {
+                        Xomni.Utils.Validator.isDefined("tenantAssetDetail", tenantAssetDetail);
+                        Xomni.Utils.Validator.isDefined("FileName", tenantAssetDetail.FileName);
+                        Xomni.Utils.Validator.isDefined("MimeType", tenantAssetDetail.MimeType);
+                        Xomni.Utils.Validator.isDefined("FileBody", tenantAssetDetail.FileBody);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("FileName length", tenantAssetDetail.FileName.length, 1);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("Mimetype length", tenantAssetDetail.MimeType.length, 1);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("File body", tenantAssetDetail.FileBody.length, 1);
+                        this.httpProvider.post(this.singleOperationBaseUrl, {
+                            FileName: tenantAssetDetail.FileName,
+                            FileBody: btoa(this.Uint8ArrayToString(tenantAssetDetail.FileBody)),
+                            MimeType: tenantAssetDetail.MimeType
+                        }, success, error);
+                    };
+
+                    AssetClient.prototype.put = function (tenantAssetDetail, success, error) {
+                        Xomni.Utils.Validator.isDefined("tenantAssetDetail", tenantAssetDetail);
+                        Xomni.Utils.Validator.isDefined("Id", tenantAssetDetail.Id);
+                        Xomni.Utils.Validator.isDefined("FileName", tenantAssetDetail.FileName);
+                        Xomni.Utils.Validator.isDefined("MimeType", tenantAssetDetail.MimeType);
+                        Xomni.Utils.Validator.isDefined("FileBody", tenantAssetDetail.FileBody);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("Id", tenantAssetDetail.Id, 1);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("FileName length", tenantAssetDetail.FileName.length, 1);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("Mimetype length", tenantAssetDetail.MimeType.length, 1);
+                        Xomni.Utils.Validator.isGreaterThanOrEqual("File body", tenantAssetDetail.FileBody.length, 1);
+                        this.httpProvider.put(this.singleOperationBaseUrl, {
+                            Id: tenantAssetDetail.Id,
+                            FileName: tenantAssetDetail.FileName,
+                            FileBody: btoa(this.Uint8ArrayToString(tenantAssetDetail.FileBody)),
+                            MimeType: tenantAssetDetail.MimeType
+                        }, success, error);
+                    };
+
+                    AssetClient.prototype.StringToUint8Array = function (str) {
+                        var bufView = new Uint8Array(str.length);
+                        for (var i = 0, strLen = str.length; i < strLen; i++) {
+                            bufView[i] = str.charCodeAt(i);
+                        }
+                        return bufView;
+                    };
+
+                    AssetClient.prototype.Uint8ArrayToString = function (arr) {
+                        var result = '';
+                        for (var i = 0; i < arr.length; i++) {
+                            result += String.fromCharCode(arr[i]);
+                        }
+                        return result;
+                    };
+                    return AssetClient;
+                })(Xomni.BaseClient);
+                Assets.AssetClient = AssetClient;
+            })(Storage.Assets || (Storage.Assets = {}));
+            var Assets = Storage.Assets;
+        })(Management.Storage || (Management.Storage = {}));
+        var Storage = Management.Storage;
     })(Xomni.Management || (Xomni.Management = {}));
     var Management = Xomni.Management;
 })(Xomni || (Xomni = {}));
@@ -490,7 +783,7 @@ var Xomni;
                     PrivateApiUserClient.prototype.getList = function (skip, take, success, error) {
                         Xomni.Utils.Validator.isGreaterThanOrEqual("skip", skip, 0);
                         Xomni.Utils.Validator.isGreaterThanOrEqual("take", take, 1);
-                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameter(this.listOperationBaseUrl, new Xomni.Dictionary([
+                        var uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(this.listOperationBaseUrl, new Xomni.Dictionary([
                             { key: "skip", value: skip.toString() },
                             { key: "take", value: take.toString() }
                         ]));
@@ -548,7 +841,7 @@ var Xomni;
                     ClientCounterClient.prototype.get = function (success, error, continuationKey) {
                         var uri = this.clientCounterUri;
                         if (continuationKey != undefined) {
-                            uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameter(uri, new Xomni.Dictionary([
+                            uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(uri, new Xomni.Dictionary([
                                 { key: "continuationKey", value: continuationKey }
                             ]));
                         }
@@ -616,7 +909,7 @@ var Xomni;
 
                     ClientSideAnalyticsLogSummaryClient.prototype.PrepareUri = function (baseUri, counterName, startOADate, endOADate) {
                         var uri = baseUri.replace("{counterName}", counterName);
-                        uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameter(uri, new Xomni.Dictionary([
+                        uri = Xomni.Utils.UrlGenerator.PrepareOperationUrlWithMultipleParameters(uri, new Xomni.Dictionary([
                             { key: "startOADate", value: startOADate.toString() },
                             { key: "endOADate", value: endOADate.toString() }
                         ]));
@@ -679,10 +972,13 @@ var Xomni;
             UrlGenerator.PrepareOperationUrl = function (baseUrl, additionalQueryString) {
                 Xomni.Utils.Validator.isDefined("baseUrl", baseUrl);
                 Xomni.Utils.Validator.isDefined("additionalQueryString", additionalQueryString);
+                if (baseUrl.substring(baseUrl.length - 1) != "/") {
+                    baseUrl += "/";
+                }
                 return baseUrl + additionalQueryString;
             };
 
-            UrlGenerator.PrepareOperationUrlWithMultipleParameter = function (baseUrl, additionalQueryString) {
+            UrlGenerator.PrepareOperationUrlWithMultipleParameters = function (baseUrl, additionalQueryString) {
                 Xomni.Utils.Validator.isDefined("baseUrl", baseUrl);
                 Xomni.Utils.Validator.isDefined("additionalQueryString", additionalQueryString);
                 baseUrl += "?";
@@ -696,9 +992,13 @@ var Xomni;
                 return baseUrl;
             };
 
-            UrlGenerator.ReplaceUri = function (baseUri, oldStringPattern, newStringPattern) {
-                var uri = baseUri.replace(oldStringPattern, newStringPattern);
-                return uri;
+            UrlGenerator.ReplaceUri = function (baseUrl, patterns) {
+                Xomni.Utils.Validator.isDefined("baseUrl", baseUrl);
+                Xomni.Utils.Validator.isDefined("patterns", patterns);
+                for (var i = 0; i < patterns.keys().length; i++) {
+                    baseUrl = baseUrl.replace(patterns.keys()[i], patterns.values()[i]);
+                }
+                return baseUrl;
             };
             return UrlGenerator;
         })();

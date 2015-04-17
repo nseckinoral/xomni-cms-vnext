@@ -1,0 +1,38 @@
+﻿<article role="form">
+    <h1>My Style Genie Integration</h1>
+
+    <div data-bind="if: isEnabled(), visible: isEnabled()">
+        <p>
+            Email :
+            <span data-bind="text: email"></span>
+        </p>
+        <p data-bind="visible: password">
+            Password :
+            <span data-bind="text: password"></span>
+        </p>
+        <p>
+            Portal URL :
+            <a data-bind="attr:{href: ssoUrl,target: '_blank'}">Click</a>
+        </p>
+    </div>
+
+    <div data-bind="if: !isEnabled(), visible: !isEnabled()">
+        <div>
+            <p>
+                First Name:
+                <input data-bind="textInput: firstName" />
+            </p>
+            <p>
+                Last Name:
+                <input data-bind="textInput: lastName" />
+            </p>
+            <p>
+                Email:
+                <input data-bind="textInput: email" />
+            </p>
+            <button type="button" data-bind="click: enableIntegration" style="margin-left:15px;">
+                Enable
+            </button>
+        </div>
+    </div>
+</article>
