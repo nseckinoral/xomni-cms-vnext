@@ -15,6 +15,8 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public lastName = ko.observable<string>().extend({ required: true });
     public ssoUrl = ko.observable<string>();
     public password = ko.observable<string>();
+    public subscriptionKey = ko.observable<string>();
+    public endpoints = ko.observable([]);
     public validationErrors = ko.validation.group([this.email, this.firstName, this.lastName]);
 
     constructor() {
@@ -28,6 +30,8 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 this.email(t.Email);
                 this.ssoUrl(t.SsoUrl);
                 this.isEnabled(true);
+                this.endpoints(t.Endpoints);
+                this.subscriptionKey(t.SubscriptionKey);
             },
             (e) => {
                 if (e.HttpStatusCode == 404) {
@@ -52,6 +56,8 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     this.email(t.Email);
                     this.ssoUrl(t.SsoUrl);
                     this.isEnabled(true);
+                    this.endpoints(t.Endpoints);
+                    this.subscriptionKey(t.SubscriptionKey);
                 },
                 (e) => {
                     if (e.HttpStatusCode == 400) {
