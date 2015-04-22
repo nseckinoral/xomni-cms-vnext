@@ -1,0 +1,73 @@
+﻿<article role="form">
+    <h1>Tenant Settings</h1>
+
+    <div>
+        <p>
+            CDN Enabled:
+            <div>
+                <label for="rad1">On</label> <input type="radio" id="rad1" name="cdnEnabledGroup" value="true" data-bind="checked: cdnEnabled,checkedValue: true" />
+                <label for="rad2">Off</label><input type="radio" id="rad2" name="cdnEnabledGroup" value="false" data-bind="checked: cdnEnabled,checkedValue: false" />
+            </div>
+        </p>
+        <p>
+            CDN Url:
+            <input data-bind="textInput: cdnUrl,enable:cdnEnabled" />
+        </p>
+        <p>
+            Cache Expiration Time:
+            <input data-bind="textInput: cacheExpirationTime, enable:cdnEnabled" />
+        </p>
+        <p>
+            Is Passbook Enabled:
+            <div>
+                <input type="radio" id="rad3" name="isPassbookEnabledGroup" value="true" data-bind="checked: isPassbookEnabled,checkedValue: true" /><label for="rad3">On</label>
+                <input type="radio" id="rad4" name="isPassbookEnabledGroup" value="false" data-bind="checked: isPassbookEnabled,checkedValue: false" /><label for="rad4">Off</label>
+            </div>
+        </p>
+        <p>
+            Apple Pass Type Identifier:
+            <input data-bind="textInput: applePassTypeIdentifier,enable:isPassbookEnabled" />
+        </p>
+        <p>
+            Apple WWDRCA Certificate File Name:
+            <input type="file" data-bind="event:{change:function(){appleWWDRCACertificate($element.files[0])}},enable:isPassbookEnabled" />
+            <span data-bind="text: appleWWDRCACertificateFileName"></span>
+        </p>
+        <p>
+            Passbook Certificate File Name:
+            <input type="file" data-bind="event:{change:function(){passbookCertificate($element.files[0])}},enable:isPassbookEnabled" />
+            <span data-bind="text: passbookCertificateFileName"></span>
+
+        </p>
+        <p>
+            Passbook Certificate Password:
+            <input type="password" data-bind="textInput: passbookCertificatePassword,enable:isPassbookEnabled" />
+        </p>
+        <p>
+            Passbook Team Identifier:
+            <input data-bind="textInput: passbookTeamIdentifier,enable:isPassbookEnabled" />
+        </p>
+        <p>
+            Organization Name:
+            <input data-bind="textInput: passbookOrganizationName,enable:isPassbookEnabled" />
+        </p>
+        <p>
+            Popularity Time Impact Value:
+            <input data-bind="textInput: popularityTimeImpactValue" />
+        </p>
+        <p>
+            Search Indexing Enabled:
+            <div>
+                <input type="radio" id="rad5" name="isSearchIndexingEnabledGroup" value="true" data-bind="checked: isSearchIndexingEnabled,checkedValue: true" /><label for="rad5">On</label>
+                <input type="radio" id="rad6" name="isSearchIndexingEnabledGroup" value="false" data-bind="checked: isSearchIndexingEnabled,checkedValue: false" /><label for="rad6">Off</label>
+            </div>
+        </p>
+        <p>
+            Mail Unsubscribe Redirection Link:
+            <input data-bind="textInput: mailUnsubscribeRedirectionLink" />
+        </p>
+        <button type="button" data-bind="click: update" style="margin-left:15px;">
+            Update
+        </button>
+    </div>
+</article>

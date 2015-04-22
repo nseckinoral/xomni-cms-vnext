@@ -1,4 +1,19 @@
 ﻿declare module Xomni {
+    class Dictionary<K, V> {
+        private keyArray;
+        private valueArray;
+        constructor(init?: {
+            key: K;
+            value: V;
+        }[]);
+        public add(key: K, value: V): void;
+        public remove(key: K): void;
+        public keys(): K[];
+        public values(): V[];
+        public containsKey(key: K): boolean;
+    }
+}
+declare module Xomni {
     class HttpProvider {
         public get<T>(uri: string, success: (result: T) => void, error: (error: Models.ExceptionResult) => void): void;
         public put<T>(uri: string, data: any, success: (result: T) => void, error: (error: Models.ExceptionResult) => void): void;
@@ -17,6 +32,19 @@
         constructor(username: string, password: string, serviceUri: string);
     }
     var currentContext: ClientContext;
+}
+declare module Xomni.Management.Company.Device {
+    class DeviceClient extends BaseClient {
+        private baseUri;
+        public delete(deviceId: string, relatedLicenceId: number, success: () => void, error: (error: Models.ExceptionResult) => void): void;
+        public getList(skip: number, take: number, success: (success: Models.PaginatedContainer<Models.Management.Company.Device>) => void, error: (error: Models.ExceptionResult) => void): void;
+        public get(deviceId: string, relatedLicenceId: number, success: (success: Models.Management.Company.Device) => void, error: (error: Models.ExceptionResult) => void): void;
+        public post(device: Models.Management.Company.Device, success: (result: Models.Management.Company.Device) => void, error: (error: Models.ExceptionResult) => void): void;
+        public put(deviceId: string, device: Models.Management.Company.Device, success: (result: Models.Management.Company.Device) => void, error: (error: Models.ExceptionResult) => void): void;
+        private validateDevice(device);
+        private convertToDevice(deviceJson);
+        private convertToDeviceList(list);
+    }
 }
 declare module Xomni.Management.Company.DeviceMetadata {
     class DeviceMetadataClient extends BaseClient {
@@ -51,6 +79,13 @@ declare module Xomni.Management.Configuration.ImageSizeProfile {
         public delete(imageSizeProfileId: number, success: () => void, error: (error: Models.ExceptionResult) => void): void;
     }
 }
+declare module Xomni.Management.Configuration.Settings {
+    class SettingsClient extends BaseClient {
+        private uri;
+        public put(settings: Models.Management.Configuration.Settings, success: (result: Models.Management.Configuration.Settings) => void, error: (error: Models.ExceptionResult) => void): void;
+        public get(success: (result: Models.Management.Configuration.Settings) => void, error: (error: Models.ExceptionResult) => void): void;
+    }
+}
 declare module Xomni.Management.Configuration.Store {
     class StoreClient extends BaseClient {
         private singleOperationBaseUrl;
@@ -60,28 +95,6 @@ declare module Xomni.Management.Configuration.Store {
         public post(store: Models.Management.Configuration.Store, success: (result: Models.Management.Configuration.Store) => void, error: (error: Models.ExceptionResult) => void): void;
         public put(store: Models.Management.Configuration.Store, success: (result: Models.Management.Configuration.Store) => void, error: (error: Models.ExceptionResult) => void): void;
         public getList(skip: number, take: number, success: (result: Models.PaginatedContainer<Models.Management.Configuration.Store>) => void, error: (error: Models.ExceptionResult) => void): void;
-    }
-}
-declare module Xomni.Management.Configuration.Settings {
-    class SettingsClient extends BaseClient {
-        private uri;
-        public put(settings: Models.Management.Configuration.Settings, success: (result: Models.Management.Configuration.Settings) => void, error: (error: Models.ExceptionResult) => void): void;
-        public get(success: (result: Models.Management.Configuration.Settings) => void, error: (error: Models.ExceptionResult) => void): void;
-    }
-}
-declare module Xomni {
-    class Dictionary<K, V> {
-        private keyArray;
-        private valueArray;
-        constructor(init?: {
-            key: K;
-            value: V;
-        }[]);
-        public add(key: K, value: V): void;
-        public remove(key: K): void;
-        public keys(): K[];
-        public values(): V[];
-        public containsKey(key: K): boolean;
     }
 }
 declare module Xomni.Management.Configuration.TrendingActionTypes {
@@ -134,6 +147,24 @@ declare module Xomni.Management.Security.License {
         public getUnassignedLicenses(onlyUnassignedUsers: boolean, success: (result: Models.PaginatedContainer<Models.Management.Security.License>) => void, error: (error: Models.ExceptionResult) => void): void;
     }
 }
+declare module Xomni.Management.Security.PrivateApiUser {
+    class PrivateApiUserClient extends BaseClient {
+        private listOperationBaseUrl;
+        private singleOperationBaseUrl;
+        public getList(skip: number, take: number, success: (result: Models.PaginatedContainer<Models.Management.Security.ApiUser>) => void, error: (error: Models.ExceptionResult) => void): void;
+        public get(privateApiUserId: number, success: (result: Models.Management.Security.ApiUser) => void, error: (error: Models.ExceptionResult) => void): void;
+        public delete(privateApiUserId: number, success: () => void, error: (error: Models.ExceptionResult) => void): void;
+        public post(privateApiUser: Models.Management.Security.ApiUser, success: (result: Models.Management.Security.ApiUser) => void, error: (error: Models.ExceptionResult) => void): void;
+        public put(privateApiUser: Models.Management.Security.ApiUser, success: (result: Models.Management.Security.ApiUser) => void, error: (error: Models.ExceptionResult) => void): void;
+    }
+}
+declare module Xomni.Management.Social.Facebook {
+    class FacebookClient extends BaseClient {
+        private uri;
+        public get(success: (result: Dictionary<string, string>) => void, error: (error: Models.ExceptionResult) => void): void;
+        private convertToDictionary(types);
+    }
+}
 declare module Xomni.Management.Storage.Assets {
     class AssetClient extends BaseClient {
         private singleOperationBaseUrl;
@@ -156,15 +187,33 @@ declare module Models {
     }
 }
 declare module Models.Management.Company {
+    interface DeviceType {
+        Id: number;
+        Description: string;
+    }
+}
+declare module Models.Management.Company {
+    interface Device {
+        DeviceId: string;
+        Description: string;
+        DeviceTypeId: number;
+        DeviceTypeDescription: string;
+        ExpirationDate: UTCDate;
+        RelatedLicenceId: number;
+        RelatedLicenceName: string;
+    }
+}
+declare module Models.Management.Company {
     interface Metadata {
         Key: string;
         Value: string;
     }
 }
-declare module Models.Management.Company {
-    interface DeviceType {
-        Id: number;
-        Description: string;
+declare module Models.Management.Configuration {
+    enum FacebookDisplayType {
+        Page = 0,
+        Popup = 1,
+        Touch = 2,
     }
 }
 declare module Models.Management.Configuration {
@@ -190,23 +239,6 @@ declare module Models.Management.Configuration {
     }
 }
 declare module Models.Management.Configuration {
-    interface Store {
-        Id: number;
-        Name: string;
-        Description: string;
-        Address: string;
-        Location: Location;
-        Licenses: Licenses[];
-    }
-}
-declare module Models.Management.Configuration {
-    enum FacebookDisplayType {
-        Page = 0,
-        Popup = 1,
-        Touch = 2,
-    }
-}
-declare module Models.Management.Configuration {
     interface Settings {
         FacebookDisplayType: FacebookDisplayType;
         FacebookApplicationId: string;
@@ -228,6 +260,16 @@ declare module Models.Management.Configuration {
         TwitterConsumerKeySecret: string;
         TwitterRedirectUri: string;
         MailUnsubscribeRedirectionUri: string;
+    }
+}
+declare module Models.Management.Configuration {
+    interface Store {
+        Id: number;
+        Name: string;
+        Description: string;
+        Address: string;
+        Location: Location;
+        Licenses: Licenses[];
     }
 }
 declare module Models.Management.Configuration {
@@ -256,12 +298,16 @@ declare module Models.Management.Integration {
         Email: string;
         SsoUrl: string;
         Password: string;
+        SubscriptionKey: string;
+        Endpoints: string[];
     }
 }
 declare module Models.Management.Integration {
     interface MSGIntegration {
         Email: string;
         SsoUrl: string;
+        SubscriptionKey: string;
+        Endpoints: string[];
     }
 }
 declare module Models.Management.Integration {
@@ -269,17 +315,6 @@ declare module Models.Management.Integration {
         Developer = 0,
         Standart = 1,
         Premium = 2,
-    }
-}
-declare module Xomni.Management.Security.PrivateApiUser {
-    class PrivateApiUserClient extends BaseClient {
-        private listOperationBaseUrl;
-        private singleOperationBaseUrl;
-        public getList(skip: number, take: number, success: (result: Models.PaginatedContainer<Models.Management.Security.ApiUser>) => void, error: (error: Models.ExceptionResult) => void): void;
-        public get(privateApiUserId: number, success: (result: Models.Management.Security.ApiUser) => void, error: (error: Models.ExceptionResult) => void): void;
-        public delete(privateApiUserId: number, success: () => void, error: (error: Models.ExceptionResult) => void): void;
-        public post(privateApiUser: Models.Management.Security.ApiUser, success: (result: Models.Management.Security.ApiUser) => void, error: (error: Models.ExceptionResult) => void): void;
-        public put(privateApiUser: Models.Management.Security.ApiUser, success: (result: Models.Management.Security.ApiUser) => void, error: (error: Models.ExceptionResult) => void): void;
     }
 }
 declare module Models.Management.Security {
@@ -322,6 +357,13 @@ declare module Models.Management.Storage {
         FileBody: Uint8Array;
     }
 }
+declare module Models.Management.Storage {
+    interface TenantAsset {
+        Id: number;
+        FileName: string;
+        MimeType: string;
+    }
+}
 declare module Models {
     interface PaginatedContainer<T> {
         Results: T[];
@@ -359,6 +401,18 @@ declare module Models.Private.Analytics {
         Year: number;
     }
 }
+declare module Models {
+    class UTCDate {
+        private date;
+        private excessMillisecond;
+        constructor(date?: string);
+        public toJSON(key?: any): string;
+        public getDate(): Date;
+        public setDate(date?: string): void;
+        public toUTCString(): string;
+        private keepExcessMillisecond(date);
+    }
+}
 declare module Xomni.Private.Analytics.ClientCounters {
     class ClientCounterClient extends BaseClient {
         private clientCounterUri;
@@ -378,13 +432,6 @@ declare module Xomni.Private.Analytics.ClientSideAnalyticsSummary {
         private PrepareUri(baseUri, counterName, startOADate, endOADate);
     }
 }
-declare module Xomni.Management.Social.Facebook {
-    class FacebookClient extends BaseClient {
-        private uri;
-        public get(success: (result: Dictionary<string, string>) => void, error: (error: Models.ExceptionResult) => void): void;
-        private convertToDictionary(types);
-    }
-}
 declare module Xomni.Utils {
     class UrlGenerator {
         static PrepareOperationUrl(baseUrl: string, additionalQueryString: string): string;
@@ -397,12 +444,6 @@ declare module Xomni.Utils {
         static isDefined(argName: string, argValue: any): void;
         static isGreaterThanOrEqual(argName: string, argValue: number, bound: number): void;
         static isLessThan(minValue: number, minParameterName: string, maxValue: number, maxParameterName?: string): void;
-    }
-}
-declare module Models.Management.Storage {
-    interface TenantAsset {
-        Id: number;
-        FileName: string;
-        MimeType: string;
+        static isDateValid(argName: string, date: string): void;
     }
 }
