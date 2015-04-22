@@ -85,53 +85,53 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     update() {
         if (this.validationErrors().length === 0) {
             this.uploadTenantAssetsIfChanged();
-            while (this.appleWWDRCACertificateUploadStatus === TenantAssetUploadStatus.Uploading || this.passbookCertificateUploadStatus === TenantAssetUploadStatus.Uploading) {
+            var intervalId = setInterval(() => {
+                if (this.passbookCertificateUploadStatus !== TenantAssetUploadStatus.Failed && this.appleWWDRCACertificateUploadStatus !== TenantAssetUploadStatus.Failed) {
+                    clearInterval(intervalId);
+                    var settings: Models.Management.Configuration.Settings = {
+                        CacheExpirationTime: this.cacheExpirationTime(),
+                        CDNUrl: this.cdnUrl(),
+                        IsCDNEnabled: this.cdnEnabled(),
+                        IsPassbookEnabled: this.isPassbookEnabled(),
+                        MailUnsubscribeRedirectionUri: this.mailUnsubscribeRedirectionLink(),
+                        PassbookCertificatePassword: this.passbookCertificatePassword(),
+                        PassbookOrganizationName: this.passbookOrganizationName(),
+                        PassbookPassTypeIdentifier: this.applePassTypeIdentifier(),
+                        PassbookTeamIdentifier: this.passbookTeamIdentifier(),
+                        PassbookCertificateTenantAssetId: this.passbookCertificateAssetId,
+                        SearchIndexingEnabled: this.isSearchIndexingEnabled(),
+                        PopularityTimeImpactValue: this.popularityTimeImpactValue(),
+                        PassbookWWDRCACertificateTenantAssetId: this.appleWWDRCACertificateAssetId,
+                        FacebookApplicationId: this.currentSettings.FacebookApplicationId,
+                        FacebookApplicationSecretKey: this.currentSettings.FacebookApplicationSecretKey,
+                        FacebookDisplayType: this.currentSettings.FacebookDisplayType,
+                        FacebookRedirectUri: this.currentSettings.FacebookRedirectUri,
+                        TwitterConsumerKey: this.currentSettings.TwitterConsumerKey,
+                        TwitterConsumerKeySecret: this.currentSettings.TwitterConsumerKeySecret,
+                        TwitterRedirectUri: this.currentSettings.TwitterRedirectUri
+                    };
 
-            }
-            if (this.passbookCertificateUploadStatus !== TenantAssetUploadStatus.Failed && this.appleWWDRCACertificateUploadStatus !== TenantAssetUploadStatus.Failed) {
-                var settings: Models.Management.Configuration.Settings = {
-                    CacheExpirationTime: this.cacheExpirationTime(),
-                    CDNUrl: this.cdnUrl(),
-                    IsCDNEnabled: this.cdnEnabled(),
-                    IsPassbookEnabled: this.isPassbookEnabled(),
-                    MailUnsubscribeRedirectionUri: this.mailUnsubscribeRedirectionLink(),
-                    PassbookCertificatePassword: this.passbookCertificatePassword(),
-                    PassbookOrganizationName: this.passbookOrganizationName(),
-                    PassbookPassTypeIdentifier: this.applePassTypeIdentifier(),
-                    PassbookTeamIdentifier: this.passbookTeamIdentifier(),
-                    PassbookCertificateTenantAssetId: this.passbookCertificateAssetId,
-                    SearchIndexingEnabled: this.isSearchIndexingEnabled(),
-                    PopularityTimeImpactValue: this.popularityTimeImpactValue(),
-                    PassbookWWDRCACertificateTenantAssetId: this.appleWWDRCACertificateAssetId,
-                    FacebookApplicationId: this.currentSettings.FacebookApplicationId,
-                    FacebookApplicationSecretKey: this.currentSettings.FacebookApplicationSecretKey,
-                    FacebookDisplayType: this.currentSettings.FacebookDisplayType,
-                    FacebookRedirectUri: this.currentSettings.FacebookRedirectUri,
-                    TwitterConsumerKey: this.currentSettings.TwitterConsumerKey,
-                    TwitterConsumerKeySecret: this.currentSettings.TwitterConsumerKeySecret,
-                    TwitterRedirectUri: this.currentSettings.TwitterRedirectUri
-                };
+                    this.settingsClient.put(settings, t=> {
+                        this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.None;
+                        this.passbookCertificateUploadStatus = TenantAssetUploadStatus.None;
+                        this.bindFields(t);
+                    }, error=> {
+                            this.showErrorDialog();
+                        });
+                }
 
-                this.settingsClient.put(settings, t=> {
-                    this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.None;
-                    this.passbookCertificateUploadStatus = TenantAssetUploadStatus.None;
-                    this.bindFields(t);
-                }, error=> {
-                        this.showErrorDialog();
-                    });
-            }
-        }
-        else {
-            this.validationErrors.showAllMessages();
+                else {
+                    this.validationErrors.showAllMessages();
+                }
+            }, 2000);
         }
     }
-
     uploadTenantAssetsIfChanged() {
         if (this.appleWWDRCACertificate() !== undefined) {
             this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.Uploading;
             var reader = new FileReader();
             reader.onload = t=> {
-                var fileBody = new Uint8Array(this.reader.result);
+                var fileBody = new Uint8Array(reader.result);
                 this.storageClient.post({
                     Id: 0,
                     FileName: this.appleWWDRCACertificate().name,
@@ -144,6 +144,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
                     });
             };
+
             reader.onerror = t=> {
                 this.showCustomErrorDialog("An error occurred while reading file");
             };
