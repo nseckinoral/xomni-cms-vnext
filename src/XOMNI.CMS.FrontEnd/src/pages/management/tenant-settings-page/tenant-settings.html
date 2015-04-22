@@ -4,8 +4,10 @@
     <div>
         <p>
             CDN Enabled:
-            <input type="radio" id="rad1" name="cdnEnabledGroup" data-bind="checked: cdnEnabled" /><label for="rad1">On</label>
-            <input type="radio" id="rad2" name="cdnEnabledGroup" /><label for="rad2">Off</label>
+            <div>
+                <label for="rad1">On</label> <input type="radio" id="rad1" name="cdnEnabledGroup" value="true" data-bind="checked: cdnEnabled,checkedValue: true" />
+                <label for="rad2">Off</label><input type="radio" id="rad2" name="cdnEnabledGroup" value="false" data-bind="checked: cdnEnabled,checkedValue: false" />
+            </div>
         </p>
         <p>
             CDN Url:
@@ -17,8 +19,10 @@
         </p>
         <p>
             Is Passbook Enabled:
-            <input type="radio" id="rad3" name="isPassbookEnabledGroup" data-bind="checked: isPassbookEnabled" /><label for="rad3">On</label>
-            <input type="radio" id="rad4" name="isPassbookEnabledGroup" /><label for="rad4">Off</label>
+            <div>
+                <input type="radio" id="rad3" name="isPassbookEnabledGroup" value="true" data-bind="checked: isPassbookEnabled,checkedValue: true" /><label for="rad3">On</label>
+                <input type="radio" id="rad4" name="isPassbookEnabledGroup" value="false" data-bind="checked: isPassbookEnabled,checkedValue: false" /><label for="rad4">Off</label>
+            </div>
         </p>
         <p>
             Apple Pass Type Identifier:
@@ -50,8 +54,10 @@
         </p>
         <p>
             Search Indexing Enabled:
-            <input type="radio" id="rad5" name="isSearchIndexingEnabledGroup" value="1" data-bind="checked: !isSearchIndexingEnabled" /><label for="rad5">On</label>
-            <input type="radio" id="rad6" name="isSearchIndexingEnabledGroup" value="0" data-bind="checked: isSearchIndexingEnabled" /><label for="rad6">Off</label>
+            <div>
+                <input type="radio" id="rad5" name="isSearchIndexingEnabledGroup" value="true" data-bind="checked: isSearchIndexingEnabled,checkedValue: true" /><label for="rad5">On</label>
+                <input type="radio" id="rad6" name="isSearchIndexingEnabledGroup" value="false" data-bind="checked: isSearchIndexingEnabled,checkedValue: false" /><label for="rad6">Off</label>
+            </div>
         </p>
         <p>
             Mail Unsubscribe Redirection Link:

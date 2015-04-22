@@ -36,6 +36,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     passbookCertificateAssetId: number;
     appleCertificateReader: FileReader = new FileReader();
     developerCertificateReader: FileReader = new FileReader();
+
     constructor() {
         super();
         this.initalize();
@@ -51,6 +52,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             }
             );
     }
+
     bindFields(settings: Models.Management.Configuration.Settings) {
         this.cdnEnabled(settings.IsCDNEnabled);
         this.cdnUrl(settings.CDNUrl);
@@ -83,6 +85,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         this.mailUnsubscribeRedirectionLink(settings.MailUnsubscribeRedirectionUri);
         this.currentSettings = settings;
     }
+
     update() {
         if (this.validationErrors().length === 0) {
             this.uploadTenantAssetsIfChanged();
@@ -111,11 +114,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                         TwitterConsumerKeySecret: this.currentSettings.TwitterConsumerKeySecret,
                         TwitterRedirectUri: this.currentSettings.TwitterRedirectUri
                     };
-                    settings.TwitterConsumerKey = "sdadasd";
-                    settings.TwitterConsumerKeySecret = "asdasd";
-                    settings.TwitterRedirectUri = "http://xomni.com";
-
-                    console.log(settings.TwitterConsumerKeySecret);
 
                     this.settingsClient.put(settings, t=> {
                         this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.None;
@@ -125,13 +123,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                             this.showErrorDialog();
                         });
                 }
-
-                else {
-                    this.validationErrors.showAllMessages();
-                }
             }, 2000);
         }
+        else {
+            this.validationErrors.showAllMessages();
+        }
     }
+
     uploadTenantAssetsIfChanged() {
         if (this.appleWWDRCACertificate() !== undefined) {
             this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.Uploading;
@@ -147,7 +145,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                         this.appleWWDRCACertificateAssetId = t.Id;
                     }, e=> {
                         this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.Failed;
-
+                        this.showCustomErrorDialog("An error occurred while uploading file");
                     });
             };
 
@@ -171,6 +169,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                         this.passbookCertificateAssetId = t.Id;
                     }, e=> {
                         this.passbookCertificateUploadStatus = TenantAssetUploadStatus.Failed;
+                        this.showCustomErrorDialog("An error occurred while uploading file");
                     });
             };
             this.developerCertificateReader.onerror = t=> {
@@ -180,6 +179,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         }
     }
 }
+
 export enum TenantAssetUploadStatus {
     None= 0,
     Uploading,
