@@ -34,7 +34,8 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     passbookCertificateUploadStatus: TenantAssetUploadStatus;
     appleWWDRCACertificateAssetId: number;
     passbookCertificateAssetId: number;
-    reader: FileReader = new FileReader();
+    appleCertificateReader: FileReader = new FileReader();
+    developerCertificateReader: FileReader = new FileReader();
     constructor() {
         super();
         this.initalize();
@@ -110,6 +111,11 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                         TwitterConsumerKeySecret: this.currentSettings.TwitterConsumerKeySecret,
                         TwitterRedirectUri: this.currentSettings.TwitterRedirectUri
                     };
+                    settings.TwitterConsumerKey = "sdadasd";
+                    settings.TwitterConsumerKeySecret = "asdasd";
+                    settings.TwitterRedirectUri = "http://xomni.com";
+
+                    console.log(settings.TwitterConsumerKeySecret);
 
                     this.settingsClient.put(settings, t=> {
                         this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.None;
@@ -129,9 +135,8 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     uploadTenantAssetsIfChanged() {
         if (this.appleWWDRCACertificate() !== undefined) {
             this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.Uploading;
-            var reader = new FileReader();
-            reader.onload = t=> {
-                var fileBody = new Uint8Array(reader.result);
+            this.appleCertificateReader.onload = t=> {
+                var fileBody = new Uint8Array(this.appleCertificateReader.result);
                 this.storageClient.post({
                     Id: 0,
                     FileName: this.appleWWDRCACertificate().name,
@@ -139,23 +144,23 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     FileBody: fileBody
                 }, t=> {
                         this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.Completed;
+                        this.appleWWDRCACertificateAssetId = t.Id;
                     }, e=> {
                         this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.Failed;
 
                     });
             };
 
-            reader.onerror = t=> {
+            this.appleCertificateReader.onerror = t=> {
                 this.showCustomErrorDialog("An error occurred while reading file");
             };
-            reader.readAsArrayBuffer(this.appleWWDRCACertificate());
+            this.appleCertificateReader.readAsArrayBuffer(this.appleWWDRCACertificate());
         }
 
         if (this.passbookCertificate() !== undefined) {
             this.passbookCertificateUploadStatus = TenantAssetUploadStatus.Uploading;
-            var reader = new FileReader();
-            reader.onload = t=> {
-                var fileBody = new Uint8Array(reader.result);
+            this.developerCertificateReader.onload = t=> {
+                var fileBody = new Uint8Array(this.developerCertificateReader.result);
                 this.storageClient.post({
                     Id: 0,
                     FileName: this.passbookCertificate().name,
@@ -163,14 +168,15 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     FileBody: fileBody
                 }, t=> {
                         this.passbookCertificateUploadStatus = TenantAssetUploadStatus.Completed;
+                        this.passbookCertificateAssetId = t.Id;
                     }, e=> {
                         this.passbookCertificateUploadStatus = TenantAssetUploadStatus.Failed;
                     });
             };
-            reader.onerror = t=> {
+            this.developerCertificateReader.onerror = t=> {
                 this.showCustomErrorDialog("An error occurred while reading file");
             };
-            reader.readAsArrayBuffer(this.passbookCertificate());
+            this.developerCertificateReader.readAsArrayBuffer(this.passbookCertificate());
         }
     }
 }
