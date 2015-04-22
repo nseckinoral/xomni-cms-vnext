@@ -30,11 +30,14 @@
         </p>
         <p>
             Apple WWDRCA Certificate File Name:
-            <input type="file" data-bind="event:{change:function(){appleWWDRCACertificate($element.files[0])}},enable:isPassbookEnabled,textInput:appleWWDRCACertificateFileName" />
+            <input type="file" data-bind="event:{change:function(){appleWWDRCACertificate($element.files[0])}},enable:isPassbookEnabled" />
+            <span data-bind="text: appleWWDRCACertificateFileName"></span>
         </p>
         <p>
             Passbook Certificate File Name:
-            <input type="file" data-bind="event:{change:function(){passbookCertificate($element.files[0])}},enable:isPassbookEnabled,textInput:passbookCertificateFileName" />
+            <input type="file" data-bind="event:{change:function(){passbookCertificate($element.files[0])}},enable:isPassbookEnabled" />
+            <span data-bind="text: passbookCertificateFileName"></span>
+
         </p>
         <p>
             Passbook Certificate Password:
