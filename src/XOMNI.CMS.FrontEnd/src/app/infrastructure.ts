@@ -22,7 +22,19 @@ export module infrastructure {
     export class baseViewModel {
         constructor() {
             var userInfo = this.getAuthenticatedUserInfo();
-            Xomni.currentContext = new Xomni.ClientContext(userInfo.UserName, userInfo.Password, location.protocol + '//' + location.hostname.replace('cmsvnext', 'api'));
+            var apiUrl = this.getApiUrl();
+            Xomni.currentContext = new Xomni.ClientContext(userInfo.UserName, userInfo.Password, apiUrl);
+        }
+
+        private getApiUrl() {
+            var url: string;
+            if (Configuration.AppSettings.IsDebug) {
+                url = Configuration.AppSettings.XomniApiUrl;
+            }
+            else {
+                url = location.protocol + '//' + location.hostname.replace('cmsvnext', 'api');
+            }
+            return url;
         }
 
         public getAuthenticatedUserInfo(): AuthenticatedUser {
@@ -113,5 +125,6 @@ export module infrastructure {
         APIUsername: string;
         APIPassword: string;
         IsDebug: boolean;
+        XomniApiUrl: string;
     }
 }
