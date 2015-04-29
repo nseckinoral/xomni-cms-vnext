@@ -206,6 +206,7 @@ article[role="form"] {
     display: block;
     text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
     box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+    height:100vh;
 }
 
     article[role="form"] h1 {
@@ -291,6 +292,12 @@ button[type=button] {
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
 }
 
+button[type="button"].rightCorner {
+    min-width:82px;
+    max-width:92px;
+    float:right;
+}
+
 select {
     display: inline-block;
     width: 100%;
@@ -317,4 +324,34 @@ select {
 
 .validationMessage {
     color: red;
+}
+
+.validationElement {
+    border: 1px solid red;
+}
+
+.section {
+    display: block;
+    padding: 15px 10px;
+    background: #f7f7f7;
+    border: 1px solid #ececec;
+    overflow: hidden;
+    margin-bottom:1.5%;
+    border-radius:4px;
+}
+
+    .section label {
+        font-size: 1.4em;
+    }
+
+    .section .row {
+        line-height: 2.5;
+    }
+
+.col-md-8 input {
+    margin-top:5px;
+}
+
+.table label{
+    font-size:1em;
 }
