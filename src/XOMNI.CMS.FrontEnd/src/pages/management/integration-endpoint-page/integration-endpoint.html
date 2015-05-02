@@ -1,36 +1,75 @@
 ﻿<article role="form">
-    <h1>Integration Endpoint </h1>
-
-    <div data-bind="if: isEnabled(), visible: isEnabled()">
-        <p>
-            Service Name :
-            <span data-bind="text: serviceName"></span>
-        </p>
-        <p data-bind="visible: managementPortalUrl">
-            Management portal url :
-            <a data-bind="attr:{href: managementPortalUrl,target: '_blank'}">Click</a>
-        </p>
-        <p>
-            Status :
-            <span data-bind="text: endpointCreateStatus"></span>
-        </p>
-        <button type="button" data-bind="click: deleteEndpoint" style="margin-left:15px;">
-            Delete
-        </button>
-    </div>
-
-
-    <div data-bind="if: !isEnabled(), visible: !isEnabled()">
-        <div>
-            <p>
-                Admin Mail:
-                <input data-bind="textInput: adminMail" />
-            </p>
-            <p>Service Name: <input data-bind="textInput: serviceName" /></p>
-            <select data-bind="options:serviceTierOptions, optionsText:'Description', optionsValue:'Id',  value: serviceTier"></select>
-            <button type="button" data-bind="click: createEndpoint" style="margin-left:15px;">
+    <div class="row">
+        <div class="col-xs-6">
+            <h1>
+                Integration Endpoint
+            </h1>
+        </div>
+        <div data-bind="if: isEnabled(), visible: isEnabled()">
+            <button class="form-control rightCorner" type="button" data-bind="click: deleteEndpoint">
+                Delete
+            </button>
+        </div>
+        <div data-bind="if: !isEnabled(), visible: !isEnabled()">
+            <button class="form-control rightCorner" type="button" data-bind="click: createEndpoint">
                 Create
             </button>
+        </div>
+    </div>
+    <hr />
+
+    <div data-bind="if: isEnabled(), visible: isEnabled()">
+        <div class="section">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Service Name</th>
+                        <th>Management Portal Url</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label data-bind="text: serviceName"></label>
+                        </td>
+                        <td>
+                            <a data-bind="attr:{href: managementPortalUrl,target: '_blank'}">Click</a>
+                        </td>
+                        <td>
+                            <label data-bind="text: endpointCreateStatus"></label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div data-bind="if: !isEnabled(), visible: !isEnabled()">
+        <div class="section" data-bind='validationOptions: { insertMessages: false}'>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label>Admin Mail:</label>
+                    <input name="adminMail" class="form-control" type="text" data-bind="textInput: adminMail,validationElement:adminMail" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label>Service Name:</label>
+                    <input name="serviceName" class="form-control" type="text" data-bind='textInput: serviceName,validationElement:serviceName' />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label>Service Tier Option:</label>
+                    <select name="serviceTierOption" data-bind="options:serviceTierOptions, optionsText:'Description', optionsValue:'Id',  value: serviceTier"></select>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-info" data-bind="visible: validationErrors().length > 0 && showErrors()">
+            <strong>Form is not valid</strong> The form has following errors:
+            <ul data-bind="foreach: validationErrors()">
+                <li data-bind="text: $data"></li>
+            </ul>
         </div>
     </div>
 </article>
