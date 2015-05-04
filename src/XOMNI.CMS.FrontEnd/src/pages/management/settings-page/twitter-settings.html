@@ -1,0 +1,41 @@
+﻿<article role="form">
+    <div class="row">
+        <div class="col-xs-6">
+            <h1>
+                Edit Twitter Settings
+            </h1>
+        </div>
+        <button class="form-control rightCorner" type="button" data-bind="click:save">
+            Save
+        </button>
+    </div>
+    <hr />
+    <div class="section" data-bind='validationOptions: { insertMessages: false}'>
+        <div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label>Consumer Key:</label>
+                    <input type="text" class="form-control" data-bind="value:consumerKey,validationElement:consumerKey" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label>Consumer Secret Key:</label>
+                    <input type="text" class="form-control" data-bind="value:consumerSecretKey,validationElement:consumerSecretKey" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label>Redirection Uri:</label>
+                    <input type="text" class="form-control" data-bind="value:redirectUri,validationElement:redirectUri" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info" data-bind="visible: validationErrors().length > 0">
+        <strong>Form is not valid. Other fields should be filled.</strong> The form has following errors:
+        <ul data-bind="foreach: validationErrors()">
+            <li data-bind="text: $data"></li>
+        </ul>
+    </div>
+</article>

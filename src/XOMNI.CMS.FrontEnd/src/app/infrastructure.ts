@@ -85,6 +85,38 @@ export module infrastructure {
         public showErrorDialog() {
             shouter.notifySubscribers("An error occurred. Please try again.", "showError");
         }
+
+        public createErrorMessage(error: Models.ExceptionResult) {
+            var errorMessage = "{message}<br/><br/>{description} <br/>Error Code: {errorCode}";
+            errorMessage = errorMessage.replace("{errorCode}", error.IdentifierGuid);
+            errorMessage = errorMessage.replace("{description}", error.FriendlyDescription);
+            var message = "";
+            switch (error.HttpStatusCode) {
+                case 400:
+                    message = "Your client has issued a malformed or illegal request.";
+                    break;
+                case 401:
+                    message = "Unauthorized.";
+                    break;
+                case 404:
+                    message = "The resource you are looking for was not found.";
+                    break;
+                case 409:
+                    message = "Resource already exists!";
+                    break;
+                case 500:
+                    message = "The server encountered an error and could not complete your request.";
+                    break;
+                case 503:
+                    message = "Service Unavailable!";
+                    break;
+                default:
+                    message = "Something went wrong."
+                    break;
+            }
+            errorMessage = errorMessage.replace("{message}", message);
+            return errorMessage;
+        }
     }
 
     export interface AuthenticatedUser {
