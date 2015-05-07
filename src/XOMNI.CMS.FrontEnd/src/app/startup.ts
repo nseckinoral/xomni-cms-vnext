@@ -25,6 +25,7 @@ ko.components.register('management-msg-integration-page', { require: 'pages/mana
 ko.components.register('management-tenant-settings-page', { require: 'pages/management/tenant-settings-page/tenant-settings' });
 ko.components.register('management-twitter-settings-page', { require: 'pages/management/settings-page/twitter-settings' });
 ko.components.register('management-facebook-settings-page', { require: 'pages/management/settings-page/facebook-settings' });
+ko.components.register('private-mail-subscription-status-page', { require: 'pages/private/mail-subscription-status-page/mail-subscription-status' });
 //[[XO-SCAFFOLDER]]
 
 // Start the application
