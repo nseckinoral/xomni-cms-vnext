@@ -1,0 +1,109 @@
+﻿/// <amd-dependency path="xomni" />
+/// <amd-dependency path="text!./facebook-settings.html" />
+
+import $ = require("jquery");
+import ko = require("knockout");
+import cms = require("app/infrastructure");
+
+export var template: string = require("text!./facebook-settings.html");
+
+export class viewModel extends cms.infrastructure.baseViewModel {
+    public client = new Xomni.Management.Configuration.Settings.SettingsClient();
+    public displayType = ko.observable<number>();
+    public applicationId = ko.observable<string>();
+    public applicationSecretKey = ko.observable<string>();
+    public redirectUri = ko.observable<string>();
+    public displayTypeOptions = ko.observableArray([{ Id: 1, Type: "Page" }, { Id: 2, Type: "Popup" }, { Id: 3, Type: "Touch" }]);
+    public validationErrors = ko.validation.group([this.applicationId, this.applicationSecretKey, this.redirectUri]);
+    public settings = <Models.Management.Configuration.Settings>{};
+
+    constructor() {
+        super();
+        this.initialize();
+    }
+
+    initialize() {
+        try {
+            this.client.get(this.success, this.error);
+            this.initializeValidation();
+        }
+        catch (exception) {
+            this.showCustomErrorDialog(exception.Message);
+        }
+    }
+
+    initializeValidation() {
+        this.applicationId.extend({
+            required: {
+                message: "Facebook application id should be filled.",
+                onlyIf: () => {
+                    if (this.redirectUri() || this.applicationSecretKey()) {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        });
+
+        this.applicationSecretKey.extend({
+            required: {
+                message: "Facebook application secret key should be filled.",
+                onlyIf: () => {
+                    if (this.applicationId() || this.redirectUri()) {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        });
+
+        this.redirectUri.extend({
+            required: {
+                message: "Facebook redirect uri should be filled.",
+                onlyIf: () => {
+                    if (this.applicationId() || this.applicationSecretKey()) {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        });
+    }
+
+    save() {
+        if (this.validationErrors().length == 0) {
+            try {
+                this.settings.FacebookApplicationId = this.applicationId();
+                this.settings.FacebookApplicationSecretKey = this.applicationSecretKey();
+                this.settings.FacebookRedirectUri = this.redirectUri();
+                this.settings.FacebookDisplayType = this.displayType();
+                this.client.put(this.settings, this.success, this.error);
+            }
+            catch (exception) {
+                this.showCustomErrorDialog(exception.message);
+            }
+        }
+        else {
+            this.validationErrors.showAllMessages();
+            this.showCustomErrorDialog("If you have filled at least one field , the other fields should be filled.");
+        }
+    }
+
+    success = (result: Models.Management.Configuration.Settings) => {
+        try {
+            this.settings = result;
+            this.applicationId(result.FacebookApplicationId);
+            this.applicationSecretKey(result.FacebookApplicationSecretKey);
+            this.redirectUri(result.FacebookRedirectUri);
+            this.displayType(result.FacebookDisplayType);
+        }
+        catch (exception) {
+            this.showCustomErrorDialog(exception.message);
+        }
+    }
+
+    error = (error: Models.ExceptionResult) => {
+        var errorMessage = this.createErrorMessage(error);
+        this.showCustomErrorDialog(errorMessage);
+    }
+}
