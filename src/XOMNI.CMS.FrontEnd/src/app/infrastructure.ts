@@ -85,6 +85,14 @@ export module infrastructure {
         public showErrorDialog() {
             shouter.notifySubscribers("An error occurred. Please try again.", "showError");
         }
+
+        public createErrorMessage(error: Models.ExceptionResult) {
+            var errorMessage = "{description}<br/><br/>Error Code: {errorCode}";
+            errorMessage = errorMessage.replace("{errorCode}", error.IdentifierGuid);
+            errorMessage = errorMessage.replace("{description}", error.FriendlyDescription);
+
+            return errorMessage;
+        }
     }
 
     export interface AuthenticatedUser {

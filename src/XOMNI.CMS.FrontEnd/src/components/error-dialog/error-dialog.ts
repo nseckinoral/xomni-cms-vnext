@@ -9,7 +9,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     constructor() {
         super();
         cms.infrastructure.shouter.subscribe(errorMessage=> {
-            $('#dialogContent').text(<string>errorMessage);
+            $('#dialogContent').html(<string>errorMessage);
             $('#genericDialog').modal({ keyboard: false, show: true });
         }, this, "showError");
     }
