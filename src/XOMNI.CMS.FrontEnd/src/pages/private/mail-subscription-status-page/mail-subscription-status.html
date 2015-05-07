@@ -1,0 +1,51 @@
+﻿<article role="form">
+    <div class="row">
+        <div class="col-xs-6">
+            <h1>
+                Mail Subscription Status
+            </h1>
+        </div>
+        <button type="button" data-bind="click: getSubscriptionDetails" class="form-control rightCorner">
+            Get
+        </button>
+    </div>
+    <hr />
+    <div class="section" data-bind='validationOptions: { insertMessages: false}'>
+        <div class="row">
+            <div class="col-lg-12">
+                <label>Email :</label>
+                <input type="text" class="form-control" data-bind="textInput:email, validationElement:email" />
+            </div>
+        </div>
+    </div>
+    <div data-bind="visible: status">
+        <div class="section" data-bind='validationOptions: { insertMessages: false}'>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th data-bind="visible: piiName">PII Name :</th>
+                        <th>Last Mailing Trigger</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-bind="visible: piiName"><label data-bind="text:piiName" /></td>
+                        <td><label data-bind="text:purposeType" /></td>
+                        <td><label data-bind="text:status" /></td>
+                        <td>
+                            <a href="#" data-bind="click: updateSubscriptionStatus, visible: isSubscribable">Subscribe</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="alert alert-danger" data-bind="visible: validationErrors().length > 0">
+        <text class="generalErrorMessage">Required fields are missing.</text>
+        <ul data-bind="foreach: validationErrors()">
+            <li data-bind="text: $data"></li>
+        </ul>
+    </div>
+</article>
