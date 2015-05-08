@@ -65,8 +65,8 @@
                 </div>
             </div>
         </div>
-        <div class="alert alert-info" data-bind="visible: validationErrors().length > 0 && showErrors()">
-            <strong>Form is not valid</strong> The form has following errors:
+        <div class="alert alert-danger" data-bind="visible: validationErrors().length > 0 && showErrors()">
+            <text class="generalErrorMessage">Required fields are missing.</text>
             <ul data-bind="foreach: validationErrors()">
                 <li data-bind="text: $data"></li>
             </ul>

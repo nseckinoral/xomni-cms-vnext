@@ -206,7 +206,7 @@ article[role="form"] {
     display: block;
     text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
     box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
-    height:100vh;
+    height: 100vh;
 }
 
     article[role="form"] h1 {
@@ -293,9 +293,9 @@ button[type=button] {
 }
 
 button[type="button"].rightCorner {
-    min-width:82px;
-    max-width:92px;
-    float:right;
+    min-width: 82px;
+    max-width: 92px;
+    float: right;
 }
 
 select {
@@ -336,8 +336,8 @@ select {
     background: #f7f7f7;
     border: 1px solid #ececec;
     overflow: hidden;
-    margin-bottom:1.5%;
-    border-radius:4px;
+    margin-bottom: 1.5%;
+    border-radius: 4px;
 }
 
     .section label {
@@ -349,9 +349,26 @@ select {
     }
 
 .col-md-8 input {
-    margin-top:5px;
+    margin-top: 5px;
 }
 
-.table label{
-    font-size:1em;
+.table label {
+    font-size: 1em;
+}
+
+.alert.alert-danger {
+    background-color: #ffbfbf;
+    color: #806060;
+}
+
+    .alert.alert-danger ul {
+        margin-top: 5px;
+    }
+
+        .alert.alert-danger ul li {
+            font-size: 14px;
+        }
+
+.generalErrorMessage {
+    font-size: 15px;
 }
