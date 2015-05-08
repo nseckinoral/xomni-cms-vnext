@@ -372,3 +372,7 @@ select {
 .generalErrorMessage {
     font-size: 15px;
 }
+
+.table label{
+    font-size:1em;
+}
