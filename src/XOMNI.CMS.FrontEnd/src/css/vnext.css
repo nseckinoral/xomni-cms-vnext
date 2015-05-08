@@ -399,3 +399,7 @@ select {
 .modal-header .close {
     margin-top: -5px;
 }
+
+tr {
+    font-size:16px;
+}
