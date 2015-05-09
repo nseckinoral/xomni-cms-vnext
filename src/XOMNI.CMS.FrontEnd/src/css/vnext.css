@@ -391,10 +391,22 @@ select {
 }
 
     .modal-header.successfull h1,
-    .modal-header.error h1,
-    .modal-header.warning h1 {
+    .modal-header.error h1{
         color: #fff;
     }
+
+    .modal-header.warning h1 {
+        color: #624905;
+    }
+
+    .modal-header.successfull h1,
+    .modal-header.error h1,
+    .modal-header.warning h1 {
+        font-weight:bold;
+        font-family: 'Prenton', Arial, sans-serif;
+        font-size:18px;
+        letter-spacing:1px;
+    }     
 
 .modal-header .close {
     margin-top: -5px;
