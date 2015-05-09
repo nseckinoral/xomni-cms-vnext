@@ -20,7 +20,7 @@ requireJsOptimizerConfig = merge(requireJsRuntimeConfig, {
         'components/navigation/navigation',
         'components/licence-bar/licence-bar',
         'components/loading-modal/loading-modal',
-        'components/error-dialog/error-dialog',
+        'components/message-dialog/message-dialog',
         'pages/home-page/home',
         'text!pages/about-page/about.html'
     ],
@@ -32,7 +32,6 @@ requireJsOptimizerConfig = merge(requireJsRuntimeConfig, {
         'bundle-page-management-tenant-settings': ['pages/management/tenant-settings'],
         'bundle-page-management-msg-integration': ['pages/management/msg-integration']
 			//[[XO-SCAFFOLDER]]
-
     }
 });
 

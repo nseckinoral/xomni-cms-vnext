@@ -361,18 +361,41 @@ select {
     color: #806060;
 }
 
-    .alert.alert-danger ul {
-        margin-top: 5px;
-    }
+.alert.alert-danger ul {
+    margin-top: 5px;
+}
 
-        .alert.alert-danger ul li {
-            font-size: 14px;
-        }
+    .alert.alert-danger ul li {
+        font-size: 14px;
+    }
 
 .generalErrorMessage {
     font-size: 15px;
 }
 
-.table label{
-    font-size:1em;
+.table label {
+    font-size: 1em;
+}
+
+.modal-header.successfull {
+    background-color: #50A162;
+}
+
+.modal-header.error {
+    background-color: #D4746A;
+}
+
+.modal-header.warning {
+    background-color: #FAC31E;
+    opacity: 0.85;
+}
+
+    .modal-header.successfull h1,
+    .modal-header.error h1,
+    .modal-header.warning h1 {
+        color: #fff;
+    }
+
+.modal-header .close {
+    margin-top: -5px;
 }
