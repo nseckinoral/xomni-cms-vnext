@@ -32,7 +32,9 @@ We recommend everyone to take a look at the "CONTRIBUTING.md" document before st
 
 ## Requirements
 *  Install Visual Studio 2013 Update 2 or higher. 
-*  Install [**bower package manager**](http://bower.io) to your development environment.
+*  Install [**Git SCM**](http://git-scm.com/) as a part of the requirement set for **Bower**.
+*  Install [**NodeJS**](https://nodejs.org/) as a part of the requirement set for **Bower**
+*  Install [**bower package manager**](http://bower.io) to your development environment. 
 *  Install **SQL Server 2012 or higher**. **XOMNI.CMS.Backend** project needs **MSSQL** Database to provide navigation tree. Database generation and sample data script can be found in the **scripts** folder.
 *  Activate **Internet Information Service (IIS)** from **"Turn windows features on off"**.
 *  **XOMNI.CMS.Backend** project's web config file has **Master API** fields. If you want to access to Master API's, you can send us an email at  [support@xomni.com](mailto:support@xomni.com) 
