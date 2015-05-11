@@ -38,7 +38,7 @@ We recommend everyone to take a look at the "CONTRIBUTING.md" document before st
 *  Install **SQL Server 2012 or higher**. **XOMNI.CMS.Backend** project needs **MSSQL** Database to provide navigation tree. Database generation and sample data script can be found in the **scripts** folder.
 *  Activate **Internet Information Service (IIS)** from **"Turn windows features on off"**.
 *  **XOMNI.CMS.Backend** project's web config file has **Master API** fields. If you want to access to Master API's, you can send us an email at  [support@xomni.com](mailto:support@xomni.com) 
-*  **XOMNI.CMS.FrontEnd** project needs a **Tenant API's** in order to work successfully. You can get a tenant from [http://xomni.com/](http://xomni.com/)
+*  **XOMNI.CMS.FrontEnd** project needs access to the APIs of a XOMNI Cloud Platform Tenant hosted by XOMNI. You can imagine the XOMNI.CMS being a CMS on top of the XOMNI Cloud Platform APIs. With this picture in mind the XOMNI.CMS.Backend project might look confusing. The XOMNI.CMS.Backend project is related to the functionailty explicitly related to the CMS UI. The referred functionalities are not part of the XOMNI Cloud Platform APIs. In order to fully run the XOMNI.CMS you will need a XOMNI Cloud Platform Tenant. You can always get a tenant from [http://xomni.com/](http://xomni.com/) 
 
 ## Configuring Project Settings
 
