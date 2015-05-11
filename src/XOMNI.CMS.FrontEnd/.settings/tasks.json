@@ -1,0 +1,9 @@
+{
+	"version": "0.1.0",
+	"command": "tsc",
+	"showOutput": "silent",
+	"windows": {
+		"command": "tsc.exe"
+	},
+	"problemMatcher": "$tsc"
+}
