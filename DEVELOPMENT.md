@@ -50,7 +50,7 @@ We recommend everyone to take a look at the "CONTRIBUTING.md" document before st
 
 #### XOMNI.CMS.FrontEnd
 
-* This project needs some bower packages. You should restore bower packages before starting to work.
+* This project needs some bower packages. You need to restore bower packages before starting to work.
 	* Open **Git Shell** or your preferred command line tool. 
 	* Navigate to the solution folder on shell.
 		
@@ -60,7 +60,7 @@ We recommend everyone to take a look at the "CONTRIBUTING.md" document before st
 	* Run **bower install** command. Packages needed by XOMNI.CMS.FrontEnd will be automatically downloaded.
 	
 			C:\~\Documents\GitHub\xomni-cms-vnext\src\XOMNI.CMS.FrontEnd [dev]> bower install
-* This project also needs some nuget packages. You should restore nuget packages before starting to work.
+* This project also needs some nuget packages. You need to restore nuget packages before starting to work.
 * Enter XOMNI Api credentials and backend url to **appsettings.json**.
 * While we migrate the old CMS into the new CMS vNext environment there is a cookie based authentication in place to transition the authentication from old to the new CMS. In order to have a running local dev environment just for the CMS vNext you can simply disable cookie based authentication (Set IsDebug to true) and enter XOMNI API credentials (ApiUserName, ApiUserPassword) in **src/appSettings.json** to have a workaround in place.
 
