@@ -301,8 +301,9 @@ button[type="button"].rightCorner {
 
 select {
     display: inline-block;
-    width: 100%;
+    width: auto;
     margin: -2px;
+    margin-left:5px;
     padding: 4px 12px;
     margin-bottom: 0;
     font-size: 14px;
