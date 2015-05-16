@@ -296,6 +296,7 @@ button[type="button"].rightCorner {
     min-width: 82px;
     max-width: 92px;
     float: right;
+    margin-right:15px;
 }
 
 select {
