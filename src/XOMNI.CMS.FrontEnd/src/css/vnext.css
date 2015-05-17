@@ -301,9 +301,8 @@ button[type="button"].rightCorner {
 
 select {
     display: inline-block;
-    width: auto;
+    width: 100%;
     margin: -2px;
-    margin-left:5px;
     padding: 4px 12px;
     margin-bottom: 0;
     font-size: 14px;
@@ -322,6 +321,11 @@ select {
     -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
     -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+}
+
+select.form-control{
+    float: left;
+    width: auto;
 }
 
 .validationMessage {
