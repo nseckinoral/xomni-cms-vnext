@@ -10,14 +10,28 @@ export var template: string = require("text!./msg-integration.html");
 export class viewModel extends cms.infrastructure.baseViewModel {
     public client = new Xomni.Management.Integration.MSG.MSGClient();
     public isEnabled = ko.observable(false);
-    public email = ko.observable<string>().extend({ required: true, email: true });
-    public firstName = ko.observable<string>().extend({ required: true });
-    public lastName = ko.observable<string>().extend({ required: true });
+    public isVisible = ko.observable(false);
+    public email = ko.observable<string>().extend({
+        required: {
+            message:"Email is required."
+        }, email: true
+    });
+    public firstName = ko.observable<string>().extend({
+        required: {
+            message: "FirstName is required."
+        }
+    });
+    public lastName = ko.observable<string>().extend({
+        required: {
+            message:"LastName is required."
+        }
+    });
     public ssoUrl = ko.observable<string>();
     public password = ko.observable<string>();
     public subscriptionKey = ko.observable<string>();
     public endpoints = ko.observable([]);
     public validationErrors = ko.validation.group([this.email, this.firstName, this.lastName]);
+    public showErrors = ko.observable(false);
 
     constructor() {
         super();
@@ -30,6 +44,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 this.email(t.Email);
                 this.ssoUrl(t.SsoUrl);
                 this.isEnabled(true);
+                this.isVisible(true);
                 this.endpoints(t.Endpoints);
                 this.subscriptionKey(t.SubscriptionKey);
             },
@@ -40,6 +55,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 else {
                     this.showErrorDialog();
                 }
+                this.isVisible(true);
             }
             );
     }
@@ -71,6 +87,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         }
         else {
             this.validationErrors.showAllMessages();
+            this.showErrors(true);
         }
     }
 }
