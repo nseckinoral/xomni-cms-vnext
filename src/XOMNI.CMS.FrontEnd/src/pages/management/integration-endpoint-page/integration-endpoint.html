@@ -5,20 +5,22 @@
                 Integration Endpoint
             </h1>
         </div>
-        <div data-bind="if: isEnabled(), visible: isEnabled()">
-            <button class="form-control rightCorner" type="button" data-bind="click: deleteEndpoint">
-                Delete
-            </button>
-        </div>
-        <div data-bind="if: !isEnabled(), visible: !isEnabled()">
-            <button class="form-control rightCorner" type="button" data-bind="click: createEndpoint">
-                Create
-            </button>
+        <div data-bind="visible: isVisible()">
+            <div data-bind="if: isEnabled(), visible: isEnabled()">
+                <button class="form-control rightCorner" type="button" data-bind="click: deleteEndpoint">
+                    Delete
+                </button>
+            </div>
+            <div data-bind="if: !isEnabled(), visible: !isEnabled()">
+                <button class="form-control rightCorner" type="button" data-bind="click: createEndpoint">
+                    Create
+                </button>
+            </div>
         </div>
     </div>
     <hr />
 
-    <div data-bind="if: isEnabled(), visible: isEnabled()">
+    <div data-bind="if: isEnabled(), visible: isEnabled() && isVisible()">
         <div class="section">
             <table class="table">
                 <thead>
@@ -44,7 +46,7 @@
             </table>
         </div>
     </div>
-    <div data-bind="if: !isEnabled(), visible: !isEnabled()">
+    <div data-bind="if: !isEnabled(), visible: !isEnabled() && isVisible()">
         <div class="section" data-bind='validationOptions: { insertMessages: false}'>
             <div class="row">
                 <div class="col-lg-12">

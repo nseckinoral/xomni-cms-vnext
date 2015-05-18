@@ -10,6 +10,7 @@ export var template: string = require("text!./integration-endpoint.html");
 export class viewModel extends cms.infrastructure.baseViewModel {
     public client = new Xomni.Management.Integration.Endpoint.EndpointClient();
     public isEnabled = ko.observable(false);
+    public isVisible = ko.observable(false);
     public adminMail = ko.observable<string>().extend({
         required: {
             message : "Admin mail is required."
@@ -39,6 +40,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 this.serviceName(t.ServiceName);
                 this.endpointCreateStatus(Models.Management.Integration.EndpointStatusType[t.Status]);
                 this.isEnabled(true);
+                this.isVisible(true);
             },
             (e) => {
                 if (e.HttpStatusCode == 404) {
@@ -48,6 +50,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     cms.infrastructure.showLoading(false);
                     this.showErrorDialog();
                 }
+                this.isVisible(true);
             }
             );
     }
