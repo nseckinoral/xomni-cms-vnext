@@ -206,6 +206,7 @@ article[role="form"] {
     display: block;
     text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
     box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+    height: 100vh;
 }
 
     article[role="form"] h1 {
@@ -291,6 +292,13 @@ button[type=button] {
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
 }
 
+button[type="button"].rightCorner {
+    min-width: 82px;
+    max-width: 92px;
+    float: right;
+    margin-right:15px;
+}
+
 select {
     display: inline-block;
     width: 100%;
@@ -318,10 +326,62 @@ select {
 .validationMessage {
     color: red;
 }
-<<<<<<< HEAD
 
+<<<<<<< HEAD
 =======
->>>>>>> Added message-dialog modal.
+.validationElement {
+    border: 1px solid red;
+}
+
+.section {
+    display: block;
+    padding: 15px 10px;
+    background: #f7f7f7;
+    border: 1px solid #ececec;
+    overflow: hidden;
+    margin-bottom: 1.5%;
+    border-radius: 4px;
+}
+
+    .section label {
+        font-size: 1.4em;
+    }
+
+    .section .row {
+        line-height: 2.5;
+    }
+
+.col-md-8 input {
+    margin-top: 5px;
+}
+
+.table label {
+    font-size: 1em;
+}
+
+.alert.alert-danger {
+    background-color: #ffbfbf;
+    color: #806060;
+}
+
+.alert.alert-danger ul {
+    margin-top: 5px;
+}
+
+    .alert.alert-danger ul li {
+        font-size: 14px;
+    }
+
+.generalErrorMessage {
+    font-size: 15px;
+    margin-top:5px;
+}
+
+.table label {
+    font-size: 1em;
+}
+
+>>>>>>> Applied css to msg-integration screen.
 .modal-header.successfull {
     background-color: #50A162;
 }
@@ -335,7 +395,6 @@ select {
     opacity: 0.85;
 }
 
-<<<<<<< HEAD
 .modal-header.successfull h1,
 .modal-header.error h1 {
     color: #fff;
@@ -358,6 +417,7 @@ select {
     margin-top: -5px;
 }
 
+<<<<<<< HEAD
 .modal-body {
     padding: 20px 15px;
 }
@@ -400,25 +460,7 @@ select {
     background: #C4721F;
     color: #fff;
 =======
-    .modal-header.successfull h1,
-    .modal-header.error h1{
-        color: #fff;
-    }
-
-    .modal-header.warning h1 {
-        color: #624905;
-    }
-
-    .modal-header.successfull h1,
-    .modal-header.error h1,
-    .modal-header.warning h1 {
-        font-weight:bold;
-        font-family: 'Prenton', Arial, sans-serif;
-        font-size:18px;
-        letter-spacing:1px;
-    }     
-
-.modal-header .close {
-    margin-top: -5px;
->>>>>>> Added message-dialog modal.
+hr {
+    margin-top:10px;
+>>>>>>> Applied css to msg-integration screen.
 }

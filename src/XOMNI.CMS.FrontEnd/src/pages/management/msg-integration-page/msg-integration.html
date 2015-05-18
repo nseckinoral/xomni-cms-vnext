@@ -1,50 +1,80 @@
 ﻿<article role="form">
-    <h1>My Style Genie Integration</h1>
+    <div class="row">
+        <div class="col-xs-6">
+            <h1>
+                My Style Genie Integration
+            </h1>
+        </div>
+        <div data-bind="visible:isVisible()">
+            <div data-bind="if: !isEnabled(), visible: !isEnabled()">
+                <button type="button" data-bind="click: enableIntegration" class="form-control rightCorner">
+                    Enable
+                </button>
+            </div>
+            <div data-bind="if: isEnabled(), visible: isEnabled()">
+                <button type="button" class="form-control rightCorner">
+                    Disable
+                </button>
+            </div>
+        </div>
+    </div>
+    <hr />
 
-    <div data-bind="if: isEnabled(), visible: isEnabled()">
-        <p>
-            Email :
-            <span data-bind="text: email"></span>
-        </p>
-        <p data-bind="visible: password">
-            Password :
-            <span data-bind="text: password"></span>
-        </p>
-        <p>
-            Portal URL :
-            <a data-bind="attr:{href: ssoUrl,target: '_blank'}">Click</a>
-        </p>
-        <p>
-            Subscription Key :
-            <span data-bind="text: subscriptionKey"></span>
-        </p>
-        <p>
-            Endpoints :
-            <ul data-bind="foreach: endpoints" class="fifteenBox toRight">
-                <li>
-                    <span data-bind="text: $data"></span>
-                </li>
-            </ul>
-        </p>
+    <div data-bind="if: isEnabled(), visible: isEnabled() && isVisible()">
+        <div class="section" data-bind="validationOptions:{insertMessages:false}">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Portal Access</th>
+                        <th>Subscription Key</th>
+                        <th>Endpoints</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><label data-bind="text:email" /></td>
+                        <td><a data-bind="attr:{href: ssoUrl,target: '_blank'}">Click</a></td>
+                        <td><label data-bind="text:subscriptionKey" /></td>
+                        <td>
+                            <ul data-bind="foreach: endpoints" class="fifteenBox toRight">
+                                <li>
+                                    <span data-bind="text: $data"></span>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div data-bind="if: !isEnabled(), visible: !isEnabled()">
-        <div>
-            <p>
-                First Name:
-                <input data-bind="textInput: firstName" />
-            </p>
-            <p>
-                Last Name:
-                <input data-bind="textInput: lastName" />
-            </p>
-            <p>
-                Email:
-                <input data-bind="textInput: email" />
-            </p>
-            <button type="button" data-bind="click: enableIntegration" style="margin-left:15px;">
-                Enable
-            </button>
+    <div data-bind="if: !isEnabled(), visible: !isEnabled() && isVisible()">
+        <div class="section" data-bind='validationOptions: { insertMessages: false}'>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label>First Name:</label>
+                    <input type="text" class="form-control" data-bind="textInput: firstName,validationElement:firstName" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label>Last Name:</label>
+                    <input type="text" class="form-control" data-bind="textInput: lastName,validationElement:lastName" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label>Email:</label>
+                    <input type="text" class="form-control" data-bind="textInput: email,validationElement:email" />
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-danger" data-bind="visible: validationErrors().length > 0 && showErrors()">
+            <text class="generalErrorMessage">Required fields are missing.</text>
+            <ul data-bind="foreach: validationErrors()">
+                <li data-bind="text: $data"></li>
+            </ul>
         </div>
     </div>
 </article>
