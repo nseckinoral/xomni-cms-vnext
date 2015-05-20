@@ -40,6 +40,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public password = ko.observable<string>();
     public subscriptionKey = ko.observable<string>();
     public endpoints = ko.observable([]);
+    public pageInfo = ko.observable();
     public validationErrors = ko.validation.group([this.email, this.firstName, this.lastName]);
 
     constructor() {
@@ -48,6 +49,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     initalize() {
+        this.loadPageInfo();
         this.client.get(
             (t) => {
                 this.email(t.Email);
@@ -98,5 +100,14 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         else {
             this.validationErrors.showAllMessages();
         }
+    }
+
+    loadPageInfo() {
+        $.ajax("msg-info.json", {
+            async: true,
+            success: (t, d) => {
+                this.pageInfo(t);
+            }
+        });
     }
 }

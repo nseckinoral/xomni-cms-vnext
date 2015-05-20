@@ -417,3 +417,21 @@ select {
 hr {
     margin-top:10px;
 }
+
+.pageInfo {
+    margin-bottom: 20px;
+}
+
+    .pageInfo .header {
+        font-size: 16px;
+        font-family: Prenton;
+        font-weight: bold;
+        margin-bottom: 5px;
+        letter-spacing: 1px;
+    }
+
+    .pageInfo .body p{
+        margin-top: 10px;
+        text-align: justify;
+        line-height: 15px;
+    }

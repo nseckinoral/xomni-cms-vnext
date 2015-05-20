@@ -129,6 +129,7 @@
     </Content>
     <Content Include="definitions\xomni\xomni.js.map" />
     <Content Include="packages.config" />
+    <Content Include="src\msg-info.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
