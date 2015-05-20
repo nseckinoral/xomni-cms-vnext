@@ -11,19 +11,29 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public client = new Xomni.Management.Integration.MSG.MSGClient();
     public isEnabled = ko.observable(false);
     public isVisible = ko.observable(false);
+    public showErrors = ko.observable(false);
     public email = ko.observable<string>().extend({
         required: {
-            message:"Email is required."
+            onlyIf: () => {
+                return this.showErrors();
+            },
+            message: "Email is required."
         }, email: true
     });
     public firstName = ko.observable<string>().extend({
         required: {
+            onlyIf: () => {
+                return this.showErrors();
+            },
             message: "FirstName is required."
         }
     });
     public lastName = ko.observable<string>().extend({
         required: {
-            message:"LastName is required."
+            onlyIf: () => {
+                return this.showErrors();
+            },
+            message: "LastName is required."
         }
     });
     public ssoUrl = ko.observable<string>();
@@ -31,7 +41,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public subscriptionKey = ko.observable<string>();
     public endpoints = ko.observable([]);
     public validationErrors = ko.validation.group([this.email, this.firstName, this.lastName]);
-    public showErrors = ko.observable(false);
 
     constructor() {
         super();
@@ -61,6 +70,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     enableIntegration() {
+            this.showErrors(true);
         if (this.validationErrors().length == 0) {
             this.client.post({
                 Email: this.email(),
@@ -87,7 +97,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         }
         else {
             this.validationErrors.showAllMessages();
-            this.showErrors(true);
         }
     }
 }
