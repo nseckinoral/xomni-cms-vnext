@@ -19,7 +19,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
-    <Content Include="definitions\xomni\xomni.js" />
     <Content Include="gulpfile.js" />
     <Content Include="src\app\require.config.js" />
     <Content Include="src\components\dashboard\dashboard.html" />
@@ -127,8 +126,6 @@
     <Content Include="src\appSettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="definitions\xomni\xomni.js.map" />
-    <Content Include="packages.config" />
     <Content Include="src\msg-info.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
@@ -154,7 +151,6 @@
     <TypeScriptCompile Include="definitions\moment-msdate\moment-msdate.d.ts" />
     <TypeScriptCompile Include="definitions\moment\moment.d.ts" />
     <TypeScriptCompile Include="definitions\knockout-validation\knockout.validation.d.ts" />
-    <TypeScriptCompile Include="definitions\xomni\xomni.d.ts" />
     <TypeScriptCompile Include="src\app\infrastructure.ts" />
     <TypeScriptCompile Include="src\app\router.ts" />
     <TypeScriptCompile Include="src\app\startup.ts" />
