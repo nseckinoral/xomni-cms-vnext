@@ -72,7 +72,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     enableIntegration() {
-            this.showErrors(true);
+        this.showErrors(true);
         if (this.validationErrors().length == 0) {
             this.client.post({
                 Email: this.email(),
@@ -92,7 +92,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                         this.showCustomErrorDialog("Please enable integration endpoint first.");
                     }
                     else {
-                        this.showErrorDialog();
+                        this.showErrorDialog(e);
                     }
                 }
                 );
@@ -100,6 +100,17 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         else {
             this.validationErrors.showAllMessages();
         }
+    }
+
+    disableIntegration() {
+        this.client.delete(
+            () => {
+                this.initalize();
+            },
+            (e) => {
+                this.showErrorDialog(e);
+            }
+            );
     }
 
     loadPageInfo() {
