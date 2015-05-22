@@ -103,6 +103,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     disableIntegration() {
+        this.clearInputFields();
         this.client.delete(
             () => {
                 this.initalize();
@@ -111,6 +112,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 this.showErrorDialog(e);
             }
             );
+    }
+
+    clearInputFields() {
+        this.email("");
+        this.firstName("");
+        this.lastName("");
+        this.showErrors(false);
     }
 
     loadPageInfo() {
