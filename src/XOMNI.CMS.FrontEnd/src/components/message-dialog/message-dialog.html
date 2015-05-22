@@ -1,4 +1,4 @@
-﻿<div class="modal fade" id="genericDialog" tabindex="-1" role="dialog" aria-hidden="true">
+﻿<div class="modal fade" id="genericDialog" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-vertical-centered">
         <div class="modal-content">
             <div class="modal-header" id="header">
@@ -8,6 +8,10 @@
                 <h1 id="title"></h1>
             </div>
             <div id="dialogContent" class="modal-body">
+            </div>
+            <div style="visibility:hidden;" id="confirm" class="modal-footer">
+                <button class="btn btn-default" id="yes">Yes</button>
+                <button class="btn btn-default" tabindex="-1" autofocus id="no">No</button>
             </div>
         </div>
     </div>
