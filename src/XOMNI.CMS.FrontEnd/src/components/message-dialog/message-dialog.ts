@@ -21,8 +21,25 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     $('#header').addClass('error');
                     break;
             }
+
             $('#title').text(<string>content.Title);
             $('#dialogContent').html(<string>content.Body);
+
+            if (content.Click) {
+                $('#confirm').css("visibility", "visible");
+                $('#yes').bind({
+                    click: () => {
+                        $('#genericDialog').modal('hide');
+                        content.Click(content.DataContext);
+                    }
+                });
+                $('#no').bind({
+                    click: () => {
+                        $('#genericDialog').modal('hide');
+                    }
+                });
+            }
+
             $('#genericDialog').modal({ keyboard: false, show: true });
         }, this, "showDialog");
     }
