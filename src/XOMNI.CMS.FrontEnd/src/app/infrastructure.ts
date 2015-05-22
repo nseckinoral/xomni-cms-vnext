@@ -3,16 +3,22 @@
 
 import $ = require("jquery");
 import ko = require("knockout");
+import dialog = require("models/dialog-content");
 
 export module infrastructure {
     export var shouter = new ko.subscribable();
     export var showLoading = ko.observable<boolean>();
 
-    $.ajaxSettings.beforeSend = () => {
-        showLoading(true);
+    $.ajaxSettings.beforeSend = (jqXHR: any, settings: JQueryAjaxSettings) => {
+        if (settings.url.indexOf("xomni.com") > -1) {
+            jqXHR.isXomni = true;
+            showLoading(true);
+        }
     }
-    $.ajaxSettings.complete = () => {
-        showLoading(false);
+    $.ajaxSettings.complete = (jqXHR: any) => {
+        if (jqXHR.isXomni === true) {
+            showLoading(false);
+        }
     }
 
     showLoading.subscribe(t=> {
@@ -78,12 +84,51 @@ export module infrastructure {
             return user.Roles.indexOf(Roles[role]) !== -1;
         }
 
-        public showCustomErrorDialog(errorText: string) {
-            shouter.notifySubscribers(errorText, "showError");
+        public showErrorDialog(error?: Models.ExceptionResult) {
+            if (error) {
+                shouter.notifySubscribers(<dialog.DialogContent>{
+                    Body: this.createErrorMessage(error),
+                    Title: dialog.ContentType[this.identifyErrorType(error)],
+                    Type: this.identifyErrorType(error)
+                }, "showDialog");
+            }
+            else {
+                shouter.notifySubscribers(<dialog.DialogContent>{
+                    Body: "An error occurred. Please try again.",
+                    Title: "Error",
+                    Type: dialog.ContentType.Error
+                }, "showDialog");
+            }
         }
 
-        public showErrorDialog() {
-            shouter.notifySubscribers("An error occurred. Please try again.", "showError");
+        public showCustomErrorDialog(errorMessage: string) {
+            shouter.notifySubscribers(<dialog.DialogContent>{
+                Body: errorMessage,
+                Title: "Error",
+                Type: dialog.ContentType.Error
+            }, "showDialog");
+        }
+
+        public showDialog(content: dialog.DialogContent) {
+            shouter.notifySubscribers(content, "showDialog");
+        }
+
+        public createErrorMessage(error: Models.ExceptionResult) {
+            var errorMessage = "{description}<br/><br/>Error Code: {errorCode}";
+            errorMessage = errorMessage.replace("{errorCode}", error.IdentifierGuid);
+            errorMessage = errorMessage.replace("{description}", error.FriendlyDescription);
+
+            return errorMessage;
+        }
+
+        public identifyErrorType(error: Models.ExceptionResult) {
+            var digit = error.HttpStatusCode.toString()[0];
+            if (digit == '4') {
+                return dialog.ContentType.Warning;
+            }
+            else if (digit == '5') {
+                return dialog.ContentType.Error;
+            }
         }
     }
 
