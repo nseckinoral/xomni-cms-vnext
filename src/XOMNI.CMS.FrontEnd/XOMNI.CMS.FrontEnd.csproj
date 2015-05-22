@@ -19,7 +19,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
-    <Content Include="gulpfile.js" />
+    <Content Include="deployment\gulpfile.js" />
     <Content Include="src\app\require.config.js" />
     <Content Include="src\components\dashboard\dashboard.html" />
     <Content Include="src\components\licence-bar\licence-bar.html" />
