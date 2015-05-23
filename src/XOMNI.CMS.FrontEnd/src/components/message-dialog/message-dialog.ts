@@ -26,7 +26,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             $('#dialogContent').html(<string>content.Body);
 
             if (content.Click) {
-                $('#confirm').css("visibility", "visible");
+                $('#confirm').removeClass("invisible");
                 $('#yes').bind({
                     click: () => {
                         $('#genericDialog').modal('hide');

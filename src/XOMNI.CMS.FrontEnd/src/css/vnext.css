@@ -362,6 +362,11 @@ select {
     padding: 10px 15px 10px;
 }
 
+    #confirm.invisible {
+        display: none;
+        visibility: collapse;
+    }
+
     #confirm .btn {
         min-width: 64px;
     }
