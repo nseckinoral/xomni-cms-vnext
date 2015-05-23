@@ -31,7 +31,6 @@ We recommend everyone to take a look at the "CONTRIBUTING.md" document before st
         * The pages examplified above can be accessed by using a Uri like **'#/src/{private/management}/{page-name}'**
 
 ## Requirements
-*  You can use Visual Studio 2013 Update 2 or higher and Visual Studio Code on Windows or Visual Studio Code on MacOS and Linux platforms. 
 *  Install **Typescript 1.4**.
 *  Install [**Git SCM**](http://git-scm.com/) as a part of the requirement set for **Bower**.
 *  Install [**NodeJS**](https://nodejs.org/) as a part of the requirement set for **Bower**
