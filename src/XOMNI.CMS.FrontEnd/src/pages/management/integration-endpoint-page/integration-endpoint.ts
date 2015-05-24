@@ -13,7 +13,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public isVisible = ko.observable(false);
     public adminMail = ko.observable<string>().extend({
         required: {
-            message : "Admin mail is required."
+            message: "Admin mail is required."
         }, email: true
     });
     public serviceName = ko.observable<string>().extend({
@@ -38,7 +38,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             (t) => {
                 this.managementPortalUrl(t.ManagementPortalUrl);
                 this.serviceName(t.ServiceName);
-                this.endpointCreateStatus(Models.Management.Integration.EndpointStatusType[t.Status]);
+                this.endpointCreateStatus(IntegrationEndpointStatusType[t.Status]);
                 this.isEnabled(true);
                 this.isVisible(true);
             },
@@ -90,4 +90,10 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     showNoDataFoundDialog() {
         this.showCustomErrorDialog("No data found for selected dates.");
     }
+}
+
+export enum IntegrationEndpointStatusType {
+    InProgress = 1,
+    Enabled = 2,
+    Failed = 3,
 }
