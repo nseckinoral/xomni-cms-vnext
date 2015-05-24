@@ -39,6 +39,11 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     }
                 });
             }
+            else {
+                if (!$("#confirm").hasClass("invisible")) {
+                    $("#confirm").addClass("invisible");
+                }
+            }
 
             $('#genericDialog').modal({ keyboard: false, show: true });
         }, this, "showDialog");
