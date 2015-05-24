@@ -12,13 +12,21 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public client = new Xomni.Management.Integration.Endpoint.EndpointClient();
     public isEnabled = ko.observable(false);
     public isVisible = ko.observable(false);
+    public showErrors = ko.observable(false);
     public adminMail = ko.observable<string>().extend({
         required: {
-            message: "Admin mail is required."
-        }, email: true
+            onlyIf: () => {
+                return this.showErrors();
+            },
+            message: "Admin mail is required.",
+        },
+        email: true
     });
     public serviceName = ko.observable<string>().extend({
         required: {
+            onlyIf: () => {
+                return this.showErrors();
+            },
             message: "Service name is required."
         }
     });
@@ -27,7 +35,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public endpointCreateStatus = ko.observable<string>();
     public serviceTierOptions = ko.observableArray([{ Id: 1, Description: "Developer" }, { Id: 2, Description: "Standart" }, { Id: 3, Description: "Premium" }]);
     public validationErrors = ko.validation.group([this.adminMail, this.serviceName, this.serviceTier]);
-    public showErrors = ko.observable(false);
 
     constructor() {
         super();
@@ -57,6 +64,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     createEndpoint() {
+        this.showErrors(true);
         if (this.validationErrors().length == 0) {
             this.client.post({
                 AdminMail: this.adminMail(),
@@ -73,7 +81,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         }
         else {
             this.validationErrors.showAllMessages();
-            this.showErrors(true);
         }
     }
 
