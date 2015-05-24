@@ -4,6 +4,7 @@
 import $ = require("jquery");
 import ko = require("knockout");
 import cms = require("app/infrastructure");
+import dialog = require("models/dialog-content");
 
 export var template: string = require("text!./integration-endpoint.html");
 
@@ -77,14 +78,24 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     deleteEndpoint() {
-        this.client.delete(
-            () => {
-                this.initalize();
+        var content = <dialog.DialogContent>{
+            Body: "Are you sure you want to delete integration endpoint?",
+            Title: "Warning",
+            Type: dialog.ContentType.Warning,
+            Click: (context) => {
+                context.client.delete(
+                    () => {
+                        context.initalize();
+                    },
+                    (e) => {
+                        context.showErrorDialog(e);
+                    }
+                    );
+
             },
-            (e) => {
-                this.showErrorDialog();
-            }
-            );
+            DataContext: this
+        };
+        this.showDialog(content);
     }
 
     showNoDataFoundDialog() {
