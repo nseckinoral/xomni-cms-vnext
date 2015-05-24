@@ -18,6 +18,8 @@
 </head>
 <body>
     <div>
+        <message-dialog></message-dialog>
+        <loading-modal></loading-modal>
         <header role="banner">
             <img class="logo" src="images/logo-small.png" />
             <licence-bar params="route: route"></licence-bar>
@@ -30,8 +32,6 @@
             <div class="leftContainer" data-bind="component: { name: route().page, params: {route:route}}">
 
             </div>
-            <message-dialog></message-dialog>
-            <loading-modal></loading-modal>
         </div>
     </div>
 </body>

@@ -419,5 +419,83 @@ select.form-control{
 }
 
 hr {
-    margin-top:10px;
+    margin-top: 10px;
+}
+
+.modal-header.successfull {
+    background-color: #50A162;
+}
+
+.modal-header.error {
+    background-color: #D4746A;
+}
+
+.modal-header.warning {
+    background-color: #FAC31E;
+    opacity: 0.85;
+}
+
+.modal-header.successfull h1,
+.modal-header.error h1 {
+    color: #fff;
+}
+
+.modal-header.warning h1 {
+    color: #624905;
+}
+
+.modal-header.successfull h1,
+.modal-header.error h1,
+.modal-header.warning h1 {
+    font-weight: bold;
+    font-family: 'Prenton', Arial, sans-serif;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.modal-header .close {
+    margin-top: -5px;
+}
+
+.modal-body {
+    padding: 20px 15px;
+}
+
+#confirm {
+    padding: 10px 15px 10px;
+}
+
+    #confirm.invisible {
+        display: none;
+        visibility: collapse;
+    }
+
+    #confirm .btn {
+        min-width: 64px;
+    }
+
+#yes.btn-default {
+    background: #CB8C20;
+    color: #ffffff;
+}
+
+#no.btn-default {
+    background: #E39D24;
+    color: #ffffff;
+}
+
+#yes.btn-default:hover,
+#yes.btn-default:focus,
+#yes.btn-default:active,
+#yes.btn-default.active {
+    background: #C4721F;
+    color: #fff;
+}
+
+#no.btn-default:hover,
+#no.btn-default:focus,
+#no.btn-default:active,
+#no.btn-default.active {
+    background: #C4721F;
+    color: #fff;
 }

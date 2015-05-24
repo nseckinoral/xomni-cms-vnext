@@ -1,3 +1,6 @@
+// There is an issue defined on https://github.com/XomniCloud/xomni-cms-vnext/issues/16 related to this gulp file. 
+// Refrain from using this file until the issue is solved. 
+
 // Node modules
 var fs = require('fs'), vm = require('vm'), merge = require('deeply'), chalk = require('chalk'), es = require('event-stream');
 

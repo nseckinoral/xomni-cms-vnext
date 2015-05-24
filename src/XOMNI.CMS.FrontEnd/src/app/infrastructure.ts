@@ -9,11 +9,16 @@ export module infrastructure {
     export var shouter = new ko.subscribable();
     export var showLoading = ko.observable<boolean>();
 
-    $.ajaxSettings.beforeSend = () => {
-        showLoading(true);
+    $.ajaxSettings.beforeSend = (jqXHR: any, settings: JQueryAjaxSettings) => {
+        if (settings.url.indexOf("xomni.com") > -1) {
+            jqXHR.isXomni = true;
+            showLoading(true);
+        }
     }
-    $.ajaxSettings.complete = () => {
-        showLoading(false);
+    $.ajaxSettings.complete = (jqXHR: any) => {
+        if (jqXHR.isXomni === true) {
+            showLoading(false);
+        }
     }
 
     showLoading.subscribe(t=> {
