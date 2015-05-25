@@ -46,7 +46,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             (t) => {
                 this.managementPortalUrl(t.ManagementPortalUrl);
                 this.serviceName(t.ServiceName);
-                this.endpointCreateStatus(IntegrationEndpointStatusType[t.Status]);
+                this.endpointCreateStatus(this.getEndpointStatusTypeName(t.Status));
                 this.isEnabled(true);
                 this.isVisible(true);
             },
@@ -104,10 +104,14 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         };
         this.showDialog(content);
     }
-}
 
-export enum IntegrationEndpointStatusType {
-    InProgress = 1,
-    Enabled = 2,
-    Failed = 3,
+    getEndpointStatusTypeName(statusType: Models.Management.Integration.EndpointStatusType) {
+        switch (statusType) {
+            case Models.Management.Integration.EndpointStatusType.Succeeded:
+                return "Enabled";
+                break;
+            default:
+                return Models.Management.Integration.EndpointStatusType[statusType];
+        }
+    }
 }
