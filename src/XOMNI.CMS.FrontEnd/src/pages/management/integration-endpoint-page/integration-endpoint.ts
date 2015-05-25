@@ -104,10 +104,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         };
         this.showDialog(content);
     }
-
-    showNoDataFoundDialog() {
-        this.showCustomErrorDialog("No data found for selected dates.");
-    }
 }
 
 export enum IntegrationEndpointStatusType {
