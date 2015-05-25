@@ -98,11 +98,18 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                         context.showErrorDialog(e);
                     }
                     );
+                context.clearInputFields();
 
             },
             DataContext: this
         };
         this.showDialog(content);
+    }
+
+    clearInputFields() {
+        this.adminMail("");
+        this.serviceName("");
+        this.showErrors(false);
     }
 
     getEndpointStatusTypeName(statusType: Models.Management.Integration.EndpointStatusType) {
