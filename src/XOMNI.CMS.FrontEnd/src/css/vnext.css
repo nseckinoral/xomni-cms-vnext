@@ -323,6 +323,11 @@ select {
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
 }
 
+select.form-control{
+    float: left;
+    width: auto;
+}
+
 .validationMessage {
     color: red;
 }
@@ -377,6 +382,45 @@ select {
 
 .table label {
     font-size: 1em;
+}
+
+.modal-header.successfull {
+    background-color: #50A162;
+}
+
+.modal-header.error {
+    background-color: #D4746A;
+}
+
+.modal-header.warning {
+    background-color: #FAC31E;
+    opacity: 0.85;
+}
+
+    .modal-header.successfull h1,
+    .modal-header.error h1{
+        color: #fff;
+    }
+
+    .modal-header.warning h1 {
+        color: #624905;
+    }
+
+    .modal-header.successfull h1,
+    .modal-header.error h1,
+    .modal-header.warning h1 {
+        font-weight:bold;
+        font-family: 'Prenton', Arial, sans-serif;
+        font-size:18px;
+        letter-spacing:1px;
+    }     
+
+.modal-header .close {
+    margin-top: -5px;
+}
+
+hr {
+    margin-top: 10px;
 }
 
 .modal-header.successfull {
