@@ -101,6 +101,7 @@
     <Content Include="src\components\navigation\navigation.html" />
     <Content Include="src\css\styles.css" />
     <Content Include="src\index.html" />
+    <Content Include="src\pages\management\facebook-settings-page\facebook-settings.html" />
     <Content Include="src\pages\management\integration-endpoint-page\integration-endpoint.html" />
     <Content Include="src\pages\management\msg-integration-page\msg-integration.html" />
     <Content Include="src\pages\management\tenant-settings-page\tenant-settings.html" />
@@ -162,6 +163,7 @@
     <TypeScriptCompile Include="src\models\dialog-content.ts" />
     <TypeScriptCompile Include="src\pages\catalog\brand-page\brand.ts" />
     <TypeScriptCompile Include="src\components\navigation\navigation.ts" />
+    <TypeScriptCompile Include="src\pages\management\facebook-settings-page\facebook-settings.ts" />
     <TypeScriptCompile Include="src\pages\management\integration-endpoint-page\integration-endpoint.ts" />
     <TypeScriptCompile Include="src\pages\management\tenant-settings-page\tenant-settings.ts" />
     <TypeScriptCompile Include="src\pages\management\msg-integration-page\msg-integration.ts" />
