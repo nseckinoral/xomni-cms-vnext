@@ -24,6 +24,7 @@ ko.components.register('private-analytics-summary-page', { require: 'pages/priva
 ko.components.register('management-integration-endpoint-page', { require: 'pages/management/integration-endpoint-page/integration-endpoint' });
 ko.components.register('management-msg-integration-page', { require: 'pages/management/msg-integration-page/msg-integration' });
 ko.components.register('management-tenant-settings-page', { require: 'pages/management/tenant-settings-page/tenant-settings' });
+ko.components.register('management-twitter-settings-page', { require: 'pages/management/twitter-settings-page/twitter-settings' });
 //[[XO-SCAFFOLDER]]
 
 // Start the application
