@@ -34,7 +34,8 @@ requireJsOptimizerConfig = merge(requireJsRuntimeConfig, {
         'bundle-page-management-integration-endpoint': ['pages/management/integration-endpoint'],
         'bundle-page-management-tenant-settings': ['pages/management/tenant-settings'],
         'bundle-page-management-msg-integration': ['pages/management/msg-integration'],
-        'bundle-page-management-facebook-settings': ['pages/management/facebok-settings']
+        'bundle-page-management-facebook-settings': ['pages/management/facebok-settings'],
+        'bundle-page-management-twitter-settings': ['pages/management/twitter-settings'],
 			//[[XO-SCAFFOLDER]]
     }
 });
