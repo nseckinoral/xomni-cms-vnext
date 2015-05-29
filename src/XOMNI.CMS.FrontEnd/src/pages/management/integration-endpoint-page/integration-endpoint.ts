@@ -86,7 +86,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     deleteEndpoint() {
         var content = <dialog.DialogContent>{
-            Body: "Are you sure you want to delete integration endpoint?",
+            Body: '<div class="alert alert-warning">Deleting your integration endpoint will delete all related configuration and disable all third party data access integration as well.</div><br/>Are you sure you want to delete integration endpoint?',
             Title: "Warning",
             Type: dialog.ContentType.Warning,
             Click: (context) => {
@@ -99,7 +99,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     }
                     );
                 context.clearInputFields();
-
             },
             DataContext: this
         };
