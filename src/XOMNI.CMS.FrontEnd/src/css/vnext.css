@@ -420,6 +420,10 @@ select.form-control{
     margin-top: -5px;
 }
 
+.modal-footer {
+    margin-top: 0px;
+}
+
 hr {
     margin-top: 10px;
 }
@@ -497,6 +501,20 @@ hr {
     #confirm .btn {
         min-width: 64px;
     }
+
+#dialogContent.modal-body {
+    text-align: right;
+}
+
+    #dialogContent.modal-body .alert {
+        margin-bottom: 10px;
+    }
+
+        #dialogContent.modal-body .alert.alert-warning {
+            text-align: left;
+            background-color: #fbf4e2;
+            border-color: #fbf4e2;
+        }
 
 #yes.btn-default {
     background: #CB8C20;
