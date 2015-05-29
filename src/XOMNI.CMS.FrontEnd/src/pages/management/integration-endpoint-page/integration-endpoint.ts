@@ -4,14 +4,32 @@
 import $ = require("jquery");
 import ko = require("knockout");
 import cms = require("app/infrastructure");
+import dialog = require("models/dialog-content");
 
 export var template: string = require("text!./integration-endpoint.html");
 
 export class viewModel extends cms.infrastructure.baseViewModel {
     public client = new Xomni.Management.Integration.Endpoint.EndpointClient();
     public isEnabled = ko.observable(false);
-    public adminMail = ko.observable<string>().extend({ required: true, email: true });
-    public serviceName = ko.observable<string>().extend({ required: true });
+    public isVisible = ko.observable(false);
+    public showErrors = ko.observable(false);
+    public adminMail = ko.observable<string>().extend({
+        required: {
+            onlyIf: () => {
+                return this.showErrors();
+            },
+            message: "Admin mail is required.",
+        },
+        email: true
+    });
+    public serviceName = ko.observable<string>().extend({
+        required: {
+            onlyIf: () => {
+                return this.showErrors();
+            },
+            message: "Service name is required."
+        }
+    });
     public serviceTier = ko.observable<number>().extend({ required: true });
     public managementPortalUrl = ko.observable<string>();
     public endpointCreateStatus = ko.observable<string>();
@@ -28,8 +46,9 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             (t) => {
                 this.managementPortalUrl(t.ManagementPortalUrl);
                 this.serviceName(t.ServiceName);
-                this.endpointCreateStatus(Models.Management.Integration.EndpointStatusType[t.Status]);
+                this.endpointCreateStatus(this.getEndpointStatusTypeName(t.Status));
                 this.isEnabled(true);
+                this.isVisible(true);
             },
             (e) => {
                 if (e.HttpStatusCode == 404) {
@@ -39,11 +58,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     cms.infrastructure.showLoading(false);
                     this.showErrorDialog();
                 }
+                this.isVisible(true);
             }
             );
     }
 
     createEndpoint() {
+        this.showErrors(true);
         if (this.validationErrors().length == 0) {
             this.client.post({
                 AdminMail: this.adminMail(),
@@ -64,17 +85,39 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     deleteEndpoint() {
-        this.client.delete(
-            () => {
-                this.initalize();
+        var content = <dialog.DialogContent>{
+            Body: '<div class="alert alert-warning">Deleting your integration endpoint will delete all related configuration and disable all third party data access integration as well.</div><br/>Are you sure you want to delete integration endpoint?',
+            Title: "Warning",
+            Type: dialog.ContentType.Warning,
+            Click: (context) => {
+                context.client.delete(
+                    () => {
+                        context.initalize();
+                    },
+                    (e) => {
+                        context.showErrorDialog(e);
+                    }
+                    );
+                context.clearInputFields();
             },
-            (e) => {
-                this.showErrorDialog();
-            }
-            );
+            DataContext: this
+        };
+        this.showDialog(content);
     }
 
-    showNoDataFoundDialog() {
-        this.showCustomErrorDialog("No data found for selected dates.");
+    clearInputFields() {
+        this.adminMail("");
+        this.serviceName("");
+        this.showErrors(false);
+    }
+
+    getEndpointStatusTypeName(statusType: Models.Management.Integration.EndpointStatusType) {
+        switch (statusType) {
+            case Models.Management.Integration.EndpointStatusType.Succeeded:
+                return "Enabled";
+                break;
+            default:
+                return Models.Management.Integration.EndpointStatusType[statusType];
+        }
     }
 }

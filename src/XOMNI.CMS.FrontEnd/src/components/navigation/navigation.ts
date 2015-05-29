@@ -15,7 +15,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         //    this.loadSideMenu(t);
         //}, this, 'menuGroupId');
         this.route = params.route;
-        this.loadSideMenu(1);
+        this.loadSideMenu(2);
     }
 
     public fetchNavigationData(userRightId: number, success: (result: MenuItem[]) => void): any {

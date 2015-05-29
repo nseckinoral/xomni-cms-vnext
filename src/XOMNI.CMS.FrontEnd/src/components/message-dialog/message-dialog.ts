@@ -27,17 +27,24 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
             if (content.Click) {
                 $('#confirm').removeClass("invisible");
+                $('#yes').unbind();
                 $('#yes').bind({
                     click: () => {
                         $('#genericDialog').modal('hide');
                         content.Click(content.DataContext);
                     }
                 });
+                $('#no').unbind();
                 $('#no').bind({
                     click: () => {
                         $('#genericDialog').modal('hide');
                     }
                 });
+            }
+            else {
+                if (!$("#confirm").hasClass("invisible")) {
+                    $("#confirm").addClass("invisible");
+                }
             }
 
             $('#genericDialog').modal({ keyboard: false, show: true });
