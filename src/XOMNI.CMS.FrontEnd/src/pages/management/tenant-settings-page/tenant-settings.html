@@ -1,4 +1,6 @@
-﻿<article role="form">
+﻿
+<input type="checkbox" checked data-toggle="toggle">
+<article role="form">
     <div class="row">
         <div class="col-xs-6">
             <h1>Tenant Settings</h1>
@@ -13,19 +15,14 @@
         <div class="row">
             <div class="col-lg-12">
                 <label>CDN Enabled:</label>
-                <label for="rad1">On</label>
-                <input class="form-control" type="radio" id="rad1" name="cdnEnabledGroup" value="true" data-bind="checked: cdnEnabled,checkedValue: true" />
-                <label for="rad2">Off</label>
-                <input type="radio" id="rad2" name="cdnEnabledGroup" value="false" data-bind="checked: cdnEnabled,checkedValue: false" />
+                <input type="checkbox" data-bind="toggle: cdnEnabled">
             </div>
         </div>
-        <div class="row">
+        <div class="row" data-bind="visible: cdnEnabled">
             <div class="col-lg-12">
                 <label>CDN Url:</label>
-                <input class="form-control" data-bind="textInput: cdnUrl,enable:cdnEnabled" />
+                <input class="form-control" data-bind="textInput: cdnUrl, enable:cdnEnabled" />
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-12">
                 <label>Cache Expiration Time:</label>
                 <input class="form-control" data-bind="textInput: cacheExpirationTime, enable:cdnEnabled" />
@@ -34,45 +31,32 @@
         <div class="row">
             <div class="col-lg-12">
                 <label>Is Passbook Enabled:</label>
-                <div>
-                    <input type="radio" id="rad3" name="isPassbookEnabledGroup" value="true" data-bind="checked: isPassbookEnabled,checkedValue: true" /><label for="rad3">On</label>
-                    <input type="radio" id="rad4" name="isPassbookEnabledGroup" value="false" data-bind="checked: isPassbookEnabled,checkedValue: false" /><label for="rad4">Off</label>
-                </div>
+                <input type="checkbox" data-bind="toggle: isPassbookEnabled">
             </div>
         </div>
-        <div class="row">
+        <div class="row" data-bind="visible: isPassbookEnabled">
             <div class="col-lg-12">
                 <label>Apple Pass Type Identifier:</label>
                 <input class="form-control" data-bind="textInput: applePassTypeIdentifier,enable:isPassbookEnabled" />
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-12">
                 <label>Apple WWDRCA Certificate File Name:</label>
                 <input type="file" data-bind="event:{change:function(){appleWWDRCACertificate($element.files[0])}},enable:isPassbookEnabled" />
                 <span data-bind="text: appleWWDRCACertificateFileName"></span>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-12">
                 <label>Passbook Certificate File Name:</label>
                 <input type="file" data-bind="event:{change:function(){passbookCertificate($element.files[0])}},enable:isPassbookEnabled" />
                 <span data-bind="text: passbookCertificateFileName"></span>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-12">
                 <label>Passbook Certificate Password:</label>
                 <input class="form-control" type="password" data-bind="textInput: passbookCertificatePassword,enable:isPassbookEnabled" />
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-12">
                 <label>Passbook Team Identifier:</label>
                 <input class="form-control" data-bind="textInput: passbookTeamIdentifier,enable:isPassbookEnabled" />
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-12">
                 <label>Organization Name:</label>
                 <input class="form-control" data-bind="textInput: passbookOrganizationName,enable:isPassbookEnabled" />
@@ -87,10 +71,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <label>Search Indexing Enabled:</label>
-                <div>
-                    <input type="radio" id="rad5" name="isSearchIndexingEnabledGroup" value="true" data-bind="checked: isSearchIndexingEnabled,checkedValue: true" /><label for="rad5">On</label>
-                    <input type="radio" id="rad6" name="isSearchIndexingEnabledGroup" value="false" data-bind="checked: isSearchIndexingEnabled,checkedValue: false" /><label for="rad6">Off</label>
-                </div>
+                <input type="checkbox" data-bind="toggle: isSearchIndexingEnabled">
             </div>
         </div>
         <div class="row">

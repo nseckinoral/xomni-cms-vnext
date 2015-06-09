@@ -1,4 +1,5 @@
-﻿/// <amd-dependency path="xomni" />
+﻿/// <amd-dependency path="bootstrap-toggle" />
+/// <amd-dependency path="xomni" />
 /// <amd-dependency path="text!./tenant-settings.html" />
 
 import $ = require("jquery");
