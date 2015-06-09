@@ -11,7 +11,6 @@ export var template: string = require("text!./integration-endpoint.html");
 export class viewModel extends cms.infrastructure.baseViewModel {
     public client = new Xomni.Management.Integration.Endpoint.EndpointClient();
     public isEnabled = ko.observable(false);
-    public isVisible = ko.observable(false);
     public showErrors = ko.observable(false);
     public adminMail = ko.observable<string>().extend({
         required: {
@@ -32,10 +31,14 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     });
     public serviceTier = ko.observable<number>().extend({ required: true });
     public managementPortalUrl = ko.observable<string>();
-    public endpointCreateStatus = ko.observable<string>();
     public serviceTierOptions = ko.observableArray([{ Id: 1, Description: "Developer" }, { Id: 2, Description: "Standart" }, { Id: 3, Description: "Premium" }]);
     public validationErrors = ko.validation.group([this.adminMail, this.serviceName, this.serviceTier]);
-
+    public endpointCreateStatus = ko.observable<Models.Management.Integration.EndpointStatusType>();
+    public isInProgress = ko.computed<boolean>(() => this.endpointCreateStatus() === Models.Management.Integration.EndpointStatusType.InProgress);
+    public isFailed = ko.computed<boolean>(() => this.endpointCreateStatus() === Models.Management.Integration.EndpointStatusType.Failed);
+    public isSucceeded = ko.computed<boolean>(() => this.endpointCreateStatus() === Models.Management.Integration.EndpointStatusType.Succeeded);
+    public lastFailedServiceName = ko.observable<string>();
+    intervalId: number;
     constructor() {
         super();
         this.initalize();
@@ -44,11 +47,25 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     initalize() {
         this.client.get(
             (t) => {
+                this.isEnabled(true);
                 this.managementPortalUrl(t.ManagementPortalUrl);
                 this.serviceName(t.ServiceName);
-                this.endpointCreateStatus(this.getEndpointStatusTypeName(t.Status));
-                this.isEnabled(true);
-                this.isVisible(true);
+                this.endpointCreateStatus(t.Status);
+                if (t.Status === Models.Management.Integration.EndpointStatusType.InProgress) {
+                    if (this.intervalId === undefined) {
+                        this.intervalId = setInterval(() => this.initalize(), 10000);
+                    }
+                }
+                else {
+                    if (this.intervalId != undefined) {
+                        clearInterval(this.intervalId);
+                    }
+                    if (t.Status === Models.Management.Integration.EndpointStatusType.Failed) {
+                        this.lastFailedServiceName(t.ServiceName);
+                        this.clearInputFields();
+                        this.isEnabled(false);
+                    }
+                }
             },
             (e) => {
                 if (e.HttpStatusCode == 404) {
@@ -58,7 +75,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     cms.infrastructure.showLoading(false);
                     this.showErrorDialog();
                 }
-                this.isVisible(true);
             }
             );
     }
@@ -109,15 +125,5 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         this.adminMail("");
         this.serviceName("");
         this.showErrors(false);
-    }
-
-    getEndpointStatusTypeName(statusType: Models.Management.Integration.EndpointStatusType) {
-        switch (statusType) {
-            case Models.Management.Integration.EndpointStatusType.Succeeded:
-                return "Enabled";
-                break;
-            default:
-                return Models.Management.Integration.EndpointStatusType[statusType];
-        }
     }
 }
