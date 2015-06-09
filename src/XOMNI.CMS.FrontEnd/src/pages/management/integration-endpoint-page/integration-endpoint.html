@@ -1,33 +1,25 @@
 ﻿<article role="form">
     <div class="row">
         <div class="col-xs-6">
-            <h1>
-                Integration Endpoint
-            </h1>
+            <h1>Integration Endpoint</h1>
         </div>
-        <div data-bind="visible: isVisible()">
-            <div data-bind="if: isEnabled(), visible: isEnabled()">
-                <button class="form-control rightCorner" type="button" data-bind="click: deleteEndpoint">
-                    Delete
-                </button>
+        <div>
+            <div data-bind="if: isEnabled() && isSucceeded(), visible: isEnabled() && isSucceeded()">
+                <button class="form-control rightCorner" type="button" data-bind="click: deleteEndpoint">Delete</button>
             </div>
             <div data-bind="if: !isEnabled(), visible: !isEnabled()">
-                <button class="form-control rightCorner" type="button" data-bind="click: createEndpoint">
-                    Create
-                </button>
+                <button class="form-control rightCorner" type="button" data-bind="click: createEndpoint">Create</button>
             </div>
         </div>
     </div>
     <hr />
-
-    <div data-bind="if: isEnabled(), visible: isEnabled() && isVisible()">
+    <div data-bind="if: isEnabled() && isSucceeded(), visible: isEnabled() && isSucceeded()">
         <div class="section">
             <table class="table">
                 <thead>
                     <tr>
                         <th>Service Name</th>
                         <th>Management Portal Access</th>
-                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,16 +30,16 @@
                         <td>
                             <a data-bind="attr:{href: managementPortalUrl,target: '_blank'}">Click</a>
                         </td>
-                        <td>
-                            <label data-bind="text: endpointCreateStatus"></label>
-                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div data-bind="if: !isEnabled(), visible: !isEnabled() && isVisible()">
+    <div data-bind="if: !isEnabled(), visible: !isEnabled()">
         <div class="section" data-bind='validationOptions: { insertMessages: false}'>
+            <div data-bind="if: !isEnabled() && isFailed(), visible: !isEnabled() && isFailed()">
+                <span>Latest integration endpoint enable attempt was failed. Service name : <b><span data-bind="text:lastFailedServiceName"></span></b></span>
+            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <label>Admin Mail:</label>
@@ -73,6 +65,13 @@
             <ul data-bind="foreach: validationErrors()">
                 <li data-bind="text: $data"></li>
             </ul>
+        </div>
+    </div>
+    <div data-bind="if: isEnabled() && isInProgress(), visible: isEnabled() && isInProgress()">
+        You integration endpoint is creating...
+        <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-full-width" style="width:100%;" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+            </div>
         </div>
     </div>
 </article>
