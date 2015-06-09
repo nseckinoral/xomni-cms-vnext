@@ -15,7 +15,8 @@
         "moment": "~2.9.0",
         "jqueryui": "~1.11.3",
         "knockout-validation": "~2.0.2",
-        "xomni-sdk-ts": "~3.1.0"
+        "xomni-sdk-ts": "~3.1.0",
+        "bootstrap-toggle": "2.2.0"
     },
     "resolutions": {
         "knockout": "~3.2.0"
