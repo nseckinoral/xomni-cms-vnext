@@ -373,6 +373,10 @@ select {
     background-color: #ffbfbf;
     color: #806060;
 }
+.alert.alert-warning {
+    background-color: #faf2b9;
+    color: #655115;
+}
 
     .alert.alert-danger ul {
         margin-top: 5px;
@@ -570,4 +574,5 @@ hr {
     margin-left: 25%;
     margin-right: 27%;
     margin-top: 10px;
+    margin-bottom: 10px;
 }

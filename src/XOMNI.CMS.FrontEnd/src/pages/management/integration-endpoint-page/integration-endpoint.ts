@@ -38,6 +38,8 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public isFailed = ko.computed<boolean>(() => this.endpointCreateStatus() === Models.Management.Integration.EndpointStatusType.Failed);
     public isSucceeded = ko.computed<boolean>(() => this.endpointCreateStatus() === Models.Management.Integration.EndpointStatusType.Succeeded);
     public lastFailedServiceName = ko.observable<string>();
+    public lastFailedCreationDate = ko.observable<string>();
+
     intervalId: number;
     constructor() {
         super();
@@ -62,6 +64,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     }
                     if (t.Status === Models.Management.Integration.EndpointStatusType.Failed) {
                         this.lastFailedServiceName(t.ServiceName);
+                        this.lastFailedCreationDate(t.CreationDate.getDate().toLocaleString());
                         this.clearInputFields();
                         this.isEnabled(false);
                     }
