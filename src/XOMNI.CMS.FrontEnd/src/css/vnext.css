@@ -373,6 +373,10 @@ select {
     background-color: #ffbfbf;
     color: #806060;
 }
+.alert.alert-warning {
+    background-color: #faf2b9;
+    color: #655115;
+}
 
 .alert.alert-warning {
     background-color: #faf2b9;
