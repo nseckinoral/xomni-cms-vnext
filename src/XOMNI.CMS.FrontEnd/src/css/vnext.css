@@ -374,13 +374,18 @@ select {
     color: #806060;
 }
 
-    .alert.alert-danger ul {
-        margin-top: 5px;
-    }
+.alert.alert-warning {
+    background-color: #faf2b9;
+    color: #655115;
+}
 
-        .alert.alert-danger ul li {
-            font-size: 14px;
-        }
+.alert.alert-danger ul {
+    margin-top: 5px;
+}
+
+    .alert.alert-danger ul li {
+        font-size: 14px;
+    }
 
 .generalErrorMessage {
     font-size: 15px;
@@ -570,4 +575,9 @@ hr {
     margin-left: 25%;
     margin-right: 27%;
     margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.fontBold {
+    font-weight: 700;
 }

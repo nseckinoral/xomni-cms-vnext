@@ -36,10 +36,10 @@
         </div>
     </div>
     <div data-bind="if: !isEnabled(), visible: !isEnabled()">
+        <div class="alert alert-warning" data-bind="if: !isEnabled() && isFailed(), visible: !isEnabled() && isFailed()">
+            <text class="generalErrorMessage">Encountered an error while enabling the Integration Endpoint on <span class="fontBold" data-bind="text:lastFailedCreationDate"></span> with a service name of <span class="fontBold" data-bind="text:lastFailedServiceName"></span></text>
+        </div>
         <div class="section" data-bind='validationOptions: { insertMessages: false}'>
-            <div data-bind="if: !isEnabled() && isFailed(), visible: !isEnabled() && isFailed()">
-                <p class="text-danger">Latest integration endpoint enable attempt was failed. Service name : <b><span data-bind="text:lastFailedServiceName"></span></b></p>
-            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <label>Admin Mail:</label>
@@ -68,10 +68,11 @@
         </div>
     </div>
     <div class="center-block" data-bind="if: isEnabled() && isInProgress(), visible: isEnabled() && isInProgress()" style="text-align:center">
-        <p class="text-primary">Your integration endpoint is being created. Email will be sent to given admin email address when endpoint is created.</p>
+        <p class="text-primary">Your integration endpoint is being created.</p>
         <div class="progress progress-striped active centralized-progress-bar">
             <div class="progress-bar progress-bar-full-width" style="width:100%;" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
             </div>
         </div>
+        <p class="text-primary">Stay tuned. You will receive an e-mail notification once the endpoint is successfully created.</p>
     </div>
 </article>
