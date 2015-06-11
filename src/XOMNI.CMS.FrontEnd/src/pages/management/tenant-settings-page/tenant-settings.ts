@@ -11,20 +11,82 @@ export var template: string = require("text!./tenant-settings.html");
 export class viewModel extends cms.infrastructure.baseViewModel {
     public settingsClient = new Xomni.Management.Configuration.Settings.SettingsClient();
     public storageClient = new Xomni.Management.Storage.Assets.AssetClient();
+
     //observables
     public cdnEnabled = ko.observable<boolean>();
-    public cdnUrl = ko.observable<string>().extend({ required: { onlyIf: () => this.cdnEnabled() } });
-    public cacheExpirationTime = ko.observable<number>().extend({ required: { onlyIf: () => this.cdnEnabled() } });
+
+    public cdnUrl = ko.observable<string>().extend({
+        required: {
+            message: "CDN Url should be filled.",
+            onlyIf: () => this.cdnEnabled()
+        }
+    });
+
+    public cacheExpirationTime = ko.observable<number>().extend({
+        required: {
+            message: "Cache expiration time should be filled.",
+            onlyIf: () => this.cdnEnabled()
+        }
+    });
+
     public isPassbookEnabled = ko.observable<boolean>();
-    public applePassTypeIdentifier = ko.observable<string>().extend({ required: { onlyIf: () => this.isPassbookEnabled() } });
-    public appleWWDRCACertificateFileName = ko.observable<string>().extend({ required: { onlyIf: () => this.isPassbookEnabled() } });
-    public passbookCertificateFileName = ko.observable<string>().extend({ required: { onlyIf: () => this.isPassbookEnabled() } });
-    public passbookCertificatePassword = ko.observable<string>().extend({ required: { onlyIf: () => this.isPassbookEnabled() } });
-    public passbookTeamIdentifier = ko.observable<string>().extend({ required: { onlyIf: () => this.isPassbookEnabled() } });
-    public passbookOrganizationName = ko.observable<string>().extend({ required: { onlyIf: () => this.isPassbookEnabled() } });
-    public popularityTimeImpactValue = ko.observable<number>().extend({ required: true });
+
+    public applePassTypeIdentifier = ko.observable<string>().extend({
+        required: {
+            message: "Apple Pass Type Identifer should be filled.",
+            onlyIf: () => this.isPassbookEnabled()
+        }
+    });
+
+    public appleWWDRCACertificateFileName = ko.observable<string>().extend(
+        {
+            required: {
+                message: "Apple WWDRCA Certificate should be filled.",
+                onlyIf: () => this.isPassbookEnabled()
+            }
+        });
+
+    public passbookCertificateFileName = ko.observable<string>().extend({
+        required: {
+            message: "Passbook Certificate should be filled.",
+            onlyIf: () => this.isPassbookEnabled()
+        }
+    });
+
+    public passbookCertificatePassword = ko.observable<string>().extend({
+        required: {
+            message: "Passbook Certificate Password should be filled.",
+            onlyIf: () => this.isPassbookEnabled()
+        }
+    });
+
+    public passbookTeamIdentifier = ko.observable<string>().extend({
+        required: {
+            message: "Passbook Team Identifier should be filled.",
+            onlyIf: () => this.isPassbookEnabled()
+        }
+    });
+
+    public passbookOrganizationName = ko.observable<string>().extend({
+        required: {
+            message: "Passbook Organization Name should be filled.",
+            onlyIf: () => this.isPassbookEnabled()
+        }
+    });
+    public popularityTimeImpactValue = ko.observable<number>().extend({
+        required: {
+            message: "Popularity time impact value should be filled."
+        }
+    });
     public isSearchIndexingEnabled = ko.observable<boolean>().extend({ required: true });
-    public mailUnsubscribeRedirectionLink = ko.observable<string>().extend({ required: true });
+    public mailUnsubscribeRedirectionLink = ko.observable<string>().extend({
+        required: {
+            message: "Mail Unsubscribe Redirection Link should be filled."
+        },
+        url: {
+            message: "Mail Unsubscribe Redirection Link has to be valid."
+        }
+    });
     public appleWWDRCACertificate = ko.observable<File>();
     public passbookCertificate = ko.observable<File>();
 
@@ -63,27 +125,33 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
         if (settings.PassbookCertificateTenantAssetId !== undefined && settings.PassbookCertificateTenantAssetId !== 0) {
             this.passbookCertificateAssetId = settings.PassbookCertificateTenantAssetId;
-            this.storageClient.get(settings.PassbookCertificateTenantAssetId, (detail) => {
+            this.storageClient.get(settings.PassbookCertificateTenantAssetId,(detail) => {
                 this.passbookCertificateFileName(detail.FileName);
             }, error=> {
                     this.showErrorDialog();
                 });
         }
+        else {
+            this.passbookCertificateFileName("");
+        }
 
         if (settings.PassbookWWDRCACertificateTenantAssetId !== undefined && settings.PassbookWWDRCACertificateTenantAssetId !== 0) {
             this.appleWWDRCACertificateAssetId = settings.PassbookWWDRCACertificateTenantAssetId;
-            this.storageClient.get(settings.PassbookWWDRCACertificateTenantAssetId, (detail) => {
+            this.storageClient.get(settings.PassbookWWDRCACertificateTenantAssetId,(detail) => {
                 this.appleWWDRCACertificateFileName(detail.FileName);
             }, error=> {
                     this.showErrorDialog();
                 });
         }
-
+        else {
+            this.appleWWDRCACertificateFileName("");
+        }
         this.passbookTeamIdentifier(settings.PassbookTeamIdentifier);
         this.passbookOrganizationName(settings.PassbookOrganizationName);
         this.popularityTimeImpactValue(settings.PopularityTimeImpactValue);
         this.isSearchIndexingEnabled(settings.SearchIndexingEnabled);
         this.mailUnsubscribeRedirectionLink(settings.MailUnsubscribeRedirectionUri);
+        this.passbookCertificatePassword(settings.PassbookCertificatePassword);
         this.currentSettings = settings;
     }
 
