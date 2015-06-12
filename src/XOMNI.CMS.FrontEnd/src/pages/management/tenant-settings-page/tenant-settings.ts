@@ -89,12 +89,10 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     });
     public appleWWDRCACertificate = ko.observable<File>();
     public passbookCertificate = ko.observable<File>();
-
+    public waitingFileUpload = ko.observable<boolean>(false);
     public validationErrors = ko.validation.group(this);
     //locals
     currentSettings: Models.Management.Configuration.Settings;
-    appleWWDRCACertificateUploadStatus: TenantAssetUploadStatus;
-    passbookCertificateUploadStatus: TenantAssetUploadStatus;
     appleWWDRCACertificateAssetId: number;
     passbookCertificateAssetId: number;
     appleCertificateReader: FileReader = new FileReader();
@@ -157,51 +155,46 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     update() {
         if (this.validationErrors().length === 0) {
-            this.uploadTenantAssetsIfChanged();
-            var intervalId = setInterval(() => {
-                if (this.passbookCertificateUploadStatus !== TenantAssetUploadStatus.Failed && this.appleWWDRCACertificateUploadStatus !== TenantAssetUploadStatus.Failed) {
-                    clearInterval(intervalId);
-                    var settings: Models.Management.Configuration.Settings = {
-                        CacheExpirationTime: this.cacheExpirationTime(),
-                        CDNUrl: this.cdnUrl(),
-                        IsCDNEnabled: this.cdnEnabled(),
-                        IsPassbookEnabled: this.isPassbookEnabled(),
-                        MailUnsubscribeRedirectionUri: this.mailUnsubscribeRedirectionLink(),
-                        PassbookCertificatePassword: this.passbookCertificatePassword(),
-                        PassbookOrganizationName: this.passbookOrganizationName(),
-                        PassbookPassTypeIdentifier: this.applePassTypeIdentifier(),
-                        PassbookTeamIdentifier: this.passbookTeamIdentifier(),
-                        PassbookCertificateTenantAssetId: this.passbookCertificateAssetId,
-                        SearchIndexingEnabled: this.isSearchIndexingEnabled(),
-                        PopularityTimeImpactValue: this.popularityTimeImpactValue(),
-                        PassbookWWDRCACertificateTenantAssetId: this.appleWWDRCACertificateAssetId,
-                        FacebookApplicationId: this.currentSettings.FacebookApplicationId,
-                        FacebookApplicationSecretKey: this.currentSettings.FacebookApplicationSecretKey,
-                        FacebookDisplayType: this.currentSettings.FacebookDisplayType,
-                        FacebookRedirectUri: this.currentSettings.FacebookRedirectUri,
-                        TwitterConsumerKey: this.currentSettings.TwitterConsumerKey,
-                        TwitterConsumerKeySecret: this.currentSettings.TwitterConsumerKeySecret,
-                        TwitterRedirectUri: this.currentSettings.TwitterRedirectUri
-                    };
+            var settings: Models.Management.Configuration.Settings = {
+                CacheExpirationTime: this.cacheExpirationTime(),
+                CDNUrl: this.cdnUrl(),
+                IsCDNEnabled: this.cdnEnabled(),
+                IsPassbookEnabled: this.isPassbookEnabled(),
+                MailUnsubscribeRedirectionUri: this.mailUnsubscribeRedirectionLink(),
+                PassbookCertificatePassword: this.passbookCertificatePassword(),
+                PassbookOrganizationName: this.passbookOrganizationName(),
+                PassbookPassTypeIdentifier: this.applePassTypeIdentifier(),
+                PassbookTeamIdentifier: this.passbookTeamIdentifier(),
+                PassbookCertificateTenantAssetId: this.passbookCertificateAssetId,
+                SearchIndexingEnabled: this.isSearchIndexingEnabled(),
+                PopularityTimeImpactValue: this.popularityTimeImpactValue(),
+                PassbookWWDRCACertificateTenantAssetId: this.appleWWDRCACertificateAssetId,
+                FacebookApplicationId: this.currentSettings.FacebookApplicationId,
+                FacebookApplicationSecretKey: this.currentSettings.FacebookApplicationSecretKey,
+                FacebookDisplayType: this.currentSettings.FacebookDisplayType,
+                FacebookRedirectUri: this.currentSettings.FacebookRedirectUri,
+                TwitterConsumerKey: this.currentSettings.TwitterConsumerKey,
+                TwitterConsumerKeySecret: this.currentSettings.TwitterConsumerKeySecret,
+                TwitterRedirectUri: this.currentSettings.TwitterRedirectUri
+            };
 
-                    this.settingsClient.put(settings, t=> {
-                        this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.None;
-                        this.passbookCertificateUploadStatus = TenantAssetUploadStatus.None;
-                        this.bindFields(t);
-                    }, error=> {
-                            this.showErrorDialog();
-                        });
-                }
-            }, 2000);
+            this.settingsClient.put(settings, t=> {
+                this.bindFields(t);
+            }, error=> {
+                    this.showErrorDialog();
+                });
         }
         else {
             this.validationErrors.showAllMessages();
         }
     }
+    appleWWDRCACertificateFileChanged(files: any) {
+        if (files.length > 0) {
+            this.waitingFileUpload(true);
+            var newFile = files[0];
+            this.appleWWDRCACertificate(newFile);
+            this.appleWWDRCACertificateFileName(newFile.name);
 
-    uploadTenantAssetsIfChanged() {
-        if (this.appleWWDRCACertificate() !== undefined) {
-            this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.Uploading;
             this.appleCertificateReader.onload = t=> {
                 var fileBody = new Uint8Array(this.appleCertificateReader.result);
                 this.storageClient.post({
@@ -210,10 +203,10 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     MimeType: this.appleWWDRCACertificate().type,
                     FileBody: fileBody
                 }, t=> {
-                        this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.Completed;
                         this.appleWWDRCACertificateAssetId = t.Id;
+                        this.waitingFileUpload(false);
                     }, e=> {
-                        this.appleWWDRCACertificateUploadStatus = TenantAssetUploadStatus.Failed;
+                        this.waitingFileUpload(false);
                         this.showCustomErrorDialog("An error occurred while uploading file");
                     });
             };
@@ -223,9 +216,15 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             };
             this.appleCertificateReader.readAsArrayBuffer(this.appleWWDRCACertificate());
         }
+    }
 
-        if (this.passbookCertificate() !== undefined) {
-            this.passbookCertificateUploadStatus = TenantAssetUploadStatus.Uploading;
+    passbookCertificateFileChanged(files: any) {
+        if (files.length > 0) {
+            this.waitingFileUpload(true);
+            var newFile = files[0];
+            this.passbookCertificate(newFile);
+            this.passbookCertificateFileName(newFile.name);
+
             this.developerCertificateReader.onload = t=> {
                 var fileBody = new Uint8Array(this.developerCertificateReader.result);
                 this.storageClient.post({
@@ -234,10 +233,10 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     MimeType: this.passbookCertificate().type,
                     FileBody: fileBody
                 }, t=> {
-                        this.passbookCertificateUploadStatus = TenantAssetUploadStatus.Completed;
+                        this.waitingFileUpload(false);
                         this.passbookCertificateAssetId = t.Id;
                     }, e=> {
-                        this.passbookCertificateUploadStatus = TenantAssetUploadStatus.Failed;
+                        this.waitingFileUpload(false);
                         this.showCustomErrorDialog("An error occurred while uploading file");
                     });
             };
@@ -247,11 +246,4 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             this.developerCertificateReader.readAsArrayBuffer(this.passbookCertificate());
         }
     }
-}
-
-export enum TenantAssetUploadStatus {
-    None= 0,
-    Uploading,
-    Completed,
-    Failed
 }
