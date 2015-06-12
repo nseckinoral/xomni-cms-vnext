@@ -1,0 +1,21 @@
+<div class="menu" role="navigation"> 
+    <ul data-bind="template: { name: 'navigation-item-template', foreach: navigationItems, afterRender: slideChildsUp }" />
+</div>
+<script id="navigation-item-template" type="text/html">
+    <li class="menu_navigation_arrow_down">
+        <h3 data-bind="click: $parent.mainItemClick">
+            <span data-bind="text: Title, click: $parent.mainItemClick"></span>
+        </h3>
+        <ul data-bind="template: { name: 'navigation-sub-item-template', foreach: ChildPages}"></ul>
+    </li>
+</script>
+<script id="navigation-sub-item-template" type="text/html">
+    <li>
+        <a data-bind="attr: { href: Url }, text: Title" />
+    </li>
+</script>
+
+
+
+
+

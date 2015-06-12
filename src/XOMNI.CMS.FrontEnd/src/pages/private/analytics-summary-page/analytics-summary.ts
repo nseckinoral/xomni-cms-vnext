@@ -19,7 +19,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     constructor() {
         super();
-        this.showLoadingDialog();
         this.initializeSlider();
         this.loadClientCounters();
     }
@@ -51,39 +50,24 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     loadClientCounters() {
         var client = new Xomni.Private.Analytics.ClientCounters.ClientCounterClient();
-        var errorFunc = (error) => { alert(error); };
+        var errorFunc = (error) => {
 
-        var successFunc = (counters: Xomni.Private.Analytics.ClientCounters.ClientCounterListContainer) => {
+        };
+
+        var successFunc = (counters: Models.Private.Analytics.ClientCounterListContainer) => {
             for (var i = 0; i < counters.CounterNames.length; i++) {
                 this.clientCounters.push(counters.CounterNames[i]);
             }
             if (counters.ContinuationToken !== null) {
-                client.getClientCounterList(successFunc, errorFunc, counters.ContinuationToken);
-            }
-            else {
-                this.hideLoadingDialog();
+                client.get(successFunc, errorFunc, counters.ContinuationToken);
             }
         };
 
-        client.getClientCounterList(successFunc, errorFunc);
-    }
-
-    showLoadingDialog() {
-        $('#pleaseWaitDialog').modal({ keyboard: false, show: true });
-    }
-
-    hideLoadingDialog() {
-        $('#pleaseWaitDialog').modal('hide');
-    }
-
-    showErrorDialog() {
-        $('#dialogContent').text('An error occurred. Please try again.');
-        $('#genericDialog').modal({ keyboard: false, show: true });
+        client.get(successFunc, errorFunc);
     }
 
     showNoDataFoundDialog() {
-        $('#dialogContent').text('No data found for selected dates.');
-        $('#genericDialog').modal({ keyboard: false, show: true });
+        this.showCustomErrorDialog("No data found for selected dates.");
     }
 
     dailySelected(): boolean {
@@ -132,7 +116,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     loadChart() {
         if (this.selectedClientCounters().length > 0) {
-            this.showLoadingDialog();
             if (this.selectedClientCounters().length != 0) {
                 switch (this.selectedCounterType()) {
                     case ("daily"): {
@@ -185,16 +168,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                             lineSmooth: false
                         });
                         $(".ct-chart").show();
-                        this.hideLoadingDialog();
                     }
                 }
                 else {
-                    this.hideLoadingDialog();
                     $(".ct-chart").hide();
                     this.showNoDataFoundDialog();
                 }
             }, err=> {
-                    this.hideLoadingDialog();
                     $(".ct-chart").hide();
                     this.showErrorDialog();
                 });
@@ -226,16 +206,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     if (resultCount === this.selectedClientCounters().length) {
                         new Chartist.Line('.ct-chart', data);
                         $(".ct-chart").show();
-                        this.hideLoadingDialog();
                     }
                 }
                 else {
-                    this.hideLoadingDialog();
                     $(".ct-chart").hide();
                     this.showNoDataFoundDialog();
                 }
             }, err=> {
-                    this.hideLoadingDialog();
                     $(".ct-chart").hide();
                     this.showErrorDialog();
                 });
@@ -267,16 +244,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     if (resultCount === this.selectedClientCounters().length) {
                         new Chartist.Line('.ct-chart', data);
                         $(".ct-chart").show();
-                        this.hideLoadingDialog();
                     }
                 }
                 else {
-                    this.hideLoadingDialog();
                     $(".ct-chart").hide();
                     this.showNoDataFoundDialog();
                 }
             }, err=> {
-                    this.hideLoadingDialog();
                     $(".ct-chart").hide();
                     this.showErrorDialog();
                 });
@@ -308,16 +282,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     if (resultCount === this.selectedClientCounters().length) {
                         new Chartist.Line('.ct-chart', data);
                         $(".ct-chart").show();
-                        this.hideLoadingDialog();
                     }
                 }
                 else {
-                    this.hideLoadingDialog();
                     $(".ct-chart").hide();
                     this.showNoDataFoundDialog();
                 }
             }, err=> {
-                    this.hideLoadingDialog();
                     $(".ct-chart").hide();
                     this.showErrorDialog();
                 });
@@ -334,8 +305,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             endOADate: Math.floor(endDateWrapper.toOADate())
         };
     }
-
-
 }
 
 interface SliderSelectedDates {

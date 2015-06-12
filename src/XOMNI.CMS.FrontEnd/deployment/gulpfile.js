@@ -1,3 +1,6 @@
+// There is an issue defined on https://github.com/XomniCloud/xomni-cms-vnext/issues/16 related to this gulp file. 
+// Refrain from using this file until the issue is solved. 
+
 // Node modules
 var fs = require('fs'), vm = require('vm'), merge = require('deeply'), chalk = require('chalk'), es = require('event-stream');
 
@@ -16,18 +19,24 @@ requireJsOptimizerConfig = merge(requireJsRuntimeConfig, {
     },
     include: [
         'requireLib',
-        'components/nav-bar/nav-bar',
-        'components/side-bar/side-bar',
+        'components/menubar/menubar',
+        'components/navigation/navigation',
         'components/licence-bar/licence-bar',
+        'components/loading-modal/loading-modal',
+        'components/message-dialog/message-dialog',
         'pages/home-page/home',
         'text!pages/about-page/about.html'
     ],
     insertRequire: ['app/startup'],
     bundles: {
         // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
-        'bundle-page-private-analytics-summary': ['pages/private/analytics-summary']
-        //[[XO-SCAFFOLDER]]
-
+        'bundle-page-private-analytics-summary': ['pages/private/analytics-summary'],
+        'bundle-page-management-integration-endpoint': ['pages/management/integration-endpoint'],
+        'bundle-page-management-tenant-settings': ['pages/management/tenant-settings'],
+        'bundle-page-management-msg-integration': ['pages/management/msg-integration'],
+        'bundle-page-management-facebook-settings': ['pages/management/facebok-settings'],
+        'bundle-page-management-twitter-settings': ['pages/management/twitter-settings'],
+			//[[XO-SCAFFOLDER]]
     }
 });
 

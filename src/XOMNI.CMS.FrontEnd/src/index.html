@@ -6,6 +6,7 @@
     <title>XOMNI CMS vNext</title>
     <!-- build:css -->
     <link href="bower_modules/components-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="bower_modules/bootstrap-toggle/css/bootstrap-toggle.min.css" rel="stylesheet" />
     <link href="bower_modules/chartist/dist/chartist.min.css" rel="stylesheet" />
     <link href="css/jqrangeslider/iThing.css" rel="stylesheet" />
     <link href="css/reset.css" rel="stylesheet" />
@@ -18,16 +19,19 @@
 </head>
 <body>
     <div>
+        <message-dialog></message-dialog>
+        <loading-modal></loading-modal>
         <header role="banner">
             <img class="logo" src="images/logo-small.png" />
             <licence-bar params="route: route"></licence-bar>
         </header>
-        <nav-bar params="{route:route,shouter:shouter}"></nav-bar>
+        <menubar params="{route:route}"></menubar>
         <div class="pageContainer">
             <div class="rightContainer">
-                <side-bar params="{route:route,shouter:shouter}"></side-bar>
+                <navigation params="{route:route}"></navigation>
             </div>
-            <div class="leftContainer" data-bind="component: { name: route().page, params: {route:route,shouter:shouter}}">
+            <div class="leftContainer" data-bind="component: { name: route().page, params: {route:route}}">
+
             </div>
         </div>
     </div>

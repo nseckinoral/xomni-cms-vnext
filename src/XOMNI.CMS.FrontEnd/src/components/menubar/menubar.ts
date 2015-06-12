@@ -1,10 +1,9 @@
-/// <amd-dependency path="text!./nav-bar.html" />
+/// <amd-dependency path="text!./menubar.html" />
 import ko = require("knockout");
 import cms = require("app/infrastructure");
-export var template: string = require("text!./nav-bar.html");
+export var template: string = require("text!./menubar.html");
 
 export class viewModel extends cms.infrastructure.baseViewModel {
-    private shouter: any;
     public route: any;
     private managementEnabled = ko.observable(false);
     private oldCMSUrl = this.getOldCMSUrl();
@@ -15,12 +14,11 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     constructor(params: any) {
         super();
         this.route = params.route;
-        this.shouter = params.shouter;
         this.managementEnabled(this.userIsInRole(cms.infrastructure.Roles.ManagementAPI));
     }
 
     //Uncomment this method when menu group based nav bar loading needed.
     //changeMenuGroup(menuGroupId: number) {
-    //    this.shouter.notifySubscribers(menuGroupId, "MenuGroupId");
+    //    cms.infrastructure.shouter.notifySubscribers(menuGroupId, "menuGroupId");
     //}
 }

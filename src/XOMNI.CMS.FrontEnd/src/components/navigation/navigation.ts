@@ -1,8 +1,8 @@
-/// <amd-dependency path="text!./side-bar.html" />
+/// <amd-dependency path="text!./navigation.html" />
 import ko = require("knockout");
 import jquery = require("jquery");
 import cms = require("app/infrastructure");
-export var template: string = require("text!./side-bar.html");
+export var template: string = require("text!./navigation.html");
 
 export class viewModel extends cms.infrastructure.baseViewModel {
     public route: any;
@@ -11,11 +11,11 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     constructor(params: any) {
         super();
         //Uncomment this code when menu group based nav bar loading needed.
-        //params.shouter.subscribe(t=> {
+        //cms.infrastructure.shouter.subscribe(t=> {
         //    this.loadSideMenu(t);
-        //}, this, 'MenuGroupId');
+        //}, this, 'menuGroupId');
         this.route = params.route;
-        this.loadSideMenu(1);
+        this.loadSideMenu(2);
     }
 
     public fetchNavigationData(userRightId: number, success: (result: MenuItem[]) => void): any {

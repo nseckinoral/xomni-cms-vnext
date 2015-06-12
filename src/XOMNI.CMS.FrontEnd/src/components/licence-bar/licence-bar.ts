@@ -9,7 +9,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public username = ko.observable("");
     public licenceCap = ko.observable("");
 
-    constructor(params: any) {
+    constructor() {
         super();
         this.username(this.getAuthenticatedUserInfo().UserName);
         this.fetchNavigationData();
