@@ -1,73 +1,91 @@
-﻿<article role="form">
-    <h1>Tenant Settings</h1>
-
-    <div>
-        <p>
-            CDN Enabled:
-            <div>
-                <label for="rad1">On</label> <input type="radio" id="rad1" name="cdnEnabledGroup" value="true" data-bind="checked: cdnEnabled,checkedValue: true" />
-                <label for="rad2">Off</label><input type="radio" id="rad2" name="cdnEnabledGroup" value="false" data-bind="checked: cdnEnabled,checkedValue: false" />
-            </div>
-        </p>
-        <p>
-            CDN Url:
-            <input data-bind="textInput: cdnUrl,enable:cdnEnabled" />
-        </p>
-        <p>
-            Cache Expiration Time:
-            <input data-bind="textInput: cacheExpirationTime, enable:cdnEnabled" />
-        </p>
-        <p>
-            Is Passbook Enabled:
-            <div>
-                <input type="radio" id="rad3" name="isPassbookEnabledGroup" value="true" data-bind="checked: isPassbookEnabled,checkedValue: true" /><label for="rad3">On</label>
-                <input type="radio" id="rad4" name="isPassbookEnabledGroup" value="false" data-bind="checked: isPassbookEnabled,checkedValue: false" /><label for="rad4">Off</label>
-            </div>
-        </p>
-        <p>
-            Apple Pass Type Identifier:
-            <input data-bind="textInput: applePassTypeIdentifier,enable:isPassbookEnabled" />
-        </p>
-        <p>
-            Apple WWDRCA Certificate File Name:
-            <input type="file" data-bind="event:{change:function(){appleWWDRCACertificate($element.files[0])}},enable:isPassbookEnabled" />
-            <span data-bind="text: appleWWDRCACertificateFileName"></span>
-        </p>
-        <p>
-            Passbook Certificate File Name:
-            <input type="file" data-bind="event:{change:function(){passbookCertificate($element.files[0])}},enable:isPassbookEnabled" />
-            <span data-bind="text: passbookCertificateFileName"></span>
-
-        </p>
-        <p>
-            Passbook Certificate Password:
-            <input type="password" data-bind="textInput: passbookCertificatePassword,enable:isPassbookEnabled" />
-        </p>
-        <p>
-            Passbook Team Identifier:
-            <input data-bind="textInput: passbookTeamIdentifier,enable:isPassbookEnabled" />
-        </p>
-        <p>
-            Organization Name:
-            <input data-bind="textInput: passbookOrganizationName,enable:isPassbookEnabled" />
-        </p>
-        <p>
-            Popularity Time Impact Value:
-            <input data-bind="textInput: popularityTimeImpactValue" />
-        </p>
-        <p>
-            Search Indexing Enabled:
-            <div>
-                <input type="radio" id="rad5" name="isSearchIndexingEnabledGroup" value="true" data-bind="checked: isSearchIndexingEnabled,checkedValue: true" /><label for="rad5">On</label>
-                <input type="radio" id="rad6" name="isSearchIndexingEnabledGroup" value="false" data-bind="checked: isSearchIndexingEnabled,checkedValue: false" /><label for="rad6">Off</label>
-            </div>
-        </p>
-        <p>
-            Mail Unsubscribe Redirection Link:
-            <input data-bind="textInput: mailUnsubscribeRedirectionLink" />
-        </p>
-        <button type="button" data-bind="click: update" style="margin-left:15px;">
+﻿
+<input type="checkbox" checked data-toggle="toggle">
+<article role="form">
+    <div class="row">
+        <div class="col-xs-6">
+            <h1>Tenant Settings</h1>
+        </div>
+        <button class="form-control rightCorner" type="button" data-bind="click: update, enable: !waitingFileUpload()">
             Update
         </button>
+    </div>
+    <hr />
+
+    <div class="section" data-bind='validationOptions: { insertMessages: false}'>
+        <div class="row">
+            <div class="col-lg-12">
+                <label>CDN Enabled:</label>
+                <input type="checkbox" data-bind="toggle: cdnEnabled" data-off="OFF" data-on="ON" data-onstyle="success" data-size="small" data-height="23">
+            </div>
+        </div>
+        <div class="row" data-bind="visible: cdnEnabled">
+            <div class="col-lg-12">
+                <label>CDN Url:</label>
+                <input class="form-control" data-bind="textInput: cdnUrl, enable:cdnEnabled, validationElement: cdnUrl" />
+            </div>
+            <div class="col-lg-12">
+                <label>Cache Expiration Time:</label>
+                <input class="form-control" data-bind="textInput: cacheExpirationTime, enable:cdnEnabled, validationElement:cacheExpirationTime" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <label>Is Passbook Enabled:</label>
+                <input type="checkbox" data-bind="toggle: isPassbookEnabled" data-off="OFF" data-on="ON" data-onstyle="success" data-size="small" data-height="23">
+            </div>
+        </div>
+        <div class="row" data-bind="visible: isPassbookEnabled">
+            <div class="col-lg-12">
+                <label>Apple Pass Type Identifier:</label>
+                <input class="form-control" data-bind="textInput: applePassTypeIdentifier,enable:isPassbookEnabled, validationElement:applePassTypeIdentifier">
+            </div>
+            <div class="col-lg-12">
+                <label>Apple WWDRCA Certificate File Name:</label>
+                <span data-bind="text: appleWWDRCACertificateFileName"></span>
+                <input type="file" class="file-input" data-bind="event:{change: appleWWDRCACertificateFileChanged($element.files)},enable:isPassbookEnabled, validationElement:appleWWDRCACertificateFileName" />
+            </div>
+            <div class="col-lg-12">
+                <label>Passbook Certificate File Name:</label>
+                <span data-bind="text: passbookCertificateFileName"></span>
+                <input type="file" class="file-input" data-bind="event:{change: passbookCertificateFileChanged($element.files)},enable:isPassbookEnabled, validationElement:passbookCertificateFileName" />
+            </div>
+            <div class="col-lg-12">
+                <label>Passbook Certificate Password:</label>
+                <input class="form-control" type="password" data-bind="value: passbookCertificatePassword,enable:isPassbookEnabled, validationElement:passbookCertificatePassword" />
+            </div>
+            <div class="col-lg-12">
+                <label>Passbook Team Identifier:</label>
+                <input class="form-control" data-bind="textInput: passbookTeamIdentifier,enable:isPassbookEnabled, validationElement:passbookTeamIdentifier" />
+            </div>
+            <div class="col-lg-12">
+                <label>Organization Name:</label>
+                <input class="form-control" data-bind="textInput: passbookOrganizationName,enable:isPassbookEnabled, validationElement:passbookOrganizationName" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <label>Popularity Time Impact Value:</label>
+                <input class="form-control" data-bind="textInput: popularityTimeImpactValue, validationElement:popularityTimeImpactValue" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <label>Search Indexing Enabled:</label>
+                <input type="checkbox" data-bind="toggle: isSearchIndexingEnabled" data-off="OFF" data-on="ON" data-onstyle="success" data-size="small" data-height="23">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <label>Mail Unsubscribe Redirection Link:</label>
+                <input class="form-control" data-bind="textInput: mailUnsubscribeRedirectionLink, validationElement:mailUnsubscribeRedirectionLink" />
+            </div>
+        </div>
+
+    </div>
+    <div class="alert alert-danger" data-bind="visible: validationErrors().length > 0">
+        <text class="generalErrorMessage">Required fields are missing.</text>
+        <ul data-bind="foreach: validationErrors()">
+            <li data-bind="text: $data"></li>
+        </ul>
     </div>
 </article>

@@ -28,6 +28,27 @@ ko.components.register('management-facebook-settings-page', { require: 'pages/ma
 ko.components.register('management-twitter-settings-page', { require: 'pages/management/twitter-settings-page/twitter-settings' });
 //[[XO-SCAFFOLDER]]
 
+(<any>ko.bindingHandlers).toggle = {
+    init: function (element, valueAccessor, allBindings, data, context) {
+        var $element, observable;
+        observable = valueAccessor();
+        if (!ko.isWriteableObservable(observable)) {
+            throw "You must pass an observable or writeable computed";
+        }
+        $element = $(element);
+        $element.on("change", function () {
+            $element.bootstrapToggle();
+            observable($element.prop('checked'));
+        });
+        ko.computed({
+            disposeWhenNodeIsRemoved: element,
+            read: function () {
+                $element.prop('checked', observable()).change();
+            }
+        });
+    }
+};
+
 // Start the application
 cms.infrastructure.Configuration.loadAppSettings(() => {
     ko.applyBindings({ route: router.currentRoute });
