@@ -566,9 +566,11 @@ hr {
         line-height: 15px;
     }
 
-
-.toggle {
-    margin-bottom: 5px;
+.toggle.btn-sm {
+  min-height: 23px;
+}
+.toggle-group label{
+   line-height: 13px !important;
 }
 
 .file-input {
