@@ -24,8 +24,9 @@ ko.components.register('private-analytics-summary-page', { require: 'pages/priva
 ko.components.register('management-integration-endpoint-page', { require: 'pages/management/integration-endpoint-page/integration-endpoint' });
 ko.components.register('management-msg-integration-page', { require: 'pages/management/msg-integration-page/msg-integration' });
 ko.components.register('management-tenant-settings-page', { require: 'pages/management/tenant-settings-page/tenant-settings' });
-ko.components.register('management-facebook-settings-page', { require: 'pages/management/facebook-settings-page/facebook-settings' });
-ko.components.register('management-twitter-settings-page', { require: 'pages/management/twitter-settings-page/twitter-settings' });
+ko.components.register('management-twitter-settings-page', { require: 'pages/management/settings-page/twitter-settings' });
+ko.components.register('management-facebook-settings-page', { require: 'pages/management/settings-page/facebook-settings' });
+ko.components.register('private-mail-subscription-status-page', { require: 'pages/private/mail-subscription-status-page/mail-subscription-status' });
 //[[XO-SCAFFOLDER]]
 
 (<any>ko.bindingHandlers).toggle = {

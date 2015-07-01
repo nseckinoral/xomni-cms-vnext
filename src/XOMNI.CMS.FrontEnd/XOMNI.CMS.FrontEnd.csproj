@@ -97,6 +97,7 @@
     <Content Include="src\images\search-icon.png" />
     <Content Include="src\images\search-top-bg.png" />
     <Content Include="src\images\user-header-img.png" />
+    <Content Include="src\pages\private\mail-subscription-status-page\mail-subscription-status.html" />
     <Content Include="src\pages\catalog\brand-page\brand.html" />
     <Content Include="src\components\navigation\navigation.html" />
     <Content Include="src\css\styles.css" />
@@ -170,6 +171,7 @@
     <TypeScriptCompile Include="src\pages\management\msg-integration-page\msg-integration.ts" />
     <TypeScriptCompile Include="src\pages\management\twitter-settings-page\twitter-settings.ts" />
     <TypeScriptCompile Include="src\pages\private\analytics-summary-page\analytics-summary.ts" />
+    <TypeScriptCompile Include="src\pages\private\mail-subscription-status-page\mail-subscription-status.ts" />
     <TypeScriptCompile Include="src\references.d.ts" />
   </ItemGroup>
   <ItemGroup />
