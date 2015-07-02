@@ -41,11 +41,11 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public subscriptionKey = ko.observable<string>();
     public endpoints = ko.observable([]);
     public pageInfo = ko.observable();
-    public validationErrors = ko.validation.group([this.email, this.firstName, this.lastName]);
 
     constructor() {
         super();
         this.initalize();
+        this.initValidation(ko.validation.group([this.email, this.firstName, this.lastName]));
     }
 
     initalize() {
@@ -73,7 +73,8 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     enableIntegration() {
         this.showErrors(true);
-        if (this.validationErrors().length == 0) {
+        this.validationActive(true);
+        if (this.getValidationErrors().length == 0) {
             this.client.post({
                 Email: this.email(),
                 FirstName: this.firstName(),
@@ -96,9 +97,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     }
                 }
                 );
-        }
-        else {
-            this.validationErrors.showAllMessages();
         }
     }
 

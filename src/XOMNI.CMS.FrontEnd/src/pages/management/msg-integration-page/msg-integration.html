@@ -78,11 +78,6 @@
                 </div>
             </div>
         </div>
-        <div class="alert alert-danger" data-bind="visible: validationErrors().length > 0 && showErrors()">
-            <text class="generalErrorMessage">Required fields are missing.</text>
-            <ul data-bind="foreach: validationErrors()">
-                <li data-bind="text: $data"></li>
-            </ul>
-        </div>
+        <validation-summary params="{errors:getValidationErrors()}" />
     </div>
 </article>
