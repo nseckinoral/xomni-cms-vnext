@@ -60,12 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="alert alert-danger" data-bind="visible: validationErrors().length > 0 && showErrors()">
-            <text class="generalErrorMessage">Required fields are missing.</text>
-            <ul data-bind="foreach: validationErrors()">
-                <li data-bind="text: $data"></li>
-            </ul>
-        </div>
+        <validation-summary params="{errors:getValidationErrors()}" />
     </div>
     <div class="center-block" data-bind="if: isEnabled() && isInProgress(), visible: isEnabled() && isInProgress()" style="text-align:center">
         <p class="text-primary">Your integration endpoint is being created.</p>

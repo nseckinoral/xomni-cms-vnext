@@ -32,7 +32,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public serviceTier = ko.observable<number>().extend({ required: true });
     public managementPortalUrl = ko.observable<string>();
     public serviceTierOptions = ko.observableArray([{ Id: 1, Description: "Developer" }, { Id: 2, Description: "Standart" }, { Id: 3, Description: "Premium" }]);
-    public validationErrors = ko.validation.group([this.adminMail, this.serviceName, this.serviceTier]);
     public endpointCreateStatus = ko.observable<Models.Management.Integration.EndpointStatusType>();
     public isInProgress = ko.computed<boolean>(() => this.endpointCreateStatus() === Models.Management.Integration.EndpointStatusType.InProgress);
     public isFailed = ko.computed<boolean>(() => this.endpointCreateStatus() === Models.Management.Integration.EndpointStatusType.Failed);
@@ -44,9 +43,11 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     constructor() {
         super();
         this.initalize();
+        this.initValidation(ko.validation.group([this.adminMail, this.serviceName, this.serviceTier]));
     }
 
     initalize() {
+        this.validationActive(false);
         this.client.get(
             (t) => {
                 this.isEnabled(true);
@@ -84,7 +85,8 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     createEndpoint() {
         this.showErrors(true);
-        if (this.validationErrors().length == 0) {
+        this.validationActive(true);
+        if (this.getValidationErrors().length == 0) {
             this.client.post({
                 AdminMail: this.adminMail(),
                 ServiceName: this.serviceName(),
@@ -97,9 +99,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     this.showErrorDialog();
                 }
                 );
-        }
-        else {
-            this.validationErrors.showAllMessages();
         }
     }
 
@@ -128,5 +127,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         this.adminMail("");
         this.serviceName("");
         this.showErrors(false);
+        this.validationActive(false);
     }
 }

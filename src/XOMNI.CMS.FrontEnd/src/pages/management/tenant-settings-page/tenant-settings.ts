@@ -10,15 +10,17 @@ export var template: string = require("text!./tenant-settings.html");
 
 export class viewModel extends cms.infrastructure.baseViewModel {
     public settingsClient = new Xomni.Management.Configuration.Settings.SettingsClient();
-    public storageClient = new Xomni.Management.Storage.Assets.AssetClient();
-
+    public storageClient = new Xomni.Management.Storage.Assets.AssetClient();    
     //observables
     public cdnEnabled = ko.observable<boolean>();
 
     public cdnUrl = ko.observable<string>().extend({
         required: {
-            message: "CDN Url should be filled.",
+            message: "CDN URL should be filled.",
             onlyIf: () => this.cdnEnabled()
+        },
+        url: {
+            message: 'CDN URL has to be a valid.',
         }
     });
 
@@ -89,8 +91,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     });
     public appleWWDRCACertificate = ko.observable<File>();
     public passbookCertificate = ko.observable<File>();
-    public waitingFileUpload = ko.observable<boolean>(false);
-    public validationErrors = ko.validation.group(this);
+    public waitingFileUpload = ko.observable<boolean>(false);    
     //locals
     currentSettings: Models.Management.Configuration.Settings;
     appleWWDRCACertificateAssetId: number;
@@ -100,6 +101,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     constructor() {
         super();
+        this.initValidation(ko.validation.group(this));
         this.initalize();
     }
 
@@ -151,10 +153,12 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         this.mailUnsubscribeRedirectionLink(settings.MailUnsubscribeRedirectionUri);
         this.passbookCertificatePassword(settings.PassbookCertificatePassword);
         this.currentSettings = settings;
+        this.validationActive(false);
     }
 
     update() {
-        if (this.validationErrors().length === 0) {
+        this.validationActive(true);
+        if (this.getValidationErrors().length === 0) {
             var settings: Models.Management.Configuration.Settings = {
                 CacheExpirationTime: this.cacheExpirationTime(),
                 CDNUrl: this.cdnUrl(),
@@ -183,9 +187,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             }, error=> {
                     this.showErrorDialog();
                 });
-        }
-        else {
-            this.validationErrors.showAllMessages();
         }
     }
     appleWWDRCACertificateFileChanged(files: any) {
