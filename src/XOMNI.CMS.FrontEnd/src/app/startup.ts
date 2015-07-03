@@ -13,6 +13,7 @@ ko.components.register('catalog-brand-page', { require: 'pages/catalog/brand-pag
 ko.components.register('licence-bar', { require: 'components/licence-bar/licence-bar' });
 ko.components.register('loading-modal', { require: 'components/loading-modal/loading-modal' });
 ko.components.register('message-dialog', { require: 'components/message-dialog/message-dialog' });
+ko.components.register('validation-summary', { require: 'components/validation-summary/validation-summary' });
 
 // ... or for template-only components, you can just point to a .html file directly:
 ko.components.register('about-page', {
@@ -53,7 +54,9 @@ ko.components.register('private-mail-subscription-status-page', { require: 'page
 // Start the application
 cms.infrastructure.Configuration.loadAppSettings(() => {
     ko.applyBindings({ route: router.currentRoute });
-    ko.validation.init({ messagesOnModified: true, errorMessageClass: "validationMessage" });
+    ko.validation.init({
+        messagesOnModified: false, insertMessages: false, errorMessageClass: "validationMessage", errorElementClass: "validationElement", decorateElement: true, errorClass: "validationElement"
+    });
 
     ko.validation.rules['url'] = {
         validator: (val, required) => {

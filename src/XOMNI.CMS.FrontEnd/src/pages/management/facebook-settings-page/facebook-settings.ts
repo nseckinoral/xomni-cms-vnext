@@ -14,22 +14,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public applicationSecretKey = ko.observable<string>();
     public redirectUri = ko.observable<string>();
     public displayTypeOptions = ko.observableArray([{ Id: 1, Type: "Page" }, { Id: 2, Type: "Popup" }, { Id: 3, Type: "Touch" }]);
-    public validationErrors = ko.validation.group([this.applicationId, this.applicationSecretKey, this.redirectUri]);
     public settings = <Models.Management.Configuration.Settings>{};
 
     constructor() {
         super();
+        this.initializeValidation();
+        this.initValidation(ko.validation.group([this.applicationId, this.applicationSecretKey, this.redirectUri]));
         this.initialize();
-    }
-
-    initialize() {
-        try {
-            this.client.get(this.success, this.error);
-            this.initializeValidation();
-        }
-        catch (exception) {
-            this.showCustomErrorDialog(exception.Message);
-        }
     }
 
     initializeValidation() {
@@ -73,8 +64,17 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         });
     }
 
+    initialize() {
+        try {
+            this.client.get(this.success, this.error);
+        }
+        catch (exception) {
+            this.showCustomErrorDialog(exception.Message);
+        }
+    }
     save() {
-        if (this.validationErrors().length == 0) {
+        this.validationActive(true);
+        if (this.getValidationErrors().length == 0) {
             try {
                 this.settings.FacebookApplicationId = this.applicationId();
                 this.settings.FacebookApplicationSecretKey = this.applicationSecretKey();
@@ -87,7 +87,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             }
         }
         else {
-            this.validationErrors.showAllMessages();
             this.showCustomErrorDialog("If you have filled at least one field , the other fields should be filled.");
         }
     }
@@ -99,6 +98,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             this.applicationSecretKey(result.FacebookApplicationSecretKey);
             this.redirectUri(result.FacebookRedirectUri);
             this.displayType(result.FacebookDisplayType);
+            this.validationActive(false);
         }
         catch (exception) {
             this.showCustomErrorDialog(exception.message);

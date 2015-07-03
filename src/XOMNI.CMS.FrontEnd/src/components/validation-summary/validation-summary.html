@@ -1,0 +1,6 @@
+﻿<div class="alert alert-danger" data-bind="visible: errors().length > 0">
+    <text class="generalErrorMessage">Required fields are missing.</text>
+    <ul data-bind="foreach: errors()">
+        <li data-bind="text: $data"></li>
+    </ul>
+</div>

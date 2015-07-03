@@ -12,25 +12,17 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public consumerKey = ko.observable<string>();
     public consumerSecretKey = ko.observable<string>();
     public redirectUri = ko.observable<string>();
-    public validationErrors = ko.validation.group([this.consumerKey, this.consumerSecretKey, this.redirectUri]);
+
     public settings = <Models.Management.Configuration.Settings>{};
 
     constructor() {
         super();
+        this.initObservableValidations();
+        this.initValidation(ko.validation.group([this.consumerKey, this.redirectUri, this.consumerSecretKey]));
         this.initialize();
     }
 
-    initialize() {
-        try {
-            this.client.get(this.success, this.error);
-            this.initializeValidation();
-        }
-        catch (exception) {
-            this.showCustomErrorDialog(exception.Message);
-        }
-    }
-
-    initializeValidation() {
+    initObservableValidations() {
         this.consumerKey.extend({
             required: {
                 message: "Twitter consumer key should be filled.",
@@ -71,8 +63,18 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         });
     }
 
+    initialize() {
+        try {
+            this.client.get(this.success, this.error);
+        }
+        catch (exception) {
+            this.showCustomErrorDialog(exception.Message);
+        }
+    }
+
     save() {
-        if (this.validationErrors().length == 0) {
+        this.validationActive(true);
+        if (this.getValidationErrors().length === 0) {
             try {
                 this.settings.TwitterConsumerKey = this.consumerKey();
                 this.settings.TwitterConsumerKeySecret = this.consumerSecretKey();
@@ -84,7 +86,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             }
         }
         else {
-            this.validationErrors.showAllMessages();
             this.showCustomErrorDialog("Required fields are missing.");
         }
     }
@@ -95,6 +96,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             this.consumerKey(result.TwitterConsumerKey);
             this.consumerSecretKey(result.TwitterConsumerKeySecret);
             this.redirectUri(result.TwitterRedirectUri);
+            this.validationActive(false);
         }
         catch (exception) {
             this.showCustomErrorDialog(exception.message);

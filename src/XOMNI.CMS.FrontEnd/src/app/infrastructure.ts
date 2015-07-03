@@ -26,12 +26,37 @@ export module infrastructure {
     });
 
     export class baseViewModel {
+        public validationActive = ko.observable<boolean>(false);
+        public innerValidationErrors: KnockoutValidationErrors = undefined;
+
         constructor() {
             var userInfo = this.getAuthenticatedUserInfo();
             var apiUrl = this.getApiUrl();
             Xomni.currentContext = new Xomni.ClientContext(userInfo.UserName, userInfo.Password, apiUrl);
+            this.validationActive.subscribe(t=> {
+                this.innerValidationErrors.showAllMessages(t);
+            });
         }
 
+        public initValidation(element: any) {
+            if (element) {
+                this.innerValidationErrors = element;
+                this.innerValidationErrors.showAllMessages(false);
+            }
+        }
+
+        public getValidationErrors(): string[] {
+            var retVal: string[];
+            if (this.validationActive()) {
+                this.innerValidationErrors.showAllMessages(true);
+                retVal = this.innerValidationErrors();
+            }
+            else {
+                this.innerValidationErrors.showAllMessages(false);
+                retVal = new Array<string>();
+            }
+            return retVal;
+        }
         private getApiUrl() {
             var url: string;
             if (Configuration.AppSettings.IsDebug) {
