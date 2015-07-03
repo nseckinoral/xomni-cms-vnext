@@ -47,6 +47,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     initalize() {
+        this.validationActive(false);
         this.client.get(
             (t) => {
                 this.isEnabled(true);
@@ -126,5 +127,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         this.adminMail("");
         this.serviceName("");
         this.showErrors(false);
+        this.validationActive(false);
     }
 }

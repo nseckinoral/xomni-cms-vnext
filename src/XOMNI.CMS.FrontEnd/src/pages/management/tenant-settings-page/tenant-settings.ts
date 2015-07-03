@@ -16,8 +16,11 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     public cdnUrl = ko.observable<string>().extend({
         required: {
-            message: "CDN Url should be filled.",
+            message: "CDN URL should be filled.",
             onlyIf: () => this.cdnEnabled()
+        },
+        url: {
+            message: 'CDN URL has to be a valid.',
         }
     });
 
@@ -150,6 +153,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         this.mailUnsubscribeRedirectionLink(settings.MailUnsubscribeRedirectionUri);
         this.passbookCertificatePassword(settings.PassbookCertificatePassword);
         this.currentSettings = settings;
+        this.validationActive(false);
     }
 
     update() {
@@ -183,9 +187,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             }, error=> {
                     this.showErrorDialog();
                 });
-        }
-        else {
-            //this.validationErrors.showAllMessages();
         }
     }
     appleWWDRCACertificateFileChanged(files: any) {

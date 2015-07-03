@@ -10,49 +10,58 @@ export var template: string = require("text!./facebook-settings.html");
 export class viewModel extends cms.infrastructure.baseViewModel {
     public client = new Xomni.Management.Configuration.Settings.SettingsClient();
     public displayType = ko.observable<number>();
-    public applicationId = ko.observable<string>().extend({
-        required: {
-            message: "Facebook application id should be filled.",
-            onlyIf: () => {
-                if (this.redirectUri() || this.applicationSecretKey()) {
-                    return true;
-                }
-                return false;
-            }
-        }
-    });
-    public applicationSecretKey = ko.observable<string>().extend({
-        required: {
-            message: "Facebook application secret key should be filled.",
-            onlyIf: () => {
-                if (this.applicationId() || this.redirectUri()) {
-                    return true;
-                }
-                return false;
-            }
-        }
-    });
-    public redirectUri = ko.observable<string>().extend({
-        required: {
-            onlyIf: () => {
-                if ((this.applicationId() || this.applicationSecretKey())) {
-                    return true;
-                }
-                return false;
-            },
-            message: "Facebook redirect uri should be filled.",
-        },
-        url: {
-            message: 'Facebook redirect uri has to be a valid.',
-        }
-    });
+    public applicationId = ko.observable<string>();
+    public applicationSecretKey = ko.observable<string>();
+    public redirectUri = ko.observable<string>();
     public displayTypeOptions = ko.observableArray([{ Id: 1, Type: "Page" }, { Id: 2, Type: "Popup" }, { Id: 3, Type: "Touch" }]);
     public settings = <Models.Management.Configuration.Settings>{};
 
     constructor() {
         super();
-        this.initialize();
+        this.initializeValidation();
         this.initValidation(ko.validation.group([this.applicationId, this.applicationSecretKey, this.redirectUri]));
+        this.initialize();
+    }
+
+    initializeValidation() {
+        this.applicationId.extend({
+            required: {
+                message: "Facebook application id should be filled.",
+                onlyIf: () => {
+                    if (this.redirectUri() || this.applicationSecretKey()) {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        });
+
+        this.applicationSecretKey.extend({
+            required: {
+                message: "Facebook application secret key should be filled.",
+                onlyIf: () => {
+                    if (this.applicationId() || this.redirectUri()) {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        });
+
+        this.redirectUri.extend({
+            required: {
+                onlyIf: () => {
+                    if ((this.applicationId() || this.applicationSecretKey())) {
+                        return true;
+                    }
+                    return false;
+                },
+                message: "Facebook redirect uri should be filled.",
+            },
+            url: {
+                message: 'Facebook redirect uri has to be a valid.',
+            }
+        });
     }
 
     initialize() {
@@ -89,6 +98,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             this.applicationSecretKey(result.FacebookApplicationSecretKey);
             this.redirectUri(result.FacebookRedirectUri);
             this.displayType(result.FacebookDisplayType);
+            this.validationActive(false);
         }
         catch (exception) {
             this.showCustomErrorDialog(exception.message);
