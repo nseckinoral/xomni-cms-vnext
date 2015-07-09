@@ -1,5 +1,4 @@
 /// <amd-dependency path="validation" />
-/// <amd-dependency path="bootstrap-touchspin">
 
 import $ = require("jquery");
 import ko = require("knockout");
@@ -54,32 +53,16 @@ ko.components.register('management-trending-action-settings-page', { require: 'p
     }
 };
 
-(<any>ko.extenders).numeric = function (target, precision) {
-    var result = (<any>ko).pureComputed({
-        read: target,
-        write: function () {
-            if (target() !== undefined) {
-                var current = target(),
-                    newValue = parseFloat(current),
-                    valueToWrite = newValue.toFixed(precision);
-                alert(valueToWrite);
-                if (valueToWrite !== current) {
-                    target(valueToWrite);
-                } else {
-                    if (newValue !== current) {
-                        target.notifySubscribers(valueToWrite);
-                    }
-                }
-            }
-        }
-    }).extend({ notify: 'always' });
- 
-    //return the new computed observable
-    //return parseFloat(result).toFixed(precision);
-    result(target());
- 
-    //return the new computed observable
-    return result;
+(<any>ko.extenders).numeric = (target, precision) => {
+    var round = (newValue) => {
+        var current = target();
+        var newValueAsNum = isNaN(newValue) ? 0 : parseFloat(newValue);
+        var valueToWrite = newValueAsNum.toFixed(precision);
+        target(valueToWrite);
+    }
+
+    round(target);
+    target.subscribe(round);
 };
 
 (<any>ko.bindingHandlers).spinner = {
@@ -87,28 +70,9 @@ ko.components.register('management-trending-action-settings-page', { require: 'p
         var observable = valueAccessor();
 
         var allBindings = allBindingsAccessor(),
-            touchSpinOptions = allBindings.touchSpinOptions || {};
+            touchSpinOptions = allBindings.spinner || {};
 
-        //ko.bindingHandlers.value.init(element, valueAccessor, allBindingsAccessor,bindingContext.$data,bindingContext);
-        //var options = $.extend(false, { initval: value().toString()}, touchSpinOptions);
         $(element).TouchSpin(touchSpinOptions);
-
-        //Preventing the user from typing letters. 
-        $(element).on("keypress", function (data, evt) {
-            var theEvent = evt || window.event;
-            var key = theEvent.keyCode || theEvent.which;
-            if ((key < 48 || key > 57) && !(key == 8 || key == 9 || key == 13 || key == 46 || key == 44)) {
-                theEvent.returnValue = false;
-                if (theEvent.preventDefault) theEvent.preventDefault();
-            }
-        });
-    },
-
-    update: function (element, valueAccessor, allBindings) {
-        var value = valueAccessor();
-        var valueUnwrapped = ko.unwrap(value);
-        if (valueUnwrapped !== undefined)
-            $(element).val(valueUnwrapped.toString());
     }
 };
 

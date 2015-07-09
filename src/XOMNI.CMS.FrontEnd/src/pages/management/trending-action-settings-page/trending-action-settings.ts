@@ -1,6 +1,7 @@
 ﻿/// <amd-dependency path="xomni" />
 /// <amd-dependency path="text!./trending-action-settings.html" />
 /// <amd-dependency path="jqueryui" />
+/// <amd-dependency path="bootstrap-touchspin" />
 
 import $ = require("jquery");
 import ko = require("knockout");
@@ -54,39 +55,21 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     initializeValidation() {
         this.socialLike.extend({
             required: {
-                message: "Social Like field should be filled.",
-                onlyIf: () => {
-                    if (!this.socialLike()) {
-                        return true;
-                    }
-                    return false;
-                }
+                message: "Social Like field should be filled."
             },
             numeric: 2
         });
 
         this.socialShare.extend({
             required: {
-                message: "Social Share field should be filled.",
-                onlyIf: () => {
-                    if (!this.socialShare()) {
-                        return true;
-                    }
-                    return false;
-                }
+                message: "Social Share field should be filled."
             },
             numeric: 2
         });
 
         this.shoppingCartItemInsert.extend({
             required: {
-                onlyIf: () => {
-                    if (!this.shoppingCartItemInsert()) {
-                        return true;
-                    }
-                    return false;
-                },
-                message: "Shopping Cart Item Insert field should be filled.",
+                message: "Shopping Cart Item Insert field should be filled."
             },
             numeric: 2,
 
@@ -94,26 +77,14 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
         this.wishlistItemInsert.extend({
             required: {
-                message: "Wishlist Item Insert field should be filled.",
-                onlyIf: () => {
-                    if (!this.wishlistItemInsert()) {
-                        return true;
-                    }
-                    return false;
-                }
+                message: "Wishlist Item Insert field should be filled."
             },
             numeric: 2
         });
 
         this.itemView.extend({
             required: {
-                message: "Item View field should be filled.",
-                onlyIf: () => {
-                    if (!this.itemView()) {
-                        return true;
-                    }
-                    return false;
-                }
+                message: "Item View field should be filled."
             },
             numeric: 2
         });
