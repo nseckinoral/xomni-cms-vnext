@@ -73,6 +73,16 @@ ko.components.register('management-trending-action-settings-page', { require: 'p
             touchSpinOptions = allBindings.spinner || {};
 
         $(element).TouchSpin(touchSpinOptions);
+
+        //Preventing the user from typing letters. 
+        $(element).on("keypress", function (data, evt) {
+            var theEvent = evt || window.event;
+            var key = theEvent.keyCode || theEvent.which;
+            if ((key < 48 || key > 57) && !(key == 8 || key == 9 || key == 13 || key == 46 || key == 45)) {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        });
     }
 };
 
