@@ -1,4 +1,5 @@
 /// <amd-dependency path="validation" />
+
 import $ = require("jquery");
 import ko = require("knockout");
 import bootstrap = require("bootstrap");
@@ -25,9 +26,10 @@ ko.components.register('private-analytics-summary-page', { require: 'pages/priva
 ko.components.register('management-integration-endpoint-page', { require: 'pages/management/integration-endpoint-page/integration-endpoint' });
 ko.components.register('management-msg-integration-page', { require: 'pages/management/msg-integration-page/msg-integration' });
 ko.components.register('management-tenant-settings-page', { require: 'pages/management/tenant-settings-page/tenant-settings' });
-ko.components.register('management-twitter-settings-page', { require: 'pages/management/settings-page/twitter-settings' });
-ko.components.register('management-facebook-settings-page', { require: 'pages/management/settings-page/facebook-settings' });
+ko.components.register('management-twitter-settings-page', { require: 'pages/management/twitter-settings-page/twitter-settings' });
+ko.components.register('management-facebook-settings-page', { require: 'pages/management/facebook-settings-page/facebook-settings' });
 ko.components.register('private-mail-subscription-status-page', { require: 'pages/private/mail-subscription-status-page/mail-subscription-status' });
+ko.components.register('management-trending-action-settings-page', { require: 'pages/management/trending-action-settings-page/trending-action-settings' });
 //[[XO-SCAFFOLDER]]
 
 (<any>ko.bindingHandlers).toggle = {
@@ -50,6 +52,40 @@ ko.components.register('private-mail-subscription-status-page', { require: 'page
         });
     }
 };
+
+(<any>ko.extenders).numeric = (target, precision) => {
+    var round = (newValue) => {
+        var current = target();
+        var newValueAsNum = isNaN(newValue) ? 0 : parseFloat(newValue);
+        var valueToWrite = newValueAsNum.toFixed(precision);
+        target(valueToWrite);
+    }
+
+    round(target);
+    target.subscribe(round);
+};
+
+(<any>ko.bindingHandlers).spinner = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        var observable = valueAccessor();
+
+        var allBindings = allBindingsAccessor(),
+            touchSpinOptions = allBindings.spinner || {};
+
+        $(element).TouchSpin(touchSpinOptions);
+
+        //Preventing the user from typing letters. 
+        $(element).on("keypress", function (data, evt) {
+            var theEvent = evt || window.event;
+            var key = theEvent.keyCode || theEvent.which;
+            if ((key < 48 || key > 57) && !(key == 8 || key == 9 || key == 13 || key == 46 || key == 45)) {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        });
+    }
+};
+
 
 // Start the application
 cms.infrastructure.Configuration.loadAppSettings(() => {

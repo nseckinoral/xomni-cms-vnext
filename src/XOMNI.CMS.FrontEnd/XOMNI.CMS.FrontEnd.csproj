@@ -107,6 +107,7 @@
     <Content Include="src\pages\management\integration-endpoint-page\integration-endpoint.html" />
     <Content Include="src\pages\management\msg-integration-page\msg-integration.html" />
     <Content Include="src\pages\management\tenant-settings-page\tenant-settings.html" />
+    <Content Include="src\pages\management\trending-action-settings-page\trending-action-settings.html" />
     <Content Include="src\pages\management\twitter-settings-page\twitter-settings.html" />
     <Content Include="src\pages\private\analytics-summary-page\analytics-summary.html" />
     <Content Include="src\scripts\jQDateRangeSlider-min.js" />
@@ -171,6 +172,7 @@
     <TypeScriptCompile Include="src\pages\management\integration-endpoint-page\integration-endpoint.ts" />
     <TypeScriptCompile Include="src\pages\management\tenant-settings-page\tenant-settings.ts" />
     <TypeScriptCompile Include="src\pages\management\msg-integration-page\msg-integration.ts" />
+    <TypeScriptCompile Include="src\pages\management\trending-action-settings-page\trending-action-settings.ts" />
     <TypeScriptCompile Include="src\pages\management\twitter-settings-page\twitter-settings.ts" />
     <TypeScriptCompile Include="src\pages\private\analytics-summary-page\analytics-summary.ts" />
     <TypeScriptCompile Include="src\pages\private\mail-subscription-status-page\mail-subscription-status.ts" />
