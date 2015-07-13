@@ -1,4 +1,6 @@
 /// <amd-dependency path="validation" />
+/// <amd-dependency path="bootstrap-touchspin">
+
 import $ = require("jquery");
 import ko = require("knockout");
 import bootstrap = require("bootstrap");
@@ -25,9 +27,10 @@ ko.components.register('private-analytics-summary-page', { require: 'pages/priva
 ko.components.register('management-integration-endpoint-page', { require: 'pages/management/integration-endpoint-page/integration-endpoint' });
 ko.components.register('management-msg-integration-page', { require: 'pages/management/msg-integration-page/msg-integration' });
 ko.components.register('management-tenant-settings-page', { require: 'pages/management/tenant-settings-page/tenant-settings' });
-ko.components.register('management-twitter-settings-page', { require: 'pages/management/settings-page/twitter-settings' });
-ko.components.register('management-facebook-settings-page', { require: 'pages/management/settings-page/facebook-settings' });
+ko.components.register('management-twitter-settings-page', { require: 'pages/management/twitter-settings-page/twitter-settings' });
+ko.components.register('management-facebook-settings-page', { require: 'pages/management/facebook-settings-page/facebook-settings' });
 ko.components.register('private-mail-subscription-status-page', { require: 'pages/private/mail-subscription-status-page/mail-subscription-status' });
+ko.components.register('management-trending-action-settings-page', { require: 'pages/management/trending-action-settings-page/trending-action-settings' });
 //[[XO-SCAFFOLDER]]
 
 (<any>ko.bindingHandlers).toggle = {
@@ -50,6 +53,65 @@ ko.components.register('private-mail-subscription-status-page', { require: 'page
         });
     }
 };
+
+(<any>ko.extenders).numeric = function (target, precision) {
+    var result = (<any>ko).pureComputed({
+        read: target,
+        write: function () {
+            if (target() !== undefined) {
+                var current = target(),
+                    newValue = parseFloat(current),
+                    valueToWrite = newValue.toFixed(precision);
+                alert(valueToWrite);
+                if (valueToWrite !== current) {
+                    target(valueToWrite);
+                } else {
+                    if (newValue !== current) {
+                        target.notifySubscribers(valueToWrite);
+                    }
+                }
+            }
+        }
+    }).extend({ notify: 'always' });
+ 
+    //return the new computed observable
+    //return parseFloat(result).toFixed(precision);
+    result(target());
+ 
+    //return the new computed observable
+    return result;
+};
+
+(<any>ko.bindingHandlers).spinner = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        var observable = valueAccessor();
+
+        var allBindings = allBindingsAccessor(),
+            touchSpinOptions = allBindings.touchSpinOptions || {};
+
+        //ko.bindingHandlers.value.init(element, valueAccessor, allBindingsAccessor,bindingContext.$data,bindingContext);
+        //var options = $.extend(false, { initval: value().toString()}, touchSpinOptions);
+        $(element).TouchSpin(touchSpinOptions);
+
+        //Preventing the user from typing letters. 
+        $(element).on("keypress", function (data, evt) {
+            var theEvent = evt || window.event;
+            var key = theEvent.keyCode || theEvent.which;
+            if ((key < 48 || key > 57) && !(key == 8 || key == 9 || key == 13 || key == 46 || key == 44)) {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        });
+    },
+
+    update: function (element, valueAccessor, allBindings) {
+        var value = valueAccessor();
+        var valueUnwrapped = ko.unwrap(value);
+        if (valueUnwrapped !== undefined)
+            $(element).val(valueUnwrapped.toString());
+    }
+};
+
 
 // Start the application
 cms.infrastructure.Configuration.loadAppSettings(() => {

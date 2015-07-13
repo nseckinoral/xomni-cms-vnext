@@ -18,7 +18,8 @@ var require = {
         "xomni": "bower_modules/xomni-sdk-ts/xomni-sdk-ts-preview/dist/xomni",
         "chartist": "bower_modules/chartist/dist/chartist",
         "validation": "bower_modules/knockout-validation/dist/knockout.validation",
-        "bootstrap-toggle": "bower_modules/bootstrap-toggle/js/bootstrap-toggle.min"
+        "bootstrap-toggle": "bower_modules/bootstrap-toggle/js/bootstrap-toggle.min",
+        "bootstrap-touchspin": "bower_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin"
     },
     shim: {
         "bootstrap": { deps: ["jquery"] },
@@ -27,7 +28,8 @@ var require = {
         "jqrangeslider": { deps: ["jqueryui"] },
         "moment-msdate": { deps: ["moment"] },
         "xomni": { deps: ["jquery"] },
-        "bootstrap-toggle" : {deps: [ "bootstrap"]}
+        "bootstrap-toggle": { deps: ["bootstrap"] },
+        "bootstrap-touchspin": { deps: ["jquery"] }
     },
     deps: ["knockout", "bootstrap"]
 };
