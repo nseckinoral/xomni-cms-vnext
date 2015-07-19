@@ -680,3 +680,8 @@ width: 200px;
   font-size: 9px;
   font-weight: normal;
 }
+
+.alert-info.line-space {
+
+    line-height: 20px;
+}
