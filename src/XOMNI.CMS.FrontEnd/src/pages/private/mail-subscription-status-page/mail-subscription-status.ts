@@ -14,6 +14,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public isSubscribable = ko.observable<boolean>(false);
     public client = new Xomni.Private.Mail.Status.StatusClient();
     public subscriptionDetail = ko.observable<Models.Private.Mail.MailSubscription>();
+    public limitErrorIsVisible = ko.observable<boolean>(false);
     public email = ko.observable<string>().extend({
         required: {
             message: "Email should be filled."
@@ -32,6 +33,9 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 this.purposeType(Models.Private.Mail.MailSubscriptionPurposeType[t.PurposeTypeId]);
                 this.status(Models.Private.Mail.MailSubscriptionStatus[t.StatusId]);
                 this.isSubscribable(t.IsSubscribable);
+                if (!this.isSubscribable()) {
+                    this.limitErrorIsVisible(true);
+                }
             },
             e=> {
                 this.showCustomErrorDialog(this.createErrorMessage(e));

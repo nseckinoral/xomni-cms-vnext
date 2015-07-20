@@ -47,6 +47,11 @@
             </table>
         </div>
     </div>
+    <div class="alert alert-danger" data-bind="visible: limitErrorIsVisible()">
+        <ul>
+            <li>We're sorry but you've reached your re-subscribe limit.</li>
+        </ul>
+    </div>
     <div class="alert alert-danger" data-bind="visible: validationErrors().length > 0">
         <text class="generalErrorMessage">Required fields are missing.</text>
         <ul data-bind="foreach: validationErrors()">
