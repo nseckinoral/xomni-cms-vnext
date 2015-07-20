@@ -16,7 +16,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public subscriptionDetail = ko.observable<Models.Private.Mail.MailSubscription>();
     public email = ko.observable<string>().extend({
         required: {
-            message: "Email should be filled."
+            message: "E-Mail is required."
         }
     });
     public validationErrors = ko.validation.group(this);
