@@ -10,6 +10,11 @@
         </button>
     </div>
     <hr />
+    <div class="alert alert-info" role="alert">
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+        <span class="sr-only"></span>
+        Private API users can see their mail subscription status. If a user is unsubscribed, he/she can update the status to subscribed again. Keep in mind, that users can re-subscribe only a total of 3 times.
+    </div>
     <div class="section" data-bind='validationOptions: { insertMessages: false}'>
         <div class="row">
             <div class="col-lg-12">
@@ -41,6 +46,11 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    <div class="alert alert-danger" data-bind="visible: !isSubscribable()">
+        <ul>
+            <li>You have reached your re-subscription limit of 3 after customer unsubscriptions.</li>
+        </ul>
     </div>
     <div class="alert alert-danger" data-bind="visible: validationErrors().length > 0">
         <text class="generalErrorMessage">Required fields are missing.</text>
