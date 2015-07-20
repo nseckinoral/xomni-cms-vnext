@@ -11,7 +11,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public piiName = ko.observable<string>();
     public purposeType = ko.observable<string>();
     public status = ko.observable<string>();
-    public isSubscribable = ko.observable<boolean>(false);
+    public isSubscribable = ko.observable<boolean>(true);
     public client = new Xomni.Private.Mail.Status.StatusClient();
     public subscriptionDetail = ko.observable<Models.Private.Mail.MailSubscription>();
     public email = ko.observable<string>().extend({
