@@ -98,6 +98,7 @@
     <Content Include="src\images\search-icon.png" />
     <Content Include="src\images\search-top-bg.png" />
     <Content Include="src\images\user-header-img.png" />
+    <Content Include="src\pages\management\device-types-page\device-types.html" />
     <Content Include="src\pages\private\mail-subscription-status-page\mail-subscription-status.html" />
     <Content Include="src\pages\catalog\brand-page\brand.html" />
     <Content Include="src\components\navigation\navigation.html" />
@@ -140,6 +141,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="definitions\bootstrap-paginator\bootstrap-paginator.d.ts" />
     <TypeScriptCompile Include="definitions\bootstrap\bootstrap.d.ts" />
     <TypeScriptCompile Include="definitions\chartist\chartist.d.ts" />
     <TypeScriptCompile Include="definitions\crossroads\crossroads.d.ts" />
@@ -168,6 +170,7 @@
     <TypeScriptCompile Include="src\models\dialog-content.ts" />
     <TypeScriptCompile Include="src\pages\catalog\brand-page\brand.ts" />
     <TypeScriptCompile Include="src\components\navigation\navigation.ts" />
+    <TypeScriptCompile Include="src\pages\management\device-types-page\device-types.ts" />
     <TypeScriptCompile Include="src\pages\management\facebook-settings-page\facebook-settings.ts" />
     <TypeScriptCompile Include="src\pages\management\integration-endpoint-page\integration-endpoint.ts" />
     <TypeScriptCompile Include="src\pages\management\tenant-settings-page\tenant-settings.ts" />

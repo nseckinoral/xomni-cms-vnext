@@ -1,0 +1,39 @@
+﻿<article role="form">
+    <div class="row">
+        <div class="col-xs-6">
+            <h1>
+                Device Types
+            </h1>
+        </div>
+        <button class="form-control rightCorner" type="button">
+            Add
+        </button>
+    </div>
+    <div class="panel panel-default">
+        <table class="table table-bordered">
+            <thead>
+                <tr class="active">
+                    <th width="81px"></th>
+                    <th class="table-font header">Description</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: deviceTypes">
+                <tr>
+                    <td align="center">
+                        <button class=" btn btn-link red btn-xs" aria-label="Center-Align" data-bind="visible: $parent.buttonIsVisible($data), tooltip: {title: 'Delete'}">
+                            <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                        </button>
+                        <span></span>
+                        <button class="btn btn-link btn-xs" aria-label="Center-Align" data-bind="visible: $parent.buttonIsVisible($data), tooltip: {title: 'Edit'}">
+                            <i class="glyphicon glyphicon-edit" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                    <td class="table-font" data-bind="text: Description"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <div class="text-right">
+            <ul id="pagination" data-bind="visible: pagingIsVisible()"></ul>
+        </div>
+</article>

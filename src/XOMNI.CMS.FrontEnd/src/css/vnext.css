@@ -685,3 +685,30 @@ width: 200px;
 
     line-height: 20px;
 }
+
+.table-font {
+    font-size: 14px;
+}
+.table-font.header {
+    font-weight: bold;
+
+}
+
+.btn-link.red:hover {
+    color: rgba(236, 63, 63, 1);
+}
+
+.btn-link.red {
+    color: rgba(236, 63, 63, 0.75);
+}
+
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+  border: 1px solid #dddddd;
+  border-right-width:0px;
+  border-left-width:0px;
+}
