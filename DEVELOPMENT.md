@@ -72,3 +72,33 @@ These are additional steps you would like to take specificly for Windows based d
 
 * Run XOMNI.CMS.Backend and XOMNI.CMS.FrontEnd projects.
 * Open your browser. You can access any page using a url like: **http://localhost/XOMNI.CMS.FrontEnd/src/#{management|private}/{page-name}**
+
+## Adding a New Page
+
+* Create a new folder named **"{pagename}-page"** under **XOMNI.CMS.FrontEnd/src/pages/{catalog | management | private}/**
+* The new folder you created should contain two files. **"{pagename}.html"** and **"{pagename}.ts"**. Make sure both files have the **same name**.
+* Your ts file should contain a **viewmodel** and a **reference to your html file**. We're using amd dependency and requirejs with text plugin to reference the html files.
+
+Example:
+
+	/// <amd-dependency path="text!./trending-action-settings.html" />
+
+	export var template: string = require("text!./your-page-name.html");
+	export class viewModel{
+		constructor() {
+        	foo();
+    	}
+	}
+
+* Pages should be registered as Knockout components. In order to register your page, head to **XOMNI.CMS.FrontEnd/src/app/startup.ts** and register your page just above **//[[XO-SCAFFOLDER]]** line. 
+
+Format:
+
+	ko.components.register('{management | private | catalog}-pagename-page',{require: '{path to your files without file format}'}
+
+Example:
+
+	ko.components.register(
+	'management-trending-action-settings-page', { require: 'pages/management/trending-action-settings-page/trending-action-settings' });
+
+**We highly recommend you to take look at other pages before creating a new page.**
