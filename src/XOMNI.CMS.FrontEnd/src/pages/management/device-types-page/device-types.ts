@@ -13,14 +13,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public client = new Xomni.Management.Company.DeviceTypes.DeviceTypesClient();
     public deviceTypes = ko.observableArray<Models.Management.Company.DeviceType>();
     public pageCount = ko.observableArray<number>();
-    private take = cms.infrastructure.Configuration.AppSettings.DeviceTypesTake;
     public currentPage = 1;
 
-    public buttonIsVisible(data: Models.Management.Company.DeviceType) {
+    public decideButtonVisibility(data: Models.Management.Company.DeviceType) {
         return !(data.Description == 'InStore' || data.Description == 'Consumer');
     }
 
-    public pagingIsVisible() {
+    public decidePagingVisibility() {
         if (this.pageCount().length > 1) {
             return true;
         }
@@ -34,18 +33,38 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         try {
             var pageNumber = parseInt(params.route()["?query"].page);
             this.currentPage = pageNumber;
-            skip = (this.currentPage - 1) * this.take;
+            skip = (this.currentPage - 1) * cms.infrastructure.Configuration.AppSettings.ShortListItemCount;
         }
-        catch (e) {
-
+        catch (exception) {
+            if (exception.name != "TypeError") {
+                this.showCustomErrorDialog(exception.message);
+            }
         }
 
         this.initialize(skip);
     }
 
+    redirectToCms(page: string,id?: number) {
+
+        var baseUrl = cms.infrastructure.Configuration.AppSettings.XomniApiUrl.replace("api", "cms");
+        switch (page) {
+            case "add":
+                baseUrl += "/DeviceTypes/AddEdit.aspx";
+                break;
+            case "edit":
+                baseUrl += "/DeviceTypes/AddEdit.aspx?Id=" + id;
+                break;
+            case "delete":
+                baseUrl += "/DeviceTypes/List.aspx";
+                break;
+        }
+         
+        $(location).attr('href', baseUrl);
+    }
+
     initialize(skip: number) {
         try {
-            this.client.getList(skip, this.take, this.success, this.error);
+            this.client.getList(skip, cms.infrastructure.Configuration.AppSettings.ShortListItemCount, this.success, this.error);
         }
         catch (exception) {
             this.showCustomErrorDialog(exception.Message);
@@ -54,7 +73,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     success = (result: Models.PaginatedContainer<Models.Management.Company.DeviceType>) => {
         try {
-            var count = this.range(1, (Math.ceil(result.TotalCount / this.take)));
+            var count = this.range(1, (Math.ceil(result.TotalCount / cms.infrastructure.Configuration.AppSettings.ShortListItemCount)));
             this.pageCount(count);
 
             if (this.currentPage > this.pageCount()[this.pageCount().length - 1]) {
