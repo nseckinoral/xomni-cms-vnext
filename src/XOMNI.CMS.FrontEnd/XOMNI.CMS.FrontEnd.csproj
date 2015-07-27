@@ -99,6 +99,7 @@
     <Content Include="src\images\search-top-bg.png" />
     <Content Include="src\images\user-header-img.png" />
     <Content Include="src\pages\management\device-types-page\device-types.html" />
+    <Content Include="src\pages\management\stores-page\stores.html" />
     <Content Include="src\pages\private\mail-subscription-status-page\mail-subscription-status.html" />
     <Content Include="src\pages\catalog\brand-page\brand.html" />
     <Content Include="src\components\navigation\navigation.html" />
@@ -173,6 +174,7 @@
     <TypeScriptCompile Include="src\pages\management\device-types-page\device-types.ts" />
     <TypeScriptCompile Include="src\pages\management\facebook-settings-page\facebook-settings.ts" />
     <TypeScriptCompile Include="src\pages\management\integration-endpoint-page\integration-endpoint.ts" />
+    <TypeScriptCompile Include="src\pages\management\stores-page\stores.ts" />
     <TypeScriptCompile Include="src\pages\management\tenant-settings-page\tenant-settings.ts" />
     <TypeScriptCompile Include="src\pages\management\msg-integration-page\msg-integration.ts" />
     <TypeScriptCompile Include="src\pages\management\trending-action-settings-page\trending-action-settings.ts" />

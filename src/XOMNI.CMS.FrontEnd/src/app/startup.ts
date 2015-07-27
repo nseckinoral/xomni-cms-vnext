@@ -31,6 +31,7 @@ ko.components.register('management-facebook-settings-page', { require: 'pages/ma
 ko.components.register('private-mail-subscription-status-page', { require: 'pages/private/mail-subscription-status-page/mail-subscription-status' });
 ko.components.register('management-trending-action-settings-page', { require: 'pages/management/trending-action-settings-page/trending-action-settings' });
 ko.components.register('management-device-types-page', { require: 'pages/management/device-types-page/device-types' });
+ko.components.register('management-stores-page', { require: 'pages/management/stores-page/stores' });
 //[[XO-SCAFFOLDER]]
 
 (<any>ko.bindingHandlers).toggle = {
