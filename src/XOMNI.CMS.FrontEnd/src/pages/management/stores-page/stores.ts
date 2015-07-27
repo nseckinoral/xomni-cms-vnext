@@ -51,7 +51,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             size: 'small',
             bootstrapMajorVersion: 3,
             pageUrl: function (type, page, current) {
-                return "/XOMNI.CMS.FrontEnd/src/#management/stores?page=" + page;
+                return "/#management/stores?page=" + page;
             },
             itemTexts: function (type, page, current) {
                 switch (type) {
