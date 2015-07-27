@@ -65,6 +65,7 @@ These are additional steps you would like to take specificly for Windows based d
 
 			C:\~\Documents\GitHub\xomni-cms-vnext\src\XOMNI.CMS.FrontEnd [dev]> bower install
 * Enter XOMNI Api credentials and backend url to **appsettings.json**.
+* DeviceTypesTake in **appsettings.json** is the **take** paramater to fetch the list of devicetypes. It's set to 10 by default. It shouldn't be left empty and the maximum value can be 1000.
 * While we migrate the old CMS into the new CMS vNext environment there is a cookie based authentication in place to transition the authentication from old to the new CMS. In order to have a running local dev environment just for the CMS vNext you can simply disable cookie based authentication (Set IsDebug to true) and enter XOMNI API credentials (ApiUserName, ApiUserPassword) in **src/appSettings.json** to have a workaround in place.
 
 ## Running CMS VNext

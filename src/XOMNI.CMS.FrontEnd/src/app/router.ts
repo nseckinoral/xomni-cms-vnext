@@ -20,7 +20,7 @@ module router {
 
     var routes = [
         { pattern: '', params: { page: 'dashboard' } },
-        { pattern: '/{container}/{page}/:id:', params: { page: ''} },
+        { pattern: '/{container}/{page}/:id::?query:', params: { page: '' } },
     ];
 
     // Register routes with crossroads.js
@@ -28,6 +28,11 @@ module router {
         crossroads.addRoute(route.pattern, (requestParams) => {
             if (route.pattern) {
                 route.params.page = requestParams.container + "-" + requestParams.page + "-page";
+
+                var query = requestParams["?query"];
+                if (query && !(parseFloat(query.page))) {
+                    query.page = 1;
+                }
             }
             currentRoute(<RouteEntry>ko.utils.extend(requestParams, route.params));
         });

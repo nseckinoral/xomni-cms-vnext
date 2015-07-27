@@ -196,5 +196,6 @@ export module infrastructure {
         APIPassword: string;
         IsDebug: boolean;
         XomniApiUrl: string;
+        ShortListItemCount: number;
     }
 }

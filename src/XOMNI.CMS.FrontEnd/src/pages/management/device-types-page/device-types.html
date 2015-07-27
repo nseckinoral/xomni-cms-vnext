@@ -1,0 +1,46 @@
+﻿<article role="form">
+    <div class="row">
+        <div class="col-xs-6">
+            <h1>
+                Device Types
+            </h1>
+        </div>
+        <button class="form-control rightCorner" type="button" data-bind="event:{click: function(){redirectToCms('add')}}">
+            Add
+        </button>
+    </div>
+    <hr />
+    <div class="alert alert-info line-space" role="alert">
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+        <span class="sr-only"></span>
+        Device types help you categorize your devices. You can use it as a parameter in omni-discovery to find particular devices in a
+        store. ‘InStore’ and ‘Consumer’ device types are predefined and can't be deleted or edited. You may add as many device types as you like.
+    </div>
+    <div class="panel panel-default">
+        <table class="table table-bordered">
+            <thead>
+                <tr class="active">
+                    <th width="81px"></th>
+                    <th class="table-font header">Description</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: deviceTypes">
+                <tr>
+                    <td align="center">
+                        <button class=" btn btn-link red btn-xs" aria-label="Center-Align" data-bind="visible: $parent.decideButtonVisibility($data), tooltip: {title: 'Delete'},event:{click: function(){$parent.redirectToCms('delete')}}">
+                            <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                        </button>
+                        <span></span>
+                        <button class="btn btn-link btn-xs" aria-label="Center-Align" data-bind="visible: $parent.decideButtonVisibility($data), tooltip: {title: 'Edit'},event:{click: function(){$parent.redirectToCms('edit',$data.Id)}}">
+                            <i class="glyphicon glyphicon-edit" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                    <td class="table-font" data-bind="text: Description"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <div class="text-right">
+            <ul id="pagination" data-bind="visible: decidePagingVisibility()"></ul>
+        </div>
+</article>
