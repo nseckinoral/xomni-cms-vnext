@@ -93,7 +93,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 baseUrl += "/Stores/AddEdit.aspx";
                 break;
             case "edit":
-                baseUrl += "/Stores/AddEdit.aspx?Id=1" + id;
+                baseUrl += "/Stores/AddEdit.aspx?Id=" + id;
                 break;
             case "delete":
                 baseUrl += "/Stores/List.aspx";
