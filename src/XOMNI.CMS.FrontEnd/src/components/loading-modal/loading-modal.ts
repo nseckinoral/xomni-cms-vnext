@@ -19,7 +19,9 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     showLoadingDialog() {
-        $('#pleaseWaitDialog').modal({ keyboard: false, show: true });
+        if ($("BODY").hasClass("modal-open") == false) {
+            $('#pleaseWaitDialog').modal({ keyboard: false, show: true });
+        }
     }
 
     hideLoadingDialog() {
