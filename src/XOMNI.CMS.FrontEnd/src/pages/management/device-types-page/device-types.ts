@@ -32,8 +32,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         var skip = 0;
 
         try {
-            var pageNumber = parseInt(params.route()["?query"].page);
-            this.currentPage = pageNumber;
+            this.currentPage = parseInt(params.route()["?query"].page);
             skip = (this.currentPage - 1) * cms.infrastructure.Configuration.AppSettings.ShortListItemCount;
         }
         catch (exception) {
@@ -45,8 +44,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         this.initialize(skip);
     }
 
-    redirectToCms(page: string,id?: number) {
-
+    redirectToCms(page: string, id?: number) {
         var baseUrl = cms.infrastructure.Configuration.AppSettings.XomniApiUrl.replace("api", "cms");
         switch (page) {
             case "add":
@@ -59,7 +57,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 baseUrl += "/DeviceTypes/List.aspx";
                 break;
         }
-         
+
         $(location).attr('href', baseUrl);
     }
 
@@ -74,15 +72,17 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     success = (result: Models.PaginatedContainer<Models.Management.Company.DeviceType>) => {
         try {
-            var count = this.range(1, (Math.ceil(result.TotalCount / cms.infrastructure.Configuration.AppSettings.ShortListItemCount)));
+            var count = this.range(1,(Math.ceil(result.TotalCount / cms.infrastructure.Configuration.AppSettings.ShortListItemCount)));
             this.pageCount(count);
-
-            if (this.currentPage > this.pageCount()[this.pageCount().length - 1]) {
-                this.pageCount.removeAll();
-                throw new Error("Invalid page number");
+            var lastPage = this.pageCount()[this.pageCount().length - 1]
+            if (this.currentPage > lastPage) {
+                hasher.setHash("#management/device-types?page=" + lastPage);
             }
-            this.deviceTypes(result.Results);
-            this.initializePagination();
+            else {
+                this.deviceTypes(result.Results);
+                this.initializePagination();
+            }
+
         }
         catch (exception) {
             this.showCustomErrorDialog(exception.message);
