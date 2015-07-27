@@ -4,6 +4,7 @@
 import $ = require("jquery");
 import ko = require("knockout");
 import cms = require("app/infrastructure");
+import hasher = require("hasher");
 
 
 export var template: string = require("text!./device-types.html");
@@ -96,7 +97,10 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             size: 'small',
             bootstrapMajorVersion: 3,
             pageUrl: function (type, page, current) {
-                return "/XOMNI.CMS.FrontEnd/src/#management/device-types?page=" + page;
+                return "javascript:void(0);"
+            },
+            onPageClicked: (event, originalEvent, type, page) => {
+                hasher.setHash("#management/device-types?page=" + page);
             },
             itemTexts: function (type, page, current) {
                 switch (type) {
