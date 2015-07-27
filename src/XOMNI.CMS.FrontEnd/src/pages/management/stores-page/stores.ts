@@ -69,19 +69,9 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     case "page":
                         return page;
                 }
-            },
-            showFirst: true,
-            showLast: true,
-            showNext: true,
-            showPrevious: true
-        }
-        if (options.totalPages <= options.numberOfPages){
-            options.showFirst = false;
-            options.showLast = false;
-            options.showNext = false;
-            options.showPrevious = false;
-        }
-
+            }
+        };
+        
         $('#pagination').bootstrapPaginator(options);
     }
 
