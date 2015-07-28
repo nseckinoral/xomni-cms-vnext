@@ -30,6 +30,7 @@ ko.components.register('management-twitter-settings-page', { require: 'pages/man
 ko.components.register('management-facebook-settings-page', { require: 'pages/management/facebook-settings-page/facebook-settings' });
 ko.components.register('private-mail-subscription-status-page', { require: 'pages/private/mail-subscription-status-page/mail-subscription-status' });
 ko.components.register('management-trending-action-settings-page', { require: 'pages/management/trending-action-settings-page/trending-action-settings' });
+ko.components.register('management-stores-page', { require: 'pages/management/stores-page/stores' });
 //[[XO-SCAFFOLDER]]
 
 (<any>ko.bindingHandlers).toggle = {
@@ -83,6 +84,26 @@ ko.components.register('management-trending-action-settings-page', { require: 'p
                 if (theEvent.preventDefault) theEvent.preventDefault();
             }
         });
+    }
+};
+
+(<any>ko.bindingHandlers).tooltip = {
+    init: function (element, valueAccessor) {
+        var local = ko.utils.unwrapObservable(valueAccessor()),
+            options = {};
+
+        ko.utils.extend(options, (<any>ko.bindingHandlers).tooltip.options);
+        ko.utils.extend(options, local);
+
+        $(element).tooltip(options);
+
+        ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+            $(element).tooltip("destroy");
+        });
+    },
+    options: {
+        placement: "bottom",
+        trigger: "hover"
     }
 };
 
