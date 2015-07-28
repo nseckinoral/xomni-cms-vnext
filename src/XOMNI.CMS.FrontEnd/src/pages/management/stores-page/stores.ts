@@ -75,7 +75,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         $('#pagination').bootstrapPaginator(options);
     }
 
-    redirectToCms(page: string, id?: number) {
+    generateUrl(page: string, id?: number) {
 
         var baseUrl = cms.infrastructure.Configuration.AppSettings.XomniApiUrl.replace("api", "cms");
         switch (page) {
@@ -89,8 +89,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 baseUrl += "/Stores/List.aspx";
                 break;
         }
-
-        $(location).attr('href', baseUrl);
+        return baseUrl;
     }
 
     public decidePagingVisibility() {

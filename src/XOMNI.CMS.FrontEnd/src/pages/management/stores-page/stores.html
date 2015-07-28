@@ -5,9 +5,9 @@
                 Stores
             </h1>
         </div>
-        <button class="form-control rightCorner" type="button" data-bind="event:{click: function(){redirectToCms('add')}}">
+        <a class="form-control btn button rightCorner" role="button" data-bind="attr:{href: generateUrl('add')}">
             Add
-        </button>
+        </a>
     </div>
     <hr />
     <div class="alert alert-info line-space" role="alert">
@@ -40,13 +40,13 @@
             <tbody data-bind="foreach: stores">
                 <tr>
                     <td align="center">
-                        <button class=" btn btn-link red btn-xs" aria-label="Center-Align" data-bind="tooltip: {title: 'Delete'},event:{click: function(){$parent.redirectToCms('delete')}}">
+                        <a role="button" class=" btn btn-link red btn-xs" aria-label="Center-Align" data-bind="tooltip: {title: 'Delete'},attr:{href: $parent.generateUrl('delete')}">
                             <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
-                        </button>
+                        </a>
                         <span></span>
-                        <button class="btn btn-link btn-xs" aria-label="Center-Align" data-bind="tooltip: {title: 'Edit'},event:{click: function(){$parent.redirectToCms('edit',$data.Id)}}">
+                        <a role="button" class="btn btn-link btn-xs" aria-label="Center-Align" data-bind="tooltip: {title: 'Edit'},attr:{href: $parent.generateUrl('edit',$data.Id)}">
                             <i class="glyphicon glyphicon-edit" aria-hidden="true"></i>
-                        </button>
+                        </a>
                     </td>
                     <td class="table-font" data-bind="text: Name"></td>
                     <td class="table-font" data-bind="text: Description"></td>
