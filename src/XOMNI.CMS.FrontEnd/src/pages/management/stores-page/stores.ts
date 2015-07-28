@@ -4,7 +4,7 @@
 import $ = require("jquery");
 import ko = require("knockout");
 import cms = require("app/infrastructure");
-
+import hasher = require("hasher");
 
 export var template: string = require("text!./stores.html");
 
@@ -51,7 +51,10 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             size: 'small',
             bootstrapMajorVersion: 3,
             pageUrl: function (type, page, current) {
-                return "/#management/stores?page=" + page;
+                return "javascript:void(0);"
+            },
+            onPageClicked: (event, originalEvent, type, page) => {
+                hasher.setHash("#management/stores?page=" + page);
             },
             itemTexts: function (type, page, current) {
                 switch (type) {
@@ -66,19 +69,9 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     case "page":
                         return page;
                 }
-            },
-            showFirst: true,
-            showLast: true,
-            showNext: true,
-            showPrevious: true
-        }
-        if (options.totalPages <= options.numberOfPages){
-            options.showFirst = false;
-            options.showLast = false;
-            options.showNext = false;
-            options.showPrevious = false;
-        }
-
+            }
+        };
+        
         $('#pagination').bootstrapPaginator(options);
     }
 
@@ -90,7 +83,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 baseUrl += "/Stores/AddEdit.aspx";
                 break;
             case "edit":
-                baseUrl += "/Stores/AddEdit.aspx?Id=1" + id;
+                baseUrl += "/Stores/AddEdit.aspx?Id=" + id;
                 break;
             case "delete":
                 baseUrl += "/Stores/List.aspx";
