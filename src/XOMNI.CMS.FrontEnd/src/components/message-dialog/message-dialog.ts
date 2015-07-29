@@ -10,6 +10,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     constructor() {
         super();
         cms.infrastructure.shouter.subscribe<dialog.DialogContent>(content=> {
+            $('#header').removeClass('successfull warning error');
             switch (content.Type) {
                 case dialog.ContentType.Success:
                     $('#header').addClass('successfull');
