@@ -153,11 +153,11 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         this.mailUnsubscribeRedirectionLink(settings.MailUnsubscribeRedirectionUri);
         this.passbookCertificatePassword(settings.PassbookCertificatePassword);
         this.currentSettings = settings;
-        this.validationActive(false);
+        this.changeValidationStatus(false);
     }
 
     update() {
-        this.validationActive(true);
+        this.changeValidationStatus(true);
         if (this.getValidationErrors().length === 0) {
             var settings: Models.Management.Configuration.Settings = {
                 CacheExpirationTime: this.cacheExpirationTime(),

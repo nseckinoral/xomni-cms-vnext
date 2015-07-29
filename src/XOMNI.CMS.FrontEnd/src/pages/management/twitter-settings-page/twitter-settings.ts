@@ -73,7 +73,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     save() {
-        this.validationActive(true);
+        this.changeValidationStatus(true);
         if (this.getValidationErrors().length === 0) {
             try {
                 this.settings.TwitterConsumerKey = this.consumerKey();
@@ -96,7 +96,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             this.consumerKey(result.TwitterConsumerKey);
             this.consumerSecretKey(result.TwitterConsumerKeySecret);
             this.redirectUri(result.TwitterRedirectUri);
-            this.validationActive(false);
+            this.changeValidationStatus(false);
         }
         catch (exception) {
             this.showCustomErrorDialog(exception.message);
