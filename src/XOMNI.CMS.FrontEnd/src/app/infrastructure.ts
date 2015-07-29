@@ -26,16 +26,12 @@ export module infrastructure {
     });
 
     export class baseViewModel {
-        public validationActive = ko.observable<boolean>(false);
         public innerValidationErrors: KnockoutValidationErrors = undefined;
-
+        public validationEnabled = ko.observable<boolean>(false);
         constructor() {
             var userInfo = this.getAuthenticatedUserInfo();
             var apiUrl = this.getApiUrl();
             Xomni.currentContext = new Xomni.ClientContext(userInfo.UserName, userInfo.Password, apiUrl);
-            this.validationActive.subscribe(t=> {
-                this.innerValidationErrors.showAllMessages(t);
-            });
         }
 
         public initValidation(element: any) {
@@ -45,9 +41,14 @@ export module infrastructure {
             }
         }
 
+        public changeValidationStatus(isEnabled: boolean) {
+            this.innerValidationErrors.showAllMessages(isEnabled);
+            this.validationEnabled(isEnabled);
+        }
+
         public getValidationErrors(): string[] {
             var retVal: string[];
-            if (this.validationActive()) {
+            if (this.validationEnabled()) {
                 this.innerValidationErrors.showAllMessages(true);
                 retVal = this.innerValidationErrors();
             }

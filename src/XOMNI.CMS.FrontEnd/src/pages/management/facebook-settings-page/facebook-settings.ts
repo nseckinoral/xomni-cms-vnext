@@ -73,7 +73,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         }
     }
     save() {
-        this.validationActive(true);
+        this.changeValidationStatus(true);
         if (this.getValidationErrors().length == 0) {
             try {
                 this.settings.FacebookApplicationId = this.applicationId();
@@ -98,7 +98,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             this.applicationSecretKey(result.FacebookApplicationSecretKey);
             this.redirectUri(result.FacebookRedirectUri);
             this.displayType(result.FacebookDisplayType);
-            this.validationActive(false);
+            this.changeValidationStatus(false);
         }
         catch (exception) {
             this.showCustomErrorDialog(exception.message);
