@@ -42,8 +42,8 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     intervalId: number;
     constructor() {
         super();
-        this.initalize();
         this.initValidation(ko.validation.group([this.adminMail, this.serviceName, this.serviceTier]));
+        this.initalize();
     }
 
     initalize() {
