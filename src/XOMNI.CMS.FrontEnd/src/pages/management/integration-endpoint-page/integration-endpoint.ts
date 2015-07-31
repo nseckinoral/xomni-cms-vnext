@@ -42,12 +42,12 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     intervalId: number;
     constructor() {
         super();
-        this.initalize();
         this.initValidation(ko.validation.group([this.adminMail, this.serviceName, this.serviceTier]));
+        this.initalize();
     }
 
     initalize() {
-        this.validationActive(false);
+        this.changeValidationStatus(false);
         this.client.get(
             (t) => {
                 this.isEnabled(true);
@@ -85,7 +85,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     createEndpoint() {
         this.showErrors(true);
-        this.validationActive(true);
+        this.changeValidationStatus(true);
         if (this.getValidationErrors().length == 0) {
             this.client.post({
                 AdminMail: this.adminMail(),
@@ -127,6 +127,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         this.adminMail("");
         this.serviceName("");
         this.showErrors(false);
-        this.validationActive(false);
+        this.changeValidationStatus(false);
     }
 }
