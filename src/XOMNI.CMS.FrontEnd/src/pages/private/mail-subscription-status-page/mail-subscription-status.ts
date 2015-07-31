@@ -19,28 +19,31 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             message: "E-Mail is required."
         }
     });
-    public validationErrors = ko.validation.group(this);
 
     constructor() {
         super();
+        this.initValidation(ko.validation.group([this.email]));
     }
 
     getSubscriptionDetails() {
-        this.client.get(this.email(),
-            t=> {
-                this.piiName(t.PIIName);
-                this.purposeType(Models.Private.Mail.MailSubscriptionPurposeType[t.PurposeTypeId]);
-                this.status(Models.Private.Mail.MailSubscriptionStatus[t.StatusId]);
-                this.isSubscribable(t.IsSubscribable);
-            },
-            e=> {
-                this.showCustomErrorDialog(this.createErrorMessage(e));
-            });
+        this.changeValidationStatus(true);
+        if (this.getValidationErrors().length == 0) {
+            this.client.get(this.email(),
+                t=> {
+                    this.piiName(t.PIIName);
+                    this.purposeType(Models.Private.Mail.MailSubscriptionPurposeType[t.PurposeTypeId]);
+                    this.status(Models.Private.Mail.MailSubscriptionStatus[t.StatusId]);
+                    this.isSubscribable(t.IsSubscribable);
+                },
+                e=> {
+                    this.showCustomErrorDialog(this.createErrorMessage(e));
+                });
+        }
     }
 
     updateSubscriptionStatus() {
-        if (this.validationErrors().length === 0) {
-
+        this.changeValidationStatus(true);
+        if (this.getValidationErrors().length === 0) {
             this.client.put(this.email(), Models.Private.Mail.MailSubscriptionStatus.Subscribed,
                 () => {
                     this.getSubscriptionDetails();
@@ -48,9 +51,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 e=> {
                     this.showCustomErrorDialog(this.createErrorMessage(e));
                 });
-        }
-        else {
-            this.validationErrors.showAllMessages();
         }
     }
 }
