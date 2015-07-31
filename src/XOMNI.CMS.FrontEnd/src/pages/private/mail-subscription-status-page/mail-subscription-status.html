@@ -52,10 +52,5 @@
             <li>You have reached your re-subscription limit of 3 after customer unsubscriptions.</li>
         </ul>
     </div>
-    <div class="alert alert-danger" data-bind="visible: validationErrors().length > 0">
-        <text class="generalErrorMessage">Required fields are missing.</text>
-        <ul data-bind="foreach: validationErrors()">
-            <li data-bind="text: $data"></li>
-        </ul>
-    </div>
+    <validation-summary params="{errors:getValidationErrors()}" />
 </article>
