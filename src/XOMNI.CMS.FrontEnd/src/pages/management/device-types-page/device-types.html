@@ -5,7 +5,7 @@
                 Device Types
             </h1>
         </div>
-        <button class="form-control rightCorner" type="button" data-bind="event:{click: function(){redirectToCms('add')}}">
+        <button class="form-control rightCorner" type="button" data-bind="visible: !isAddAvailable() ,event:{click: function(){ prepareAddInput(); }}">
             Add
         </button>
     </div>
@@ -25,17 +25,46 @@
                 </tr>
             </thead>
             <tbody data-bind="foreach: deviceTypes">
-                <tr>
+                <tr data-bind="attr:{id: Id}">
                     <td align="center">
-                        <button class=" btn btn-link red btn-xs" aria-label="Center-Align" data-bind="visible: $parent.decideButtonVisibility($data), tooltip: {title: 'Delete'},event:{click: function(){$parent.redirectToCms('delete')}}">
+                        <button id="delete" class=" btn btn-link red btn-xs" aria-label="Center-Align" data-bind="visible: $parent.decideEditability($data,$index(),$element), tooltip: {title: 'Delete'}, event:{click: function(){$parent.deleteDeviceType($data)}}">
                             <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
                         </button>
+                        <button id="cancel" class=" btn btn-link red btn-xs" aria-label="Center-Align" data-bind="visible: $parent.decideEditability($data,$index(),$element), tooltip: {title: 'Cancel'}, event:{click: function(){$parent.cancel();}}">
+                            <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+                        </button>
                         <span></span>
-                        <button class="btn btn-link btn-xs" aria-label="Center-Align" data-bind="visible: $parent.decideButtonVisibility($data), tooltip: {title: 'Edit'},event:{click: function(){$parent.redirectToCms('edit',$data.Id)}}">
+                        <button id="edit" class="btn btn-link btn-xs" aria-label="Center-Align" data-bind="visible: $parent.decideEditability($data,$index(),$element), tooltip: {title: 'Edit'}, event:{click: function(){ $parent.cancel(); $parent.changeEditableRow($index(),$data); } }">
                             <i class="glyphicon glyphicon-edit" aria-hidden="true"></i>
                         </button>
+                        <button id="save" class="btn btn-link btn-xs" aria-label="Center-Align" data-bind="visible: $parent.decideEditability($data,$index(),$element), tooltip: {title: 'Save'}, event:{click: function(){ $parent.updateDeviceType($data,$parent.newDescription()); }}">
+                            <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
+                        </button>
                     </td>
-                    <td class="table-font" data-bind="text: Description"></td>
+                    <td id="description" class="table-font" data-bind="visible: $parent.decideEditability($data,$index(),$element),text: Description"></td>
+                    <td id="editableDescription" class="table-font" data-bind="visible: $parent.decideEditability($data,$index(),$element), validationOptions: { insertMessages: false}">
+                        <input class="form-control" maxlength="150" data-bind="value: $parent.newDescription,validationElement: $parent.newDescription,attr:{id: Description},event:{keyup: function(data,event){$parent.handleUpdateKeyUp(event,data,$parent.newDescription());} }" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-default" data-bind="visible: isAddAvailable,validationOptions: { insertMessages: false}">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td align="center" width="81px">
+                        <button id="cancel" class=" btn btn-link red btn-xs" aria-label="Center-Align" data-bind="tooltip: {title: 'Cancel'}, event:{click: function(){ cancel();} }">
+                            <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+                        </button>
+                        <span></span>
+                        <button id="save" class="btn btn-link btn-xs" aria-label="Center-Align" data-bind="tooltip: {title: 'Save'}, event:{click: function(){ postDeviceType($data,newDescription());}}">
+                            <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                    <td class="table-font">
+                        <input id="addInput" class="form-control" maxlength="150" data-bind="value: newDescription,validationElement: newDescription,event:{keyup: function(data,event){handlePostKeyUp(event,data,newDescription());}}" />
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -43,4 +72,5 @@
         <div class="text-right">
             <ul id="pagination" data-bind="visible: decidePagingVisibility()"></ul>
         </div>
+    <validation-summary params="{errors:getValidationErrors()}" />
 </article>

@@ -711,4 +711,5 @@ width: 200px;
   border: 1px solid #dddddd;
   border-right-width:0px;
   border-left-width:0px;
+  vertical-align:middle;
 }
