@@ -73,7 +73,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     enableIntegration() {
         this.showErrors(true);
-        this.validationActive(true);
+        this.changeValidationStatus(true);
         if (this.getValidationErrors().length == 0) {
             this.client.post({
                 Email: this.email(),

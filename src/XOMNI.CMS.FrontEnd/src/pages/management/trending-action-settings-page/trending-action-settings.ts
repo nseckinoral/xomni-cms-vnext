@@ -33,7 +33,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     save() {
-        this.validationActive(true)
+        this.changeValidationStatus(true)
         if (this.getValidationErrors().length == 0) {
             try {
                 this.trendingActionTypeValues.filter(function (item) { return item.Description == "Social Like"; })[0].ImpactValue = this.socialLike();
@@ -97,7 +97,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             this.shoppingCartItemInsert(result.filter(function (item) { return item.Description == "Shopping Cart ItemI Insert"; })[0].ImpactValue);
             this.wishlistItemInsert(result.filter(function (item) { return item.Description == "Wishlist Item Insert"; })[0].ImpactValue);
             this.itemView(result.filter(function (item) { return item.Description == "Item View"; })[0].ImpactValue);
-            this.validationActive(false);
+            this.changeValidationStatus(false);
         }
         catch (exception) {
             this.showCustomErrorDialog(exception.message);
