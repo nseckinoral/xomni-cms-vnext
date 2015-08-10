@@ -685,3 +685,7 @@ width: 200px;
 
     line-height: 20px;
 }
+
+.paging-right{
+    padding: 10px 15px 0px 0px;
+}

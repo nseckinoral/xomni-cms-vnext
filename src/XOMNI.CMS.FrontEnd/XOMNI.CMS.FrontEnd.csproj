@@ -26,6 +26,7 @@
     <Content Include="src\components\loading-modal\loading-modal.html" />
     <Content Include="src\components\menubar\menubar.html" />
     <Content Include="src\components\message-dialog\message-dialog.html" />
+    <Content Include="src\components\paginator\paginator.html" />
     <Content Include="src\components\validation-summary\validation-summary.html" />
     <Content Include="src\css\jqrangeslider\iThing.css" />
     <Content Include="src\css\reset.css" />
@@ -164,6 +165,7 @@
     <TypeScriptCompile Include="src\components\loading-modal\loading-modal.ts" />
     <TypeScriptCompile Include="src\components\menubar\menubar.ts" />
     <TypeScriptCompile Include="src\components\message-dialog\message-dialog.ts" />
+    <TypeScriptCompile Include="src\components\paginator\paginator.ts" />
     <TypeScriptCompile Include="src\components\validation-summary\validation-summary.ts" />
     <TypeScriptCompile Include="src\models\dialog-content.ts" />
     <TypeScriptCompile Include="src\pages\catalog\brand-page\brand.ts" />

@@ -15,6 +15,7 @@ ko.components.register('licence-bar', { require: 'components/licence-bar/licence
 ko.components.register('loading-modal', { require: 'components/loading-modal/loading-modal' });
 ko.components.register('message-dialog', { require: 'components/message-dialog/message-dialog' });
 ko.components.register('validation-summary', { require: 'components/validation-summary/validation-summary' });
+ko.components.register('paginator', { require: 'components/paginator/paginator' });
 
 // ... or for template-only components, you can just point to a .html file directly:
 ko.components.register('about-page', {
