@@ -2,7 +2,6 @@
 import ko = require("knockout");
 import cms = require("app/infrastructure");
 import hasher = require("hasher");
-import $ = require("jquery");
 
 
 export var template: string = require("text!./paginator.html");
@@ -15,17 +14,18 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public pageNumbers: Array<number> = new Array;
     public totalPageCount: number;
     public currentPage: number = 1;
-    public urlParameters;
+    public urlParameters: Array<any>;
 
-    constructor(params) {
+    constructor(params: any) {
+
         super();
 
         this.urlParameters = this.sanitizeQuerystingIfNeccessary(this.getUrlParams());
 
         if (params.totalPageCount) {
             this.totalPageCount = params.totalPageCount;
-            if (this.urlParameters.page) {
-                this.currentPage = parseInt(this.urlParameters.page);
+            if (this.urlParameters["page"]) {
+                this.currentPage = parseInt(this.urlParameters["page"]);
                 if (!this.currentPage) {
                     this.currentPage = 1;
                 }
@@ -35,7 +35,8 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     public getUrlParams() {
-        var vars = [], hash, hashes = [];
+
+        var params = [], hash, hashes = [];
 
         if (window.location.href.indexOf('?') > -1) {
             hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
@@ -43,32 +44,35 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
         for (var i = 0; i < hashes.length; i++) {
             hash = hashes[i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
+            params.push(hash[0]);
+            params[hash[0]] = hash[1];
         }
-        return vars;
+        return params;
     }
 
-    public prepareActiveClass(id) {
+    public prepareActiveClass(id: number) {
+
+        var className: string = "";
         if (id == this.currentPage) {
-            return "active";
+            className = "active";
         }
-        else {
-            return "";
-        }
+        return className;
     }
 
-    public initializePaginator(frameSize, totalPageCount, currentPage) {
+    public initializePaginator(frameSize: number, totalPageCount: number, currentPage: number) {
+
         var pageLimits = this.calculateBoundry(frameSize, totalPageCount, currentPage);
         this.pageNumbers = this.range(pageLimits.lowerBound, pageLimits.upperBound);
-        this.decideButtonVisibility();
+        this.prepareShortcutButtonVisibility();
     }
 
-    public decideButtonVisibility() {
+    public prepareShortcutButtonVisibility() {
+
         if (this.frameSize >= this.totalPageCount) {
             this.hasNext = false;
             this.hasPrevious = false;
         }
+
         else {
             if (this.currentPage == 1) {
                 this.hasNext = true;
@@ -79,34 +83,38 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 this.hasNext = false;
                 this.hasPrevious = true;
             }
+
             else {
                 this.hasNext = true;
                 this.hasPrevious = true;
             }
-
         }
     }
 
-    public goToPage(pageNumber: any) {
+    public redirectToPage(pageNumber: number) {
+
         try {
-            var newUrl = this.prepareQuerystring(window.location.hash, pageNumber);
-            hasher.setHash(newUrl);
+            var newUri = this.prepareQuerystring(window.location.hash, pageNumber);
+            hasher.setHash(newUri);
         }
+
         catch (exception) {
             this.showCustomErrorDialog(exception);
         }
     }
 
-    public prepareQuerystring(url : string, page : number) {
+    public prepareQuerystring(uri: string, page: number) {
+
         var retVal: string = null;
+
         if (!this.urlParameters["page"]) {
             this.urlParameters.push("page");
         }
 
         this.urlParameters["page"] = page;
 
-     
         var newPageQueryString: string = "?";
+
         for (var i = 0; i < this.urlParameters.length; i++) {
 
             if (i > 0) {
@@ -117,18 +125,22 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         }
 
         var queryStringIndex = window.location.hash.lastIndexOf("?");
+
         if (queryStringIndex > -1) {
             retVal = window.location.hash.slice(0, queryStringIndex) + newPageQueryString;
         }
+
         else {
             retVal = window.location.hash + newPageQueryString;
         }
 
         retVal = retVal.replace("#/", "");
+
         return retVal;
     }
 
-    public sanitizeQuerystingIfNeccessary(urlParameters) {
+    public sanitizeQuerystingIfNeccessary(urlParameters: Array<any>) {
+
         var sortedArray = urlParameters.sort();
         var results = [];
 
@@ -142,7 +154,8 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         return results;
     }
 
-    public calculateBoundry(frameSize, totalPageCount, currentPage) {
+    public calculateBoundry(frameSize: number, totalPageCount: number, currentPage: number) {
+
         var lowerBound;
         var upperBound;
 
@@ -168,11 +181,15 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         return { lowerBound: lowerBound, upperBound: upperBound };
     }
 
-    public range(start, end) {
-        var foo = [];
+    public range(start: number, end: number) {
+
+        var returnedArray = [];
+
         for (var i = start; i <= end; i++) {
-            foo.push(i);
+            returnedArray.push(i);
         }
-        return foo;
+
+        return returnedArray;
     }
+
 }

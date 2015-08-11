@@ -2,29 +2,29 @@
     <nav>
         <ul class="pagination pagination-sm pull-right">
             <li>
-                <a href="#" aria-label="First" data-bind="visible: hasPrevious, event:{click: function(){ goToPage(1); }}">
+                <a href="#" aria-label="First" data-bind="visible: hasPrevious, event:{click: function(){ redirectToPage(1); }}">
                     <span aria-hidden="true">First</span>
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="Previous" data-bind="visible: hasPrevious, event:{click: function(){ goToPage(currentPage-1); }}">
+                <a href="#" aria-label="Previous" data-bind="visible: hasPrevious, event:{click: function(){ redirectToPage(currentPage-1); }}">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <!-- ko foreach: pageNumbers -->
             <li data-bind="attr:{id: $data, class: $parent.prepareActiveClass($data)}">
-                <a href="#" data-bind="event:{click: function(){ $parent.goToPage($data);}}">
+                <a href="#" data-bind="event:{click: function(){ $parent.redirectToPage($data);}}">
                     <span aria-hidden="true" data-bind="text: $data"></span>
                 </a>
             </li>
             <!-- /ko -->
             <li data-bind="visible: hasNext">
-                <a href="#" aria-label="Next" data-bind="visible: hasNext, event:{click: function(){ goToPage(currentPage+1); }}">
+                <a href="#" aria-label="Next" data-bind="visible: hasNext, event:{click: function(){ redirectToPage(currentPage+1); }}">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="Last" data-bind="visible: hasNext, event:{click: function(){ goToPage(totalPageCount); }}">
+                <a href="#" aria-label="Last" data-bind="visible: hasNext, event:{click: function(){ redirectToPage(totalPageCount); }}">
                     <span aria-hidden="true">Last</span>
                 </a>
             </li>
