@@ -56,13 +56,14 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     slideChildsUp(elements) {
         if (elements != null) {
             $(elements[1]).children("ul").slideUp();
+            $(elements[1]).removeClass("menu_navigation_arrow_down");
             $(elements[1]).addClass("menu_navigation_arrow_up");
 
             ko.contextFor(elements[1]).$data.ChildPages.forEach(function (v) {
                 if (v.Url.indexOf(window.location.hash) != -1) {
                     $(elements[1]).children("ul").slideDown();
-                    $(event.target).parent().removeClass("menu_navigation_arrow_up");
-                    $(event.target).parent().addClass("menu_navigation_arrow_down");
+                    $(elements[1]).removeClass("menu_navigation_arrow_up");
+                    $(elements[1]).addClass("menu_navigation_arrow_down");
 
                     $(elements[1]).children("ul").children("li").each(function (index) {
                         if (ko.contextFor(this).$data.Url.indexOf(window.location.hash) != -1) {
