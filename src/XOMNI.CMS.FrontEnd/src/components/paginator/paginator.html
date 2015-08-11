@@ -2,12 +2,12 @@
     <nav>
         <ul class="pagination pagination-sm pull-right">
             <li>
-                <a href="#" aria-label="First" data-bind="visible: hasPrevious, event:{click: function(){ goToPage('first'); }}">
+                <a href="#" aria-label="First" data-bind="visible: hasPrevious, event:{click: function(){ goToPage(1); }}">
                     <span aria-hidden="true">First</span>
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="Previous" data-bind="visible: hasPrevious, event:{click: function(){ goToPage('previous'); }}">
+                <a href="#" aria-label="Previous" data-bind="visible: hasPrevious, event:{click: function(){ goToPage(currentPage-1); }}">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -19,12 +19,12 @@
             </li>
             <!-- /ko -->
             <li data-bind="visible: hasNext">
-                <a href="#" aria-label="Next" data-bind="visible: hasNext, event:{click: function(){ goToPage('next'); }}">
+                <a href="#" aria-label="Next" data-bind="visible: hasNext, event:{click: function(){ goToPage(currentPage+1); }}">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="Last" data-bind="visible: hasNext, event:{click: function(){ goToPage('last'); }}">
+                <a href="#" aria-label="Last" data-bind="visible: hasNext, event:{click: function(){ goToPage(totalPageCount); }}">
                     <span aria-hidden="true">Last</span>
                 </a>
             </li>

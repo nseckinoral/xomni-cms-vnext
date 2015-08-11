@@ -89,35 +89,12 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     public goToPage(pageNumber: any) {
         try {
-            var newPage = this.prepareRedirectPage(pageNumber);
-            var newUrl = this.prepareQuerystring(window.location.hash, newPage);
+            var newUrl = this.prepareQuerystring(window.location.hash, pageNumber);
             hasher.setHash(newUrl);
         }
         catch (exception) {
             this.showCustomErrorDialog(exception);
         }
-    }
-
-    public prepareRedirectPage(pageNumber) {
-        var page;
-        switch (pageNumber) {
-            case "next":
-                page = this.currentPage + 1;
-                break;
-            case "previous":
-                page = this.currentPage - 1;
-                break;
-            case "first":
-                page = 1;
-                break;
-            case "last":
-                page = this.totalPageCount;
-                break;
-            default:
-                page = pageNumber;
-                break;
-        }
-        return page;
     }
 
     public prepareQuerystring(url : string, page : number) {
