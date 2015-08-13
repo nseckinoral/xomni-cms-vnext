@@ -24,7 +24,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         if (params.totalPageCount) {
             this.totalPageCount = params.totalPageCount;
             if (this.urlParameters["page"]) {
-                this.currentPage = parseInt(this.urlParameters["page"]);
+                this.currentPage = parseInt(this.urlParameters["page"]) > this.totalPageCount ? this.totalPageCount : parseInt(this.urlParameters["page"]);
                 if (!this.currentPage) {
                     this.currentPage = 1;
                 }
