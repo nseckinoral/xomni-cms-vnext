@@ -20,7 +20,7 @@ module router {
 
     var routes = [
         { pattern: '', params: { page: 'dashboard' } },
-        { pattern: '/{container}/{page}/:id:', params: { page: ''} },
+        { pattern: '/{container}/{page}/:id::?query:', params: { page: '' } },
     ];
 
     // Register routes with crossroads.js
