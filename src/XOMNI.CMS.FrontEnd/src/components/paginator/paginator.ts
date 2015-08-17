@@ -10,7 +10,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     public hasNext: boolean = false;
     public hasPrevious: boolean = false;
-    public frameSize: number = 5;
     public pageNumbers: Array<number> = new Array;
     public totalPageCount: number;
     public currentPage: number = 1;
@@ -30,7 +29,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                     this.currentPage = 1;
                 }
             }
-            this.initializePaginator(this.frameSize, this.totalPageCount, this.currentPage);
+            this.initializePaginator(cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize, this.totalPageCount, this.currentPage);
         }
     }
 
@@ -68,7 +67,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     public prepareShortcutButtonVisibility() {
 
-        if (this.frameSize >= this.totalPageCount) {
+        if (cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize >= this.totalPageCount) {
             this.hasNext = false;
             this.hasPrevious = false;
         }

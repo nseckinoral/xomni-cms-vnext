@@ -197,5 +197,6 @@ export module infrastructure {
         APIPassword: string;
         IsDebug: boolean;
         XomniApiUrl: string;
+        PaginatorFrameSize: number;
     }
 }
