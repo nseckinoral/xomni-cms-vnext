@@ -8,8 +8,10 @@ export var template: string = require("text!./paginator.html");
 
 export class viewModel extends cms.infrastructure.baseViewModel {
 
-    public hasNext: boolean = false;
-    public hasPrevious: boolean = false;
+    public hasNextPage: boolean = false; 
+    public hasPreviousPage: boolean = false;
+    public hasNextFrame: boolean = false;
+    public hasPreviousFrame: boolean = false;
     public pageNumbers: Array<number> = new Array;
     public totalPageCount: number;
     public currentPage: number = 1;
@@ -21,11 +23,16 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
         this.urlParameters = this.sanitizeQuerystingIfNeccessary(this.getUrlParams());
 
-        if (params.totalPageCount) {
+        if (cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize <= 0) {
+            this.showCustomErrorDialog("Frame Size should be greater than 0. Please take a look at the application settings.");
+            return;
+        }
+
+        if (params.totalPageCount > 1) {
             this.totalPageCount = params.totalPageCount;
             if (this.urlParameters["page"]) {
                 this.currentPage = parseInt(this.urlParameters["page"]) > this.totalPageCount ? this.totalPageCount : parseInt(this.urlParameters["page"]);
-                if (!this.currentPage) {
+                if (!this.currentPage || this.currentPage<0) {
                     this.currentPage = 1;
                 }
             }
@@ -60,32 +67,47 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     public initializePaginator(frameSize: number, totalPageCount: number, currentPage: number) {
 
-        var pageLimits = this.calculateBoundry(frameSize, totalPageCount, currentPage);
-        this.pageNumbers = this.range(pageLimits.lowerBound, pageLimits.upperBound);
-        this.prepareShortcutButtonVisibility();
+        this.pageNumbers = this.calculateBoundry(frameSize, totalPageCount, currentPage);
+        this.preparePageShortcutVisibility();
+        this.prepareFrameShortcutVisibility();
     }
 
-    public prepareShortcutButtonVisibility() {
+    public moveFrameRight() {
+        this.redirectToPage(this.currentPage + cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize > this.totalPageCount ?
+            this.totalPageCount : this.currentPage + cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize);
+    }
+
+    public moveFrameLeft() {
+        this.redirectToPage(this.currentPage - cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize < 1 ?
+            1 : this.currentPage - cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize);
+    }
+
+    public prepareFrameShortcutVisibility() {
+
+        this.hasNextFrame = this.pageNumbers.indexOf(this.totalPageCount) > -1 ? false : true;
+        this.hasPreviousFrame = this.pageNumbers[0] == 1 ? false : true;
+
+    }
+
+    public preparePageShortcutVisibility() {
 
         if (cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize >= this.totalPageCount) {
-            this.hasNext = false;
-            this.hasPrevious = false;
+            this.hasNextPage = false;
+            this.hasPreviousPage = false;
         }
-
         else {
             if (this.currentPage == 1) {
-                this.hasNext = true;
-                this.hasPrevious = false;
+                this.hasNextPage = true;
+                this.hasPreviousPage = false;
             }
 
-            else if (this.currentPage == this.pageNumbers[this.pageNumbers.length - 1]) {
-                this.hasNext = false;
-                this.hasPrevious = true;
+            else if (this.currentPage == this.totalPageCount) {
+                this.hasNextPage = false;
+                this.hasPreviousPage = true;
             }
-
             else {
-                this.hasNext = true;
-                this.hasPrevious = true;
+                this.hasNextPage = true;
+                this.hasPreviousPage = true;
             }
         }
     }
@@ -120,7 +142,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 newPageQueryString += "&";
             }
 
-            newPageQueryString += this.urlParameters[i] + "=" + this.urlParameters[this.urlParameters[i]]; 
+            newPageQueryString += this.urlParameters[i] + "=" + this.urlParameters[this.urlParameters[i]];
         }
 
         var queryStringIndex = window.location.hash.lastIndexOf("?");
@@ -149,35 +171,26 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 results[urlParameters[i]] = urlParameters[urlParameters[i]];
             }
         }
-        
+
         return results;
     }
 
     public calculateBoundry(frameSize: number, totalPageCount: number, currentPage: number) {
-
-        var lowerBound;
-        var upperBound;
-
+        var upperBound = frameSize;
         if (totalPageCount < frameSize) {
-            lowerBound = 1;
-            upperBound = totalPageCount;
+            return this.range(1, totalPageCount);
         }
 
         else {
-            var rightDisplay = Math.ceil(frameSize / 2);
-            var leftDisplay = frameSize - rightDisplay;
-
-            lowerBound = currentPage - leftDisplay;
-            var lowerOffset = 0 - lowerBound;
-
-            upperBound = currentPage + rightDisplay + (lowerOffset > 0 ? lowerOffset : 0);
-            var upperOffset = upperBound > totalPageCount ? upperBound - totalPageCount : 0;
-            upperBound = (totalPageCount - upperBound) > 0 ? upperBound : totalPageCount;
-
-            lowerBound = lowerBound > 0 ? (lowerBound + lowerBound > upperOffset ? lowerBound - upperOffset + 1 : 1) : 1;
+            var undividedFrame = this.range(1, totalPageCount);
+            for (var i = 0; i <= totalPageCount; i += frameSize) {
+                var currentFrame = undividedFrame.slice(i, upperBound);
+                if (currentFrame.indexOf(currentPage) > -1) {
+                    return currentFrame;
+                }
+                upperBound += frameSize;
+            }
         }
-
-        return { lowerBound: lowerBound, upperBound: upperBound };
     }
 
     public range(start: number, end: number) {
