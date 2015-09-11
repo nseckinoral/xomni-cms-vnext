@@ -8,7 +8,7 @@ export var template: string = require("text!./paginator.html");
 
 export class viewModel extends cms.infrastructure.baseViewModel {
 
-    public hasNextPage: boolean = false; 
+    public hasNextPage: boolean = false;
     public hasPreviousPage: boolean = false;
     public hasNextFrame: boolean = false;
     public hasPreviousFrame: boolean = false;
@@ -32,7 +32,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             this.totalPageCount = params.totalPageCount;
             if (this.urlParameters["page"]) {
                 this.currentPage = parseInt(this.urlParameters["page"]) > this.totalPageCount ? this.totalPageCount : parseInt(this.urlParameters["page"]);
-                if (!this.currentPage || this.currentPage<0) {
+                if (!this.currentPage || this.currentPage < 0) {
                     this.currentPage = 1;
                 }
             }
@@ -177,10 +177,10 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     public calculateBoundry(frameSize: number, totalPageCount: number, currentPage: number) {
         var upperBound = frameSize;
+
         if (totalPageCount < frameSize) {
             return this.range(1, totalPageCount);
         }
-
         else {
             var undividedFrame = this.range(1, totalPageCount);
             for (var i = 0; i <= totalPageCount; i += frameSize) {
