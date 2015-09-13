@@ -101,3 +101,10 @@ Example:
 	'management-trending-action-settings-page', { require: 'pages/management/trending-action-settings-page/trending-action-settings' });
 
 **We highly recommend you to take look at other pages before creating a new page.**
+
+
+##Practices
+
+- You should not use any magic numbers. For example, using .dropdown-nav li:hover ul { top: 37px; } to move a dropdown to the bottom of the nav on hover is bad, as 37px is a magic number. 37px only works here because in this particular scenario the .dropdown-nav happens to be 37px tall. Instead you should use .dropdown-nav li:hover ul { top: 100%; } which means no matter how tall the .dropdown-nav gets, the dropdown will always sit 100% from the top. Every hard-coded measurement you set is a commitment you might not necessarily want to keep.
+- Pay attention to "seperation of concept". It means you should seperate your UI codes and backend codes. Instead of using logic in your bindings or small script snippets in your html file, create a new function in your js file and call it from the html file. Having small script snippets or logic in your bindings might seem like a quick way to do easy things but it's not maintainable and not readable in long term.
+- Do not use observables/computed observables everytime just because you can. Knockout is an amazing framework that helps alot with binding handlers,observables and also computed observables doing the hard work for you. However you should keep an eye on your variables to make sure you're not overdoing it. Think of an example page that represents a profile page for a particular customer. If that "firstName" of your customer won't change after loading the page, which means there's no need for it to be dynamic, you should be using "var firstName : string;" instead of "ko.observable()". Don't forget every observable,binding handler etc. costs a piece of your resources.
