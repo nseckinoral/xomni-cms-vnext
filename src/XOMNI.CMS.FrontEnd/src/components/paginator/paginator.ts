@@ -181,7 +181,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             return this.range(1, totalPageCount);
         }
         else {
-            var frameIndex = currentPage % frameSize == 0 ? Math.floor(currentPage / frameSize) - 1 : Math.floor(currentPage / frameSize) ;
+            var frameIndex = currentPage % frameSize == 0 ? (currentPage / frameSize) - 1 : Math.floor(currentPage / frameSize) ;
             var lowerBound = frameIndex * frameSize + 1; 
             var upperBound = lowerBound + frameSize - 1 > totalPageCount ? totalPageCount : lowerBound + frameSize - 1;
             var currentFrame = this.range(lowerBound, upperBound);
