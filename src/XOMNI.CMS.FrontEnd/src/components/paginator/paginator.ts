@@ -176,20 +176,16 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     public calculateBoundry(frameSize: number, totalPageCount: number, currentPage: number) {
-        var upperBound = frameSize;
 
         if (totalPageCount < frameSize) {
             return this.range(1, totalPageCount);
         }
         else {
-            var undividedFrame = this.range(1, totalPageCount);
-            for (var i = 0; i <= totalPageCount; i += frameSize) {
-                var currentFrame = undividedFrame.slice(i, upperBound);
-                if (currentFrame.indexOf(currentPage) > -1) {
-                    return currentFrame;
-                }
-                upperBound += frameSize;
-            }
+            var frameIndex = currentPage % frameSize == 0 ? Math.floor(currentPage / frameSize) - 1 : Math.floor(currentPage / frameSize) ;
+            var lowerBound = frameIndex * frameSize + 1; 
+            var upperBound = lowerBound + frameSize - 1 > totalPageCount ? totalPageCount : lowerBound + frameSize - 1;
+            var currentFrame = this.range(lowerBound, upperBound);
+            return currentFrame;
         }
     }
 
