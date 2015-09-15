@@ -2,6 +2,7 @@
 import ko = require("knockout");
 import jquery = require("jquery");
 import cms = require("app/infrastructure");
+import crossroads = require("crossroads");
 export var template: string = require("text!./navigation.html");
 
 export class viewModel extends cms.infrastructure.baseViewModel {
@@ -16,6 +17,12 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         //}, this, 'menuGroupId');
         this.route = params.route;
         this.loadSideMenu(2);
+
+        crossroads.routed.add(function (request, data) {
+            console.log(request);
+            console.log(data.route + ' - ' + data.params + ' - ' + data.isFirst);
+            $("#navigationMenu > li").each((n, e) => { viewModel.slideChildsUpInternal(e)});
+        });
     }
 
     public fetchNavigationData(userRightId: number, success: (result: MenuItem[]) => void): any {
@@ -53,19 +60,37 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         event.stopPropagation();
     }
 
-    slideChildsUp(elements) {
-        if (elements != null) {
-            $(elements[1]).children("ul").slideUp();
-            $(elements[1]).removeClass("menu_navigation_arrow_down");
-            $(elements[1]).addClass("menu_navigation_arrow_up");
+    public slideChildsUp(elements) {
+        viewModel.slideChildsUpInternal(elements[1]);
+    }
 
-            ko.contextFor(elements[1]).$data.ChildPages.forEach(function (v) {
+    public static slideChildsUpInternal(element) {
+        var slideUpNotRequired: boolean = false;
+        if (element != null) {
+            //$(element).children("ul").each((i, e : any) => {
+
+            //    ko.contextFor(e).$data.ChildPages.foreach(function (v) {
+            //        if (v.Url.indexOf(window.location.hash) != -1) {
+            //            slideUpNotRequired = true;
+            //        }
+            //    });
+
+            //    if (!slideUpNotRequired) {
+            //        e.slideUp();
+            //    }
+            //});
+
+            $(element).children("ul").slideUp();
+            $(element).removeClass("menu_navigation_arrow_down");
+            $(element).addClass("menu_navigation_arrow_up");
+
+            ko.contextFor(element).$data.ChildPages.forEach(function (v) {
                 if (v.Url.indexOf(window.location.hash) != -1) {
-                    $(elements[1]).children("ul").slideDown();
-                    $(elements[1]).removeClass("menu_navigation_arrow_up");
-                    $(elements[1]).addClass("menu_navigation_arrow_down");
+                    $(element).children("ul").slideDown();
+                    $(element).removeClass("menu_navigation_arrow_up");
+                    $(element).addClass("menu_navigation_arrow_down");
 
-                    $(elements[1]).children("ul").children("li").each(function (index) {
+                    $(element).children("ul").children("li").each(function (index) {
                         if (ko.contextFor(this).$data.Url.indexOf(window.location.hash) != -1) {
                             $(this).addClass("menu_navigation_highlight");
                         }
@@ -77,6 +102,9 @@ export class viewModel extends cms.infrastructure.baseViewModel {
             });
         };
     }
+
+
+
 
     getUserRightId(): number {
         var userRightId: number;
