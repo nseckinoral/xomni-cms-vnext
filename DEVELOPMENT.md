@@ -105,6 +105,49 @@ Example:
 
 ##Practices
 
-- You should not use any magic numbers. For example, using .dropdown-nav li:hover ul { top: 37px; } to move a dropdown to the bottom of the nav on hover is bad, as 37px is a magic number. 37px only works here because in this particular scenario the .dropdown-nav happens to be 37px tall. Instead you should use .dropdown-nav li:hover ul { top: 100%; } which means no matter how tall the .dropdown-nav gets, the dropdown will always sit 100% from the top. Every hard-coded measurement you set is a commitment you might not necessarily want to keep.
-- Pay attention to "seperation of concept". It means you should seperate your UI codes and backend codes. Instead of using logic in your bindings or small script snippets in your html file, create a new function in your js file and call it from the html file. Having small script snippets or logic in your bindings might seem like a quick way to do easy things but it's not maintainable and not readable in long term.
-- Do not use observables/computed observables everytime just because you can. Knockout is an amazing framework that helps alot with binding handlers,observables and also computed observables doing the hard work for you. However you should keep an eye on your variables to make sure you're not overdoing it. Think of an example page that represents a profile page for a particular customer. If that "firstName" of your customer won't change after loading the page, which means there's no need for it to be dynamic, you should be using "var firstName : string;" instead of "ko.observable()". Don't forget every observable,binding handler etc. costs a piece of your resources.
+- Do not use any magic numbers. Instead of using hardcoded variables, you can fetch them from the application settings file so users won't need to edit anything in the code.
+
+		WRONG: 
+		foo(5);
+
+		CORRECT:
+		foo(appSettings.someNumber);
+
+- Do not use any logic in your data bindings.
+
+		WRONG:
+		<input data-bind="function(){if(2+4 != 7){return 'Hello World!';}}" />
+		
+		CORRECT:
+		//Typescript file
+		public foo(){
+			if(2+4 != 7){
+				return 'Hello World!';
+			}		
+		}
+
+		//Html file
+		<input data-bind="foo" />
+
+- Do not use unnecessary observables/computed observables. If your UI component does not need to be updated there's no need to use an observable. Every observable, computed observable or binding handler costs a piece of your resources.
+
+	Example for a simple text that won't be updated after loading the page.
+		
+		//Html file
+	 	<span data-bind="text: firstName"/>
+
+		//Typescript file
+
+		WRONG:
+		public firstName:string = ko.observable();
+		/*
+			do something
+		*/
+		this.firstName("Random Name");
+
+		CORRECT:
+		public firstName: string;
+		/*
+			do something
+		*/
+		this.firstName = "Random Name";
