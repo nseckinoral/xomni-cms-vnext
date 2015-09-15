@@ -3,11 +3,9 @@ import ko = require("knockout");
 import cms = require("app/infrastructure");
 import hasher = require("hasher");
 
-
 export var template: string = require("text!./paginator.html");
 
 export class viewModel extends cms.infrastructure.baseViewModel {
-
     public hasNextPage: boolean = false;
     public hasPreviousPage: boolean = false;
     public hasNextFrame: boolean = false;
@@ -18,9 +16,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public urlParameters: Array<any>;
 
     constructor(params: any) {
-
         super();
-
         this.urlParameters = this.sanitizeQuerystingIfNeccessary(this.getUrlParams());
 
         if (cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize <= 0) {
@@ -41,9 +37,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     public getUrlParams() {
-
         var params = [], hash, hashes = [];
-
         if (window.location.href.indexOf('?') > -1) {
             hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
         }
@@ -57,7 +51,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     public prepareActiveClass(id: number) {
-
         var className: string = "";
         if (id == this.currentPage) {
             className = "active";
@@ -66,7 +59,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     public initializePaginator(frameSize: number, totalPageCount: number, currentPage: number) {
-
         this.pageNumbers = this.calculateBoundry(frameSize, totalPageCount, currentPage);
         this.preparePageShortcutVisibility();
         this.prepareFrameShortcutVisibility();
@@ -83,14 +75,11 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     public prepareFrameShortcutVisibility() {
-
         this.hasNextFrame = this.pageNumbers.indexOf(this.totalPageCount) > -1 ? false : true;
         this.hasPreviousFrame = this.pageNumbers[0] == 1 ? false : true;
-
     }
 
     public preparePageShortcutVisibility() {
-
         if (cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize >= this.totalPageCount) {
             this.hasNextPage = false;
             this.hasPreviousPage = false;
@@ -100,7 +89,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 this.hasNextPage = true;
                 this.hasPreviousPage = false;
             }
-
             else if (this.currentPage == this.totalPageCount) {
                 this.hasNextPage = false;
                 this.hasPreviousPage = true;
@@ -113,55 +101,43 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     public redirectToPage(pageNumber: number) {
-
         try {
             var newUri = this.prepareQuerystring(window.location.hash, pageNumber);
             hasher.setHash(newUri);
         }
-
         catch (exception) {
             this.showCustomErrorDialog(exception);
         }
     }
 
     public prepareQuerystring(uri: string, page: number) {
-
         var retVal: string = null;
-
         if (!this.urlParameters["page"]) {
             this.urlParameters.push("page");
         }
 
         this.urlParameters["page"] = page;
-
         var newPageQueryString: string = "?";
 
         for (var i = 0; i < this.urlParameters.length; i++) {
-
             if (i > 0) {
                 newPageQueryString += "&";
             }
-
             newPageQueryString += this.urlParameters[i] + "=" + this.urlParameters[this.urlParameters[i]];
         }
 
         var queryStringIndex = window.location.hash.lastIndexOf("?");
-
         if (queryStringIndex > -1) {
             retVal = window.location.hash.slice(0, queryStringIndex) + newPageQueryString;
         }
-
         else {
             retVal = window.location.hash + newPageQueryString;
         }
-
         retVal = retVal.replace("#/", "");
-
         return retVal;
     }
 
     public sanitizeQuerystingIfNeccessary(urlParameters: Array<any>) {
-
         var sortedArray = urlParameters.sort();
         var results = [];
 
@@ -171,35 +147,28 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 results[urlParameters[i]] = urlParameters[urlParameters[i]];
             }
         }
-
         return results;
     }
 
     public calculateBoundry(frameSize: number, totalPageCount: number, currentPage: number) {
-
         var currentFrame;
-
         if (totalPageCount < frameSize) {
             currentFrame = this.range(1, totalPageCount);
         }
         else {
-            var frameIndex = currentPage % frameSize == 0 ? (currentPage / frameSize) - 1 : Math.floor(currentPage / frameSize) ;
-            var lowerBound = frameIndex * frameSize + 1; 
+            var frameIndex = currentPage % frameSize == 0 ? (currentPage / frameSize) - 1 : Math.floor(currentPage / frameSize);
+            var lowerBound = frameIndex * frameSize + 1;
             var upperBound = lowerBound + frameSize - 1 > totalPageCount ? totalPageCount : lowerBound + frameSize - 1;
             currentFrame = this.range(lowerBound, upperBound);
         }
-
         return currentFrame;
     }
 
     public range(start: number, end: number) {
-
         var returnedArray = [];
-
         for (var i = start; i <= end; i++) {
             returnedArray.push(i);
         }
-
         return returnedArray;
     }
 
