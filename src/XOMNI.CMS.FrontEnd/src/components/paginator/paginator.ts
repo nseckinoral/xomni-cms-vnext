@@ -3,29 +3,32 @@ import ko = require("knockout");
 import cms = require("app/infrastructure");
 import hasher = require("hasher");
 
-
 export var template: string = require("text!./paginator.html");
 
 export class viewModel extends cms.infrastructure.baseViewModel {
-
-    public hasNext: boolean = false;
-    public hasPrevious: boolean = false;
+    public hasNextPage: boolean = false;
+    public hasPreviousPage: boolean = false;
+    public hasNextFrame: boolean = false;
+    public hasPreviousFrame: boolean = false;
     public pageNumbers: Array<number> = new Array;
     public totalPageCount: number;
     public currentPage: number = 1;
     public urlParameters: Array<any>;
 
     constructor(params: any) {
-
         super();
-
         this.urlParameters = this.sanitizeQuerystingIfNeccessary(this.getUrlParams());
 
-        if (params.totalPageCount) {
+        if (cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize <= 0) {
+            this.showCustomErrorDialog("Frame Size should be greater than 0. Please take a look at the application settings.");
+            return;
+        }
+
+        if (params.totalPageCount > 1) {
             this.totalPageCount = params.totalPageCount;
             if (this.urlParameters["page"]) {
                 this.currentPage = parseInt(this.urlParameters["page"]) > this.totalPageCount ? this.totalPageCount : parseInt(this.urlParameters["page"]);
-                if (!this.currentPage) {
+                if (!this.currentPage || this.currentPage < 0) {
                     this.currentPage = 1;
                 }
             }
@@ -34,9 +37,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     public getUrlParams() {
-
         var params = [], hash, hashes = [];
-
         if (window.location.href.indexOf('?') > -1) {
             hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
         }
@@ -50,7 +51,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     public prepareActiveClass(id: number) {
-
         var className: string = "";
         if (id == this.currentPage) {
             className = "active";
@@ -59,87 +59,85 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     public initializePaginator(frameSize: number, totalPageCount: number, currentPage: number) {
-
-        var pageLimits = this.calculateBoundry(frameSize, totalPageCount, currentPage);
-        this.pageNumbers = this.range(pageLimits.lowerBound, pageLimits.upperBound);
-        this.prepareShortcutButtonVisibility();
+        this.pageNumbers = this.calculateBoundry(frameSize, totalPageCount, currentPage);
+        this.preparePageShortcutVisibility();
+        this.prepareFrameShortcutVisibility();
     }
 
-    public prepareShortcutButtonVisibility() {
+    public moveFrameRight() {
+        this.redirectToPage(this.currentPage + cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize > this.totalPageCount ?
+            this.totalPageCount : this.currentPage + cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize);
+    }
 
+    public moveFrameLeft() {
+        this.redirectToPage(this.currentPage - cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize < 1 ?
+            1 : this.currentPage - cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize);
+    }
+
+    public prepareFrameShortcutVisibility() {
+        this.hasNextFrame = this.pageNumbers.indexOf(this.totalPageCount) > -1 ? false : true;
+        this.hasPreviousFrame = this.pageNumbers[0] == 1 ? false : true;
+    }
+
+    public preparePageShortcutVisibility() {
         if (cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize >= this.totalPageCount) {
-            this.hasNext = false;
-            this.hasPrevious = false;
+            this.hasNextPage = false;
+            this.hasPreviousPage = false;
         }
-
         else {
             if (this.currentPage == 1) {
-                this.hasNext = true;
-                this.hasPrevious = false;
+                this.hasNextPage = true;
+                this.hasPreviousPage = false;
             }
-
-            else if (this.currentPage == this.pageNumbers[this.pageNumbers.length - 1]) {
-                this.hasNext = false;
-                this.hasPrevious = true;
+            else if (this.currentPage == this.totalPageCount) {
+                this.hasNextPage = false;
+                this.hasPreviousPage = true;
             }
-
             else {
-                this.hasNext = true;
-                this.hasPrevious = true;
+                this.hasNextPage = true;
+                this.hasPreviousPage = true;
             }
         }
     }
 
     public redirectToPage(pageNumber: number) {
-
         try {
             var newUri = this.prepareQuerystring(window.location.hash, pageNumber);
             hasher.setHash(newUri);
         }
-
         catch (exception) {
             this.showCustomErrorDialog(exception);
         }
     }
 
     public prepareQuerystring(uri: string, page: number) {
-
         var retVal: string = null;
-
         if (!this.urlParameters["page"]) {
             this.urlParameters.push("page");
         }
 
         this.urlParameters["page"] = page;
-
         var newPageQueryString: string = "?";
 
         for (var i = 0; i < this.urlParameters.length; i++) {
-
             if (i > 0) {
                 newPageQueryString += "&";
             }
-
-            newPageQueryString += this.urlParameters[i] + "=" + this.urlParameters[this.urlParameters[i]]; 
+            newPageQueryString += this.urlParameters[i] + "=" + this.urlParameters[this.urlParameters[i]];
         }
 
         var queryStringIndex = window.location.hash.lastIndexOf("?");
-
         if (queryStringIndex > -1) {
             retVal = window.location.hash.slice(0, queryStringIndex) + newPageQueryString;
         }
-
         else {
             retVal = window.location.hash + newPageQueryString;
         }
-
         retVal = retVal.replace("#/", "");
-
         return retVal;
     }
 
     public sanitizeQuerystingIfNeccessary(urlParameters: Array<any>) {
-
         var sortedArray = urlParameters.sort();
         var results = [];
 
@@ -149,45 +147,28 @@ export class viewModel extends cms.infrastructure.baseViewModel {
                 results[urlParameters[i]] = urlParameters[urlParameters[i]];
             }
         }
-        
         return results;
     }
 
     public calculateBoundry(frameSize: number, totalPageCount: number, currentPage: number) {
-
-        var lowerBound;
-        var upperBound;
-
+        var currentFrame;
         if (totalPageCount < frameSize) {
-            lowerBound = 1;
-            upperBound = totalPageCount;
+            currentFrame = this.range(1, totalPageCount);
         }
-
         else {
-            var rightDisplay = Math.ceil(frameSize / 2);
-            var leftDisplay = frameSize - rightDisplay;
-
-            lowerBound = currentPage - leftDisplay;
-            var lowerOffset = 0 - lowerBound;
-
-            upperBound = currentPage + rightDisplay + (lowerOffset > 0 ? lowerOffset : 0);
-            var upperOffset = upperBound > totalPageCount ? upperBound - totalPageCount : 0;
-            upperBound = (totalPageCount - upperBound) > 0 ? upperBound : totalPageCount;
-
-            lowerBound = lowerBound > 0 ? (lowerBound + lowerBound > upperOffset ? lowerBound - upperOffset + 1 : 1) : 1;
+            var frameIndex = currentPage % frameSize == 0 ? (currentPage / frameSize) - 1 : Math.floor(currentPage / frameSize);
+            var lowerBound = frameIndex * frameSize + 1;
+            var upperBound = lowerBound + frameSize - 1 > totalPageCount ? totalPageCount : lowerBound + frameSize - 1;
+            currentFrame = this.range(lowerBound, upperBound);
         }
-
-        return { lowerBound: lowerBound, upperBound: upperBound };
+        return currentFrame;
     }
 
     public range(start: number, end: number) {
-
         var returnedArray = [];
-
         for (var i = start; i <= end; i++) {
             returnedArray.push(i);
         }
-
         return returnedArray;
     }
 

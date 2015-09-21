@@ -2,13 +2,13 @@
     <nav>
         <ul class="pagination pagination-sm pull-right">
             <li>
-                <a href="#" aria-label="First" data-bind="visible: hasPrevious, event:{click: function(){ redirectToPage(1); }}">
-                    <span aria-hidden="true">First</span>
+                <a href="#" aria-label="PreviousFrame" data-bind="visible: hasPreviousFrame, event:{click: function(){ moveFrameLeft(); }}">
+                    <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="Previous" data-bind="visible: hasPrevious, event:{click: function(){ redirectToPage(currentPage-1); }}">
-                    <span aria-hidden="true">&laquo;</span>
+                <a href="#" aria-label="PreviousPage" data-bind="visible: hasPreviousPage, event:{click: function(){ redirectToPage(currentPage-1); }}">
+                    <span aria-hidden="true">&lsaquo;</span>
                 </a>
             </li>
             <!-- ko foreach: pageNumbers -->
@@ -18,14 +18,14 @@
                 </a>
             </li>
             <!-- /ko -->
-            <li data-bind="visible: hasNext">
-                <a href="#" aria-label="Next" data-bind="visible: hasNext, event:{click: function(){ redirectToPage(currentPage+1); }}">
-                    <span aria-hidden="true">&raquo;</span>
+            <li>
+                <a href="#" aria-label="NextPage" data-bind="visible: hasNextPage, event:{click: function(){ redirectToPage(currentPage+1) }}">
+                    <span aria-hidden="true">&rsaquo;</span>
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="Last" data-bind="visible: hasNext, event:{click: function(){ redirectToPage(totalPageCount); }}">
-                    <span aria-hidden="true">Last</span>
+                <a href="#" aria-label="NextFrame" data-bind="visible: hasNextFrame, event:{click: function(){ moveFrameRight(); }}">
+                    <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
         </ul>
