@@ -1,10 +1,10 @@
-<div class="menu" role="navigation"> 
-    <ul data-bind="template: { name: 'navigation-item-template', foreach: navigationItems, afterRender: slideChildsUp }" />
+<div class="menu"  role="navigation"> 
+    <ul id="navigationMenu" data-bind="template: { name: 'navigation-item-template', foreach: navigationItems, afterRender: slideChildsUp }" />
 </div>
 <script id="navigation-item-template" type="text/html">
     <li class="menu_navigation_arrow_down">
-        <h3 data-bind="click: $parent.mainItemClick">
-            <span data-bind="text: Title, click: $parent.mainItemClick"></span>
+        <h3 data-bind="event:{click: function(data,event){$parent.mainItemClick(data,event)}}">
+            <span data-bind="text: Title, event:{click: function(data,event){$parent.mainItemClick(data,event)}} "></span>
         </h3>
         <ul data-bind="template: { name: 'navigation-sub-item-template', foreach: ChildPages}"></ul>
     </li>
