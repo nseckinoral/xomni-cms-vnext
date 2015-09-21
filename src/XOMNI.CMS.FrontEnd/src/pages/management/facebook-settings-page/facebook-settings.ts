@@ -18,6 +18,12 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     constructor() {
         super();
+        throw ReferenceError;
+        console.log("a");
+        throw EvalError;
+        console.log("a");
+        throw RangeError;
+        console.log("a");
         this.initializeValidation();
         this.initValidation(ko.validation.group([this.applicationId, this.applicationSecretKey, this.redirectUri]));
         this.initialize();

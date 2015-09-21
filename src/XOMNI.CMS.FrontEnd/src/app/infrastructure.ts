@@ -32,7 +32,13 @@ export module infrastructure {
             var userInfo = this.getAuthenticatedUserInfo();
             var apiUrl = this.getApiUrl();
             Xomni.currentContext = new Xomni.ClientContext(userInfo.UserName, userInfo.Password, apiUrl);
+            window.onerror = (eventOrMessage: any, uri: string, lineNumber: number, columnNumber?: number): boolean => {
+                this.showCustomErrorDialog(eventOrMessage);
+                return true;
+            }
         }
+
+
 
         public initValidation(element: any) {
             if (element) {
