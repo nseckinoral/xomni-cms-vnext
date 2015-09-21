@@ -67,18 +67,6 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     public static slideChildsUpInternal(element) {
         var slideUpNotRequired: boolean = false;
         if (element != null) {
-            //$(element).children("ul").each((i, e : any) => {
-
-            //    ko.contextFor(e).$data.ChildPages.foreach(function (v) {
-            //        if (v.Url.indexOf(window.location.hash) != -1) {
-            //            slideUpNotRequired = true;
-            //        }
-            //    });
-
-            //    if (!slideUpNotRequired) {
-            //        e.slideUp();
-            //    }
-            //});
 
             $(element).children("ul").slideUp();
             $(element).removeClass("menu_navigation_arrow_down");
