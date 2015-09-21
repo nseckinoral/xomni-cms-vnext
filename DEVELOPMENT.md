@@ -101,3 +101,53 @@ Example:
 	'management-trending-action-settings-page', { require: 'pages/management/trending-action-settings-page/trending-action-settings' });
 
 **We highly recommend you to take look at other pages before creating a new page.**
+
+
+##Practices
+
+- Do not use any magic numbers. Instead of using hardcoded variables, you can fetch them from the application settings file so users won't need to edit anything in the code.
+
+		WRONG: 
+		foo(5);
+
+		CORRECT:
+		foo(appSettings.someNumber);
+
+- Do not use any logic in your data bindings.
+
+		WRONG:
+		<input data-bind="function(){if(2+4 != 7){return 'Hello World!';}}" />
+		
+		CORRECT:
+		//Typescript file
+		public foo(){
+			if(2+4 != 7){
+				return 'Hello World!';
+			}		
+		}
+
+		//Html file
+		<input data-bind="foo" />
+
+- Do not use unnecessary observables/computed observables. If your UI component does not need to be updated there's no need to use an observable. Every observable, computed observable or binding handler costs a piece of your resources.
+
+	Example for a simple text that won't be updated after loading the page.
+		
+		//Html file
+	 	<span data-bind="text: firstName"/>
+
+		//Typescript file
+
+		WRONG:
+		public firstName:string = ko.observable();
+		/*
+			do something
+		*/
+		this.firstName("Random Name");
+
+		CORRECT:
+		public firstName: string;
+		/*
+			do something
+		*/
+		this.firstName = "Random Name";
