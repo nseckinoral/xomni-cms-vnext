@@ -33,10 +33,10 @@ export module infrastructure {
             var apiUrl = this.getApiUrl();
             Xomni.currentContext = new Xomni.ClientContext(userInfo.UserName, userInfo.Password, apiUrl);
             window.onerror = (errorMessage: any, url: string, lineNumber: number, columnNumber?: number, error?: any): boolean => {
-                if (error && error instanceof Models.ExceptionResult) {
+                if (error.FriendlyDescription) {
                     this.showErrorDialog(error);
                 }
-                else if (error) {
+                else if (error.message) {
                     this.showCustomErrorDialog(error.message);
                 }
                 else {
