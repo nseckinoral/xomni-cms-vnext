@@ -24,28 +24,18 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     initialize() {
-        try {
-            this.client.get(this.success, this.error);
-        }
-        catch (exception) {
-            this.showCustomErrorDialog(exception.Message);
-        }
+        this.client.get(this.success, this.error);
     }
 
     save() {
         this.changeValidationStatus(true)
         if (this.getValidationErrors().length == 0) {
-            try {
-                this.trendingActionTypeValues.filter(function (item) { return item.Description == "Social Like"; })[0].ImpactValue = this.socialLike();
-                this.trendingActionTypeValues.filter(function (item) { return item.Description == "Social Share"; })[0].ImpactValue = this.socialShare();
-                this.trendingActionTypeValues.filter(function (item) { return item.Description == "Shopping Cart ItemI Insert"; })[0].ImpactValue = this.shoppingCartItemInsert();
-                this.trendingActionTypeValues.filter(function (item) { return item.Description == "Wishlist Item Insert"; })[0].ImpactValue = this.wishlistItemInsert();
-                this.trendingActionTypeValues.filter(function (item) { return item.Description == "Item View"; })[0].ImpactValue = this.itemView();
-                this.client.put(this.trendingActionTypeValues, this.success, this.error);
-            }
-            catch (exception) {
-                this.showCustomErrorDialog(exception.message);
-            }
+            this.trendingActionTypeValues.filter(function (item) { return item.Description == "Social Like"; })[0].ImpactValue = this.socialLike();
+            this.trendingActionTypeValues.filter(function (item) { return item.Description == "Social Share"; })[0].ImpactValue = this.socialShare();
+            this.trendingActionTypeValues.filter(function (item) { return item.Description == "Shopping Cart ItemI Insert"; })[0].ImpactValue = this.shoppingCartItemInsert();
+            this.trendingActionTypeValues.filter(function (item) { return item.Description == "Wishlist Item Insert"; })[0].ImpactValue = this.wishlistItemInsert();
+            this.trendingActionTypeValues.filter(function (item) { return item.Description == "Item View"; })[0].ImpactValue = this.itemView();
+            this.client.put(this.trendingActionTypeValues, this.success, this.error);
         }
         else {
             this.showCustomErrorDialog("Please fill out all required fields and try again.");
@@ -90,18 +80,13 @@ export class viewModel extends cms.infrastructure.baseViewModel {
         });
     }
     success = (result: Models.Management.Configuration.TrendingActionTypeValue[]) => {
-        try {
-            this.trendingActionTypeValues = result;
-            this.socialLike(result.filter(function (item) { return item.Description == "Social Like"; })[0].ImpactValue);
-            this.socialShare(result.filter(function (item) { return item.Description == "Social Share"; })[0].ImpactValue);
-            this.shoppingCartItemInsert(result.filter(function (item) { return item.Description == "Shopping Cart ItemI Insert"; })[0].ImpactValue);
-            this.wishlistItemInsert(result.filter(function (item) { return item.Description == "Wishlist Item Insert"; })[0].ImpactValue);
-            this.itemView(result.filter(function (item) { return item.Description == "Item View"; })[0].ImpactValue);
-            this.changeValidationStatus(false);
-        }
-        catch (exception) {
-            this.showCustomErrorDialog(exception.message);
-        }
+        this.trendingActionTypeValues = result;
+        this.socialLike(result.filter(function (item) { return item.Description == "Social Like"; })[0].ImpactValue);
+        this.socialShare(result.filter(function (item) { return item.Description == "Social Share"; })[0].ImpactValue);
+        this.shoppingCartItemInsert(result.filter(function (item) { return item.Description == "Shopping Cart ItemI Insert"; })[0].ImpactValue);
+        this.wishlistItemInsert(result.filter(function (item) { return item.Description == "Wishlist Item Insert"; })[0].ImpactValue);
+        this.itemView(result.filter(function (item) { return item.Description == "Item View"; })[0].ImpactValue);
+        this.changeValidationStatus(false);
     }
 
     error = (error: Models.ExceptionResult) => {

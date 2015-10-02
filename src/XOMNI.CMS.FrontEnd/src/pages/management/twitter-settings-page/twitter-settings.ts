@@ -64,26 +64,16 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     initialize() {
-        try {
-            this.client.get(this.success, this.error);
-        }
-        catch (exception) {
-            this.showCustomErrorDialog(exception.Message);
-        }
+        this.client.get(this.success, this.error);
     }
 
     save() {
         this.changeValidationStatus(true);
         if (this.getValidationErrors().length === 0) {
-            try {
-                this.settings.TwitterConsumerKey = this.consumerKey();
-                this.settings.TwitterConsumerKeySecret = this.consumerSecretKey();
-                this.settings.TwitterRedirectUri = this.redirectUri();
-                this.client.put(this.settings, this.success, this.error);
-            }
-            catch (exception) {
-                this.showCustomErrorDialog(exception.message);
-            }
+            this.settings.TwitterConsumerKey = this.consumerKey();
+            this.settings.TwitterConsumerKeySecret = this.consumerSecretKey();
+            this.settings.TwitterRedirectUri = this.redirectUri();
+            this.client.put(this.settings, this.success, this.error);
         }
         else {
             this.showCustomErrorDialog("Required fields are missing.");
@@ -91,16 +81,11 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     success = (result: Models.Management.Configuration.Settings) => {
-        try {
-            this.settings = result;
-            this.consumerKey(result.TwitterConsumerKey);
-            this.consumerSecretKey(result.TwitterConsumerKeySecret);
-            this.redirectUri(result.TwitterRedirectUri);
-            this.changeValidationStatus(false);
-        }
-        catch (exception) {
-            this.showCustomErrorDialog(exception.message);
-        }
+        this.settings = result;
+        this.consumerKey(result.TwitterConsumerKey);
+        this.consumerSecretKey(result.TwitterConsumerKeySecret);
+        this.redirectUri(result.TwitterRedirectUri);
+        this.changeValidationStatus(false);
     }
 
     error = (error: Models.ExceptionResult) => {

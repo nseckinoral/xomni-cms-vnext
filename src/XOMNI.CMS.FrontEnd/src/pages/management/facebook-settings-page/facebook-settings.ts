@@ -65,26 +65,16 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     initialize() {
-        try {
-            this.client.get(this.success, this.error);
-        }
-        catch (exception) {
-            this.showCustomErrorDialog(exception.Message);
-        }
+        this.client.get(this.success, this.error);
     }
     save() {
         this.changeValidationStatus(true);
         if (this.getValidationErrors().length == 0) {
-            try {
-                this.settings.FacebookApplicationId = this.applicationId();
-                this.settings.FacebookApplicationSecretKey = this.applicationSecretKey();
-                this.settings.FacebookRedirectUri = this.redirectUri();
-                this.settings.FacebookDisplayType = this.displayType();
-                this.client.put(this.settings, this.success, this.error);
-            }
-            catch (exception) {
-                this.showCustomErrorDialog(exception.message);
-            }
+            this.settings.FacebookApplicationId = this.applicationId();
+            this.settings.FacebookApplicationSecretKey = this.applicationSecretKey();
+            this.settings.FacebookRedirectUri = this.redirectUri();
+            this.settings.FacebookDisplayType = this.displayType();
+            this.client.put(this.settings, this.success, this.error);
         }
         else {
             this.showCustomErrorDialog("If you have filled at least one field , the other fields should be filled.");
@@ -92,17 +82,12 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     success = (result: Models.Management.Configuration.Settings) => {
-        try {
-            this.settings = result;
-            this.applicationId(result.FacebookApplicationId);
-            this.applicationSecretKey(result.FacebookApplicationSecretKey);
-            this.redirectUri(result.FacebookRedirectUri);
-            this.displayType(result.FacebookDisplayType);
-            this.changeValidationStatus(false);
-        }
-        catch (exception) {
-            this.showCustomErrorDialog(exception.message);
-        }
+        this.settings = result;
+        this.applicationId(result.FacebookApplicationId);
+        this.applicationSecretKey(result.FacebookApplicationSecretKey);
+        this.redirectUri(result.FacebookRedirectUri);
+        this.displayType(result.FacebookDisplayType);
+        this.changeValidationStatus(false);
     }
 
     error = (error: Models.ExceptionResult) => {

@@ -101,13 +101,8 @@ export class viewModel extends cms.infrastructure.baseViewModel {
     }
 
     public redirectToPage(pageNumber: number) {
-        try {
-            var newUri = this.prepareQuerystring(window.location.hash, pageNumber);
-            hasher.setHash(newUri);
-        }
-        catch (exception) {
-            this.showCustomErrorDialog(exception);
-        }
+        var newUri = this.prepareQuerystring(window.location.hash, pageNumber);
+        hasher.setHash(newUri);
     }
 
     public prepareQuerystring(uri: string, page: number) {
