@@ -19,7 +19,8 @@ var require = {
         "chartist": "bower_modules/chartist/dist/chartist",
         "validation": "bower_modules/knockout-validation/dist/knockout.validation",
         "bootstrap-toggle": "bower_modules/bootstrap-toggle/js/bootstrap-toggle.min",
-        "bootstrap-touchspin": "bower_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin"
+        "bootstrap-touchspin": "bower_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin",
+        "jquery-simple-datepicker": "bower_modules/jquery-simple-datetimepicker/jquery.simple-dtpicker"
     },
     shim: {
         "bootstrap": { deps: ["jquery"] },
@@ -29,7 +30,8 @@ var require = {
         "moment-msdate": { deps: ["moment"] },
         "xomni": { deps: ["jquery"] },
         "bootstrap-toggle": { deps: ["bootstrap"] },
-        "bootstrap-touchspin": { deps: ["jquery"] }
+        "bootstrap-touchspin": { deps: ["jquery"] },
+        "jquery-simple-datepicker": { deps: ["jquery"] }
     },
     deps: ["knockout", "bootstrap"]
 };

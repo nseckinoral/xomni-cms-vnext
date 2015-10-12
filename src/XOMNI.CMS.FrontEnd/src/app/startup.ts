@@ -31,7 +31,17 @@ ko.components.register('management-twitter-settings-page', { require: 'pages/man
 ko.components.register('management-facebook-settings-page', { require: 'pages/management/facebook-settings-page/facebook-settings' });
 ko.components.register('private-mail-subscription-status-page', { require: 'pages/private/mail-subscription-status-page/mail-subscription-status' });
 ko.components.register('management-trending-action-settings-page', { require: 'pages/management/trending-action-settings-page/trending-action-settings' });
+ko.components.register('management-devices-add-edit-page', { require: 'pages/management/devices-page/add-edit-page/add-edit' });
 //[[XO-SCAFFOLDER]]
+
+(<any>ko.bindingHandlers).dateTimePicker = {
+    init: function (element, valueAccessor, allBindings, data, context) {
+        $(element).appendDtpicker({
+            "autodateOnStart": false,
+            "closeOnSelected": true
+        });
+    }
+};
 
 (<any>ko.bindingHandlers).toggle = {
     init: function (element, valueAccessor, allBindings, data, context) {

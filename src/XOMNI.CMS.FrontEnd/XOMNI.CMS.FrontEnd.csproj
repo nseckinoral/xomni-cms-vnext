@@ -99,6 +99,7 @@
     <Content Include="src\images\search-icon.png" />
     <Content Include="src\images\search-top-bg.png" />
     <Content Include="src\images\user-header-img.png" />
+    <Content Include="src\pages\management\devices-page\add-edit-page\add-edit.html" />
     <Content Include="src\pages\private\mail-subscription-status-page\mail-subscription-status.html" />
     <Content Include="src\pages\catalog\brand-page\brand.html" />
     <Content Include="src\components\navigation\navigation.html" />
@@ -147,6 +148,7 @@
     <TypeScriptCompile Include="definitions\hasher\hasher.d.ts" />
     <TypeScriptCompile Include="definitions\jasmine\jasmine.d.ts" />
     <TypeScriptCompile Include="definitions\jqrangeslider\jqrangeslider.d.ts" />
+    <TypeScriptCompile Include="definitions\jquery-simple-datetimepicker\jquery-simple-datetimepicker.d.ts" />
     <TypeScriptCompile Include="definitions\jquery.cookie\jquery.cookie.d.ts" />
     <TypeScriptCompile Include="definitions\jqueryui\jqueryui.d.ts" />
     <TypeScriptCompile Include="definitions\jquery\jquery.d.ts" />
@@ -170,6 +172,7 @@
     <TypeScriptCompile Include="src\models\dialog-content.ts" />
     <TypeScriptCompile Include="src\pages\catalog\brand-page\brand.ts" />
     <TypeScriptCompile Include="src\components\navigation\navigation.ts" />
+    <TypeScriptCompile Include="src\pages\management\devices-page\add-edit-page\add-edit.ts" />
     <TypeScriptCompile Include="src\pages\management\facebook-settings-page\facebook-settings.ts" />
     <TypeScriptCompile Include="src\pages\management\integration-endpoint-page\integration-endpoint.ts" />
     <TypeScriptCompile Include="src\pages\management\tenant-settings-page\tenant-settings.ts" />

@@ -17,6 +17,7 @@ export class viewModel extends cms.infrastructure.baseViewModel {
 
     constructor(params: any) {
         super();
+
         this.urlParameters = this.sanitizeQuerystingIfNeccessary(this.getUrlParams());
 
         if (cms.infrastructure.Configuration.AppSettings.PaginatorFrameSize <= 0) {
